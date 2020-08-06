@@ -356,10 +356,7 @@ texinfo_documents = [(master_doc,
 
 # -- links
 extlinks = { 'link_connext_users_man':
-            (LINK_CONNEXT_USERS_MAN + '%s', 'link_connext_users_man'),
-             'link_liveliness_usersman':
-            (LINK_LIVELINESS_USERSMAN + '%s', 'link_liveliness_usersman'),
-            
+            (LINK_CONNEXT_USERS_MAN + '%s', 'link_connext_users_man')
 }
 
 rst_prolog = """

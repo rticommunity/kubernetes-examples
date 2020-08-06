@@ -7,7 +7,7 @@ Docker
 *********
 
 This document describes examples and configurations when you run your 
-*RTI Connext DDS®* applications with *Docker®*. 
+|RTI_CONNEXT_TM| applications with *Docker®*. 
 
 Docker Overview
 -----------------------
