@@ -1,0 +1,105 @@
+.. include:: vars.rst
+
+.. _section-Intro:
+
+
+Introduction
+************
+
+This document describes Wireshark® features that are useful when debugging 
+*RTI® Connext® DDS* systems.
+
+Wireshark® is a network-packet analyzer that supports many network protocols, 
+including Real-Time Publish-Subscribe (RTPS), the wire protocol used 
+by *RTI Connext DDS*.
+
+Wireshark can be used to capture and analyze RTPS packets from *Connext DDS* 
+applications. It supports RTPS 2.1 (and lower) and is specifically tailored to 
+make RTPS packet analysis easier by including:
+
+  * A set of predefined filters to quickly select different groups of packets 
+    from the RTPS protocol.
+
+  * Coloring rules that highlight important RTPS packets. Packets not strictly 
+    related to *Connext DDS* traffic are grayed out.
+  
+  * Support for dissecting RTI TCP messages. This includes RTI TCP Control 
+    messages as well as RTPS over RTI TCP.
+
+Network packet and traffic analyzers are used during application development and 
+distributed system configuration to monitor packets sent over the network. You 
+can use filters to capture specific types of packets, then analyze the captured 
+packets.
+
+This document will help you use Wireshark to analyze RTPS packets. This analysis 
+will give you information on two levels:
+
+  * A high-level look at the RTPS submessages that are flowing between your *Connext DDS* applications.
+
+  * A detailed look at the contents of individual packets.
+
+Wireshark’s main window makes it easy to see both views.
+
+
+Available Documentation
+-----------------------
+* RTI Connext DDS Core Libraries User’s Manual: 
+  Provides details on the *Connext DDS* API and describes how RTPS packets 
+  are used by *Connext DDS* applications. In particular, you should review the 
+  Discovery chapter. 
+  
+  Open 
+  **<NDDSHOME>/doc/manuals/connext_dds/RTI_ConnextDDS_CoreLibraries_UsersManual.pdf**, 
+  where <NDDSHOME> is where you installed *Connext DDS*, or access it here:
+  https://community.rti.com/documentation.
+
+* RTPS Specification: https://www.omg.org/spec/DDSI-RTPS/2.1
+
+* DDS Security Specification: https://www.omg.org/spec/DDS-SECURITY 
+
+* Wireshark Release Notes: https://www.wireshark.org/docs/relnotes
+
+* Wireshark online help. There is extensive online help included with 
+  Wireshark. Select **Help, Contents** from the menu bar for a detailed 
+  user’s guide in HTML format.
+
+* Wireshark User’s Guide: https://www.wireshark.org/docs 
+  (Note that it may pertain to a slightly different version of Wireshark.)
+
+
+How to Get Support
+------------------
+Technical support for Wireshark is provided by RTI; send email to support@rti.com.
+
+Wireshark is an open source product. For information about Wireshark support, 
+please visit https://www.wireshark.org/.
+
+
+Installing Wireshark
+--------------------
+Several versions of Wireshark are available for download.
+
+  * Stable version: https://www.wireshark.org
+
+  * Development version: https://www.wireshark.org/download/automated
+
+Improvements and fixes included by the developers are available in 
+the development version; however it might be safer to use the Stable 
+Release (sometimes features like the I/O graph are not working in the 
+development version at a given point in time).
+
+If you want to use the user data dissection feature, it may not be 
+in the Stable Release, see the note in  
+:ref:`section-UserDataDissection` (:numref:`section-UserDataDissection`).
+
+Running Wireshark from RTI Launcher
+-----------------------------------
+
+Once installed, *Wireshark* is integrated with *RTI Launcher* 
+and you can start it from the **Tools** tab.
+
+ .. figure:: static/RunningFromLauncher.png
+    :alt: Starting Wireshark from RTI Launcher
+    :name: FigureRunningFromLauncher
+    :align: center
+    :figwidth: 100 %
