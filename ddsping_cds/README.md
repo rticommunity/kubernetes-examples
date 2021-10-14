@@ -17,7 +17,7 @@ To resolve the IP unreliability issue of k8s, a **Cluster IP Service** is used. 
 ![Discovery without Multicast](ddsping_cds.png)
 
 ### Required Docker Images
-- [RTI Cloud Discovery Service](../dockerfiles/rti_cds)
+- [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
 - [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
 - [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
 
