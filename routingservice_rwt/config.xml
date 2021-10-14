@@ -29,6 +29,15 @@
       </participant>
       <participant name="2">
         <domain_id>$(LAN_DOMAIN)</domain_id>
+      <participant_qos>
+            <discovery>
+                <initial_peers>
+                    <element>
+                        rtps@udpv4://rti-clouddiscoveryservice:7400
+                    </element>
+                </initial_peers>
+            </discovery>
+      </participant_qos>
       </participant>
       <session name="Session">
         <auto_topic_route name="Forward">

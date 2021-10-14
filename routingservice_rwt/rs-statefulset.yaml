@@ -23,15 +23,13 @@ spec:
         - name: config-volume
           mountPath: /app/config.xml
           subPath: config.xml
-        - name: scripts-vol
-          mountPath: /mnt/scripts
         env:
         - name: CFG_NAME
           value: "RS-RWT"
         - name: ARGS
           value: "-verbosity 5"
         - name: PUBLIC_IP # value for public ip address
-          value: "3.141.238.106"
+          value: "3.15.220.185"
         - name: PUBLIC_PORT # value for public port 
           value: "30007"
         - name: HOST_PORT # value for host port 
@@ -40,14 +38,9 @@ spec:
           value: "100"
         - name: LAN_DOMAIN # value for LAN domain ID
           value: "10"
-        command: ["/mnt/scripts/run.sh"]
       imagePullSecrets:
         - name: regcred
       volumes: 
         - name: config-volume
           configMap:
             name: routingservice-rwt
-        - name: scripts-vol
-          configMap:
-            name: rs-rwt-init-config
-            defaultMode: 0555

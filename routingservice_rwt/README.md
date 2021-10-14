@@ -47,4 +47,4 @@ To resolve this, **RTI Routing Service** is used to bridge internal and external
 `$ kubectl create -f rtiddsping-sub.yaml`
 
 #### Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
-`$ rtiddsping -qosFile rwt_external_participant.xml -qosProfile RWT_Demo::Participant -publisher -domainId 100`
+`$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`

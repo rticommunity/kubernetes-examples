@@ -22,3 +22,6 @@ spec:
         env:
         - name: ARGS
           value: "-domainId 10 -Verbosity 2"
+        - name: NDDS_DISCOVERY_PEERS
+          value: rtps@udpv4://rti-clouddiscoveryservice:7400
+
