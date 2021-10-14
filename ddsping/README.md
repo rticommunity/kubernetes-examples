@@ -13,8 +13,8 @@ If you use a networking plugin supporting multicast (e.g. WeaveNet) for your k8s
 ![Pod-to-pod Communications Inside a Cluster](ddsping.png)
 
 #### Required Docker Images
-- [RTI DDS Ping Publisher](dockerfiles/rti_ddsping_pub)
-- [RTI DDS Ping Subscriber](dockerfiles/rti_ddsping_sub)
+- [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
+- [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
 
 #### Steps
 
