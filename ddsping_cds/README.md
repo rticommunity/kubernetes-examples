@@ -1,14 +1,14 @@
-### Discovery without Multicast
+## Discovery without Multicast
 
 
-#### Problem
+### Problem
 
 You want to make DDS discovery work without multicast. 
 
 The default DDS discovery relies on multicast, and most virtual network solutions of k8s do not support multicast. 
 
 
-#### Solution
+### Solution
 
 **RTI Cloud Discovery Service (CDS)** enables DDS discovery on a network not supporting multicast. To use CDS, the IP address or DNS name and port number of CDS need to be added in the initial peer lists of DDS applications. 
 
@@ -16,21 +16,21 @@ To resolve the IP unreliability issue of k8s, a **Cluster IP Service** is used. 
 
 ![Discovery without Multicast](ddsping_cds.png)
 
-#### Required Docker Images
+### Required Docker Images
 - [RTI Cloud Discovery Service](../dockerfiles/rti_cds)
 - [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
 - [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
 
-#### Steps
+### Steps
 
-##### Create a ConfigMap for RTI License.
+#### Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-##### Create a Deployment and a Service for Cloud Discovery Service.
+#### Create a Deployment and a Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-##### Create a Deployment for DDS ping publisher.
+#### Create a Deployment for DDS ping publisher.
 `$ kubectl create -f rtiddsping-cds-pub.yaml`
 
-##### Create a Deployment for DDS ping subscriber.
+#### Create a Deployment for DDS ping subscriber.
 `$ kubectl create -f rtiddsping-cds-sub.yaml`
