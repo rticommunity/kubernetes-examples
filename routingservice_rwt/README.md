@@ -19,6 +19,8 @@ To resolve this, **RTI Routing Service** is used to bridge internal and external
 * **Routing Service**: A bridge service residing in the k8s cluster that forwards data from the **external DDS Publisher** to the **internal DDS Subscriber**. 
 * **NodePort Service**: We create a **NodePort Service** that exposes the **Routing Service** on each Node’s IP at a static port (e.g. Port 30007 in the figure). Then, the **external participant (DDS Publisher)** can contact the **Routing Service** by requesting NodeIP:NodePort (e.g. NODE2_IP:30007 in the figure). 
 
+![xposing DDS Applications with Real-time WAN Transport](routingservice_rwt.png)
+
 ### Required Docker Images
 - [RTI Routing Service](../dockerfiles/rti_routingservice)
 - [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
@@ -32,17 +34,17 @@ To resolve this, **RTI Routing Service** is used to bridge internal and external
 #### Create a Deployment and a Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-## Create a ConfigMap for the Routing Service XML configuration file
+#### Create a ConfigMap for the Routing Service XML configuration file
 `$ kubectl create configmap routingservice-rwt --from-file=config.xml`
 
-## Create a Deployment for the Routing Service. You should update the public IP address and ports in this file.
+#### Create a Deployment for the Routing Service. You should update the public IP address and ports in this file.
 `$ kubectl create -f rs-statefulset.yaml`
 
-## Create a NodePort Service for the Routing Service
+#### Create a NodePort Service for the Routing Service
 `$ kubectl create -f rs-nodeport.yaml`
 
-## Create a Deployment for a RTI DDS Ping subscriber
+#### Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping-sub.yaml`
 
-## Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
+#### Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
 `$ rtiddsping -qosFile rwt_external_participant.xml -qosProfile RWT_Demo::Participant -publisher -domainId 100`
