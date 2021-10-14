@@ -1,25 +1,25 @@
-### Pod-to-pod Communications Inside a Cluster
+## Pod-to-pod Communications Inside a Cluster
 
 
-#### Problem
+### Problem
 
 You want DDS applications in pods to communicate with each other in a k8s cluster. 
 
 
-#### Solution
+### Solution
 
 If you use a networking plugin supporting multicast (e.g. WeaveNet) for your k8s cluster, DDS pods can automatically discover each other through multicast. With **DDS built-in discovery**, you do not need a k8s service for discovery because DDS pods can discover and establish connections with each other by topics, abstracting IP-based communications. This will allow DDS pods to discover and communicate without a k8s service.
 
 ![Pod-to-pod Communications Inside a Cluster](ddsping.png)
 
-#### Required Docker Images
+### Required Docker Images
 - [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
 - [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
 
-#### Steps
+### Steps
 
-##### Create a Deployment for DDS ping publisher.
+#### Create a Deployment for DDS ping publisher.
 `$ kubectl create -f rtiddsping-pub.yaml`
 
-##### Create a Deployment for DDS ping subscriber.
+#### Create a Deployment for DDS ping subscriber.
 `$ kubectl create -f rtiddsping-sub.yaml`
