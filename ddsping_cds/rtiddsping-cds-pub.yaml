@@ -21,6 +21,6 @@ spec:
         image: "kyoungho/rtiddsping-pub:6.0.0"
         env:
         - name: ARGS
-          value: "-domainId 10 -numSamples 100 -Verbosity 2"
+          value: "-domainId 10 -Verbosity 2"
         - name: NDDS_DISCOVERY_PEERS
           value: rtps@udpv4://rti-clouddiscoveryservice:7400
