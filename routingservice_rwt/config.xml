@@ -1,43 +1,37 @@
 <?xml version="1.0"?>
 <dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.0.0/rti_routing_service.xsd">
-  <qos_library name="RWT_Demo_lib">
-    <qos_profile name="RWT_Demo_profile">
-      <participant_qos>
-        <transport_builtin>
-          <mask>UDPv4_WAN</mask>
-          <udpv4_wan>
-              <public_address>
-                  $(PUBLIC_IP)
-              </public_address>
-              <comm_ports>
-                  <default>
-                     <host>$(HOST_PORT)</host>
-                     <public>$(PUBLIC_PORT)</public>
-                  </default>
-              </comm_ports>
-          </udpv4_wan>
-        </transport_builtin>
-      </participant_qos>
-    </qos_profile>
-  </qos_library>
-
   <routing_service name="RS-RWT">
     <domain_route name="RWT_UDPLAN">
       <participant name="1">
         <domain_id>$(WAN_DOMAIN)</domain_id>
-        <participant_qos base_name="RWT_Demo_lib::RWT_Demo_profile"/>
+        <participant_qos>
+          <transport_builtin>
+            <mask>UDPv4_WAN</mask>
+            <udpv4_wan>
+              <public_address>
+                  $(PUBLIC_IP)
+              </public_address>
+              <comm_ports>
+                <default>
+                  <host>$(HOST_PORT)</host>
+                  <public>$(PUBLIC_PORT)</public>
+                </default>
+              </comm_ports>
+            </udpv4_wan>
+          </transport_builtin>
+        </participant_qos>
       </participant>
       <participant name="2">
         <domain_id>$(LAN_DOMAIN)</domain_id>
-      <participant_qos>
-            <discovery>
-                <initial_peers>
-                    <element>
+        <participant_qos>
+          <discovery>
+            <initial_peers>
+              <element>
                         rtps@udpv4://rti-clouddiscoveryservice:7400
-                    </element>
-                </initial_peers>
-            </discovery>
-      </participant_qos>
+              </element>
+            </initial_peers>
+          </discovery>
+        </participant_qos>
       </participant>
       <session name="Session">
         <auto_topic_route name="Forward">
