@@ -23,7 +23,7 @@ To resolve this, a **StatefulSet** for **RTI Routing Services** can be used. To 
 #### Create a Deployment and a Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-## Create a ConfigMap to initialize and run the Routing Service. You should update the public IP address and ports in this file.
+#### Create a ConfigMap to initialize and run the Routing Service. You should update the public IP address and ports in this file.
 `$ kubectl create -f init_configmap.yaml`
 
 #### Create a ConfigMap for the Routing Service XML configuration file
