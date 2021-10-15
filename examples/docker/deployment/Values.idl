@@ -1,3 +1,0 @@
-struct Values {
-    unsigned long num;
-};
