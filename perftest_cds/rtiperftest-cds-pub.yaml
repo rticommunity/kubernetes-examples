@@ -1,0 +1,27 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "rtiperftest-pub"
+  namespace: "default"
+  labels:
+    app: "rtiperftest-pub"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "rtiperftest-pub"
+  template:
+    metadata:
+      labels:
+        app: "rtiperftest-pub"
+    spec:
+
+      containers:
+      - name: "rtiperftest-pub"
+        image: "kyoungho/rti-perftest:v3.0.1"
+        env:
+          - name: "perftest_args"
+            value: "-pub"
+          - name: NDDS_DISCOVERY_PEERS
+            value: rtps@rti-clouddiscoveryservice:7400
