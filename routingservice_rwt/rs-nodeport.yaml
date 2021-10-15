@@ -7,6 +7,6 @@ spec:
   selector:
     statefulset.kubernetes.io/pod-name: rs-rwt-0
   ports:
-  - nodePort: 30007
-    protocol: UDP
-    port: 7400
+    - nodePort: 30007
+      protocol: UDP
+      port: 7400

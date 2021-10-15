@@ -14,33 +14,33 @@ spec:
         app: rti-routingservice
     spec:
       containers:
-      - name: rti-routingservice
-        image: kyoungho/rti-routingservice:6.1.0
-        ports:
-        - containerPort: 7400
-          protocol: UDP
-        volumeMounts:
-        - name: config-volume
-          mountPath: /app/config.xml
-          subPath: config.xml
-        env:
-        - name: CFG_NAME
-          value: "RS-RWT"
-        - name: ARGS
-          value: "-verbosity 5"
-        - name: PUBLIC_IP # value for public ip address
-          value: "3.15.220.185"
-        - name: PUBLIC_PORT # value for public port 
-          value: "30007"
-        - name: HOST_PORT # value for host port 
-          value: "7400"
-        - name: WAN_DOMAIN # value for WAN domain ID
-          value: "100"
-        - name: LAN_DOMAIN # value for LAN domain ID
-          value: "10"
+        - name: rti-routingservice
+          image: kyoungho/rti-routingservice:6.1.0
+          ports:
+            - containerPort: 7400
+              protocol: UDP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config.xml
+              subPath: config.xml
+          env:
+            - name: CFG_NAME
+              value: "RS-RWT"
+            - name: ARGS
+              value: "-verbosity 5"
+            - name: PUBLIC_IP # value for public ip address
+              value: "3.15.220.185"
+            - name: PUBLIC_PORT # value for public port
+              value: "30007"
+            - name: HOST_PORT # value for host port
+              value: "7400"
+            - name: WAN_DOMAIN # value for WAN domain ID
+              value: "100"
+            - name: LAN_DOMAIN # value for LAN domain ID
+              value: "10"
       imagePullSecrets:
         - name: regcred
-      volumes: 
+      volumes:
         - name: config-volume
           configMap:
             name: routingservice-rwt
