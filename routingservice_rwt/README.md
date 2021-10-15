@@ -19,7 +19,7 @@ To resolve this, **RTI Routing Service** is used to bridge internal and external
 * **Routing Service**: A bridge service residing in the k8s cluster that forwards data from the **external DDS Publisher** to the **internal DDS Subscriber**. 
 * **NodePort Service**: We create a **NodePort Service** that exposes the **Routing Service** on each Node’s IP at a static port (e.g. Port 30007 in the figure). Then, the **external participant (DDS Publisher)** can contact the **Routing Service** by requesting NodeIP:NodePort (e.g. NODE2_IP:30007 in the figure). 
 
-![xposing DDS Applications with Real-time WAN Transport](routingservice_rwt.png)
+![Exposing DDS Applications with Real-time WAN Transport](routingservice_rwt.png)
 
 ### Required Docker Images
 - [RTI Routing Service](../dockerfiles/rti_routingservice)

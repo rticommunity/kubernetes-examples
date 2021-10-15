@@ -1,0 +1,22 @@
+<dds>
+    <qos_library name="RWT_Demo">
+    <qos_profile name="RWT_Profile">
+        <participant_qos>
+            <transport_builtin>
+                <mask>UDPv4_WAN</mask>
+            </transport_builtin>
+            <discovery>
+                <initial_peers>
+                    <element>
+                        udpv4_wan://3.15.220.185:30007
+                    </element>
+                    <element>
+                        udpv4_wan://3.15.220.185:30008
+                    </element>
+                </initial_peers>
+            </discovery>
+        </participant_qos>
+    </qos_profile>
+    </qos_library>
+</dds>
+
