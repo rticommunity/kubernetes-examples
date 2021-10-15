@@ -2,7 +2,7 @@
 
 ### Problem
 
-You want to replicate Routing Services for high availability. This is an extended use case of [this](../routingservce_rwt). 
+You want to replicate Routing Services for high availability. This is an extended use case of [this](../routingservice_rwt). 
 
 ### Solution
 
