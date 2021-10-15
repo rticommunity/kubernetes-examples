@@ -17,8 +17,10 @@ spec:
         app: "rtiddsping-sub"
     spec:
       containers:
-      - name: "rtiddsping-sub"
-        image: "ghcr.io/kyoungho/rti-ddsping-pub:6.1.0"
-        env:
-        - name: ARGS
-          value: "-domainId 10 -Verbosity 2"
+        - name: "rtiddsping-sub"
+          image: "ghcr.io/kyoungho/rti-ddsping-pub:6.1.0"
+          env:
+            - name: ARGS
+              value: "-domainId 10 -Verbosity 2"
+      imagePullSecrets:
+        - name: regcred
