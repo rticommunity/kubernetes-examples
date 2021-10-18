@@ -25,11 +25,11 @@ To resolve this, a **StatefulSet** for **RTI Routing Services** can be used. To 
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
 #### Create a ConfigMap for the QoS profile for Shapes publisher and subscriber applications.
-`$ kubectl create configmap shapes-pub-config --from-file=shapes_pub_config.xml`
+`$ kubectl create configmap shapes-pub-config --from-file=shapes_pub_config.xml`\
 `$ kubectl create configmap shapes-sub-config --from-file=shapes_sub_config.xml`
 
 #### Create Deployments for the Shapes publisher and subscriber. 
-`$ kubectl create -f rti-shapes-pub.yaml`
+`$ kubectl create -f rti-shapes-pub.yaml`\
 `$ kubectl create -f rti-shapes-sub.yaml`
 
 #### Create a ConfigMap for the Routing Service XML configuration file
