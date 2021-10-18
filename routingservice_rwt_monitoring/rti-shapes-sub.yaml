@@ -1,0 +1,32 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "rti-shapes-sub"
+  namespace: "default"
+  labels:
+    app: "rti-shapes-sub"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "rti-shapes-sub"
+  template:
+    metadata:
+      labels:
+        app: "rti-shapes-sub"
+    spec:
+      containers:
+        - name: "rti-shapes-sub"
+          image: "kyoungho/rti-shapes-sub:6.1.0"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/shapes_sub_config.xml
+              subPath: shapes_sub_config.xml
+          env:
+            - name: NDDS_DISCOVERY_PEERS
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400
+      volumes:
+        - name: config-volume
+          configMap:
+            name: shapes-sub-config

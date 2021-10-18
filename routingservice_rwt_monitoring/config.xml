@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<dds>
+    <qos_library name="RWT_Demo_lib">
+        <qos_profile name="RWT_Demo_profile">
+            <participant_qos>
+                <transport_builtin>
+                    <mask>UDPv4_WAN</mask>
+                    <udpv4_wan>
+                        <public_address>$(PUBLIC_IP)</public_address>
+                        <comm_ports>
+                            <default>
+                                <host>$(HOST_PORT)</host>
+                                <public>$(PUBLIC_PORT)</public>
+                            </default>
+                        </comm_ports>
+                    </udpv4_wan>
+                </transport_builtin>
+            </participant_qos>
+        </qos_profile>
+    </qos_library>
+
+    <routing_service name="RS-RWT">
+        <!-- The administration tag enables remote administration, and is required when using Admin Console. -->
+        <administration>
+            <domain_id>2</domain_id>
+            <distributed_logger>
+                <enabled>true</enabled>
+                <filter_level>WARNING</filter_level>
+            </distributed_logger>
+        </administration>
+        <!-- This is the Monitoring configuration for all the entities in this routing service, and is required when using 
+            Admin Console. -->
+        <monitoring>
+            <!-- The domain id where to publish the monitoring information -->
+            <domain_id>3</domain_id>
+            <!-- How often to publish it -->
+            <status_publication_period>
+                <sec>5</sec>
+                <nanosec>0</nanosec>
+            </status_publication_period>
+            <!-- How often to compute statistics -->
+            <statistics_sampling_period>
+                <sec>1</sec>
+                <nanosec>0</nanosec>
+            </statistics_sampling_period>
+        </monitoring>
+
+        <domain_route name="RWT_UDPLAN">
+            <participant name="WAN">
+                <domain_id>$(WAN_DOMAIN)</domain_id>
+                <participant_qos>
+                    <transport_builtin>
+                        <mask>UDPv4_WAN</mask>
+                        <udpv4_wan>
+                            <public_address>
+                  $(PUBLIC_IP)
+              </public_address>
+                            <comm_ports>
+                                <default>
+                                    <host>$(HOST_PORT)</host>
+                                    <public>$(PUBLIC_PORT)</public>
+                                </default>
+                            </comm_ports>
+                        </udpv4_wan>
+                    </transport_builtin>
+                </participant_qos>
+
+            </participant>
+            <participant name="LAN">
+                <domain_id>$(LAN_DOMAIN)</domain_id>
+                <participant_qos>
+                    <discovery>
+                        <initial_peers>
+                            <element>
+                        rtps@udpv4://rti-clouddiscoveryservice:7400
+                    </element>
+                        </initial_peers>
+                    </discovery>
+                </participant_qos>
+            </participant>
+            <session name="Description_session">
+                <auto_route>
+                    <dds_input participant="LAN">
+                        <creation_mode>IMMEDIATE</creation_mode>
+                        <allow_topic_name_filter>rti/dds/monitoring/*Description</allow_topic_name_filter>
+                        <datareader_qos>
+                            <durability>
+                                <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+                            </durability>
+                            <reliability>
+                                <kind>RELIABLE_RELIABILITY_QOS</kind>
+                            </reliability>
+                        </datareader_qos>
+                    </dds_input>
+                    <dds_output participant="WAN">
+                        <creation_mode>IMMEDIATE</creation_mode>
+                        <allow_topic_name_filter>rti/dds/monitoring/*Description</allow_topic_name_filter>
+                        <datawriter_qos>
+                            <durability>
+                                <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+                            </durability>
+                            <reliability>
+                                <kind>RELIABLE_RELIABILITY_QOS</kind>
+                            </reliability>
+                        </datawriter_qos>
+                    </dds_output>
+                </auto_route>
+            </session>
+
+            <session name="EntityStatistics_session">
+                <auto_route name="DomainParticipantEntityStatistics_route">
+                    <dds_input participant="LAN">
+                        <creation_mode>IMMEDIATE</creation_mode>
+                        <allow_topic_name_filter>rti/dds/monitoring/*Statistics</allow_topic_name_filter>
+                    </dds_input>
+                    <dds_output participant="WAN">
+                        <creation_mode>IMMEDIATE</creation_mode>
+                        <allow_topic_name_filter>rti/dds/monitoring/*Statistics</allow_topic_name_filter>
+                    </dds_output>
+                </auto_route>
+            </session>
+
+            <session name="Ping_session">
+                <auto_route name="Ping_route">
+                    <dds_input participant="LAN">
+                        <creation_mode>IMMEDIATE</creation_mode>
+                        <allow_topic_name_filter>Square</allow_topic_name_filter>
+                    </dds_input>
+                    <dds_output participant="WAN">
+                        <creation_mode>IMMEDIATE</creation_mode>
+                        <allow_topic_name_filter>Square</allow_topic_name_filter>
+                    </dds_output>
+                </auto_route>
+            </session>
+        </domain_route>
+    </routing_service>
+</dds>
