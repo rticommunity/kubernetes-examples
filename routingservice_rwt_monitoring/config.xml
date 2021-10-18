@@ -52,9 +52,7 @@
                     <transport_builtin>
                         <mask>UDPv4_WAN</mask>
                         <udpv4_wan>
-                            <public_address>
-                  $(PUBLIC_IP)
-              </public_address>
+                            <public_address>$(PUBLIC_IP)</public_address>
                             <comm_ports>
                                 <default>
                                     <host>$(HOST_PORT)</host>
@@ -71,9 +69,7 @@
                 <participant_qos>
                     <discovery>
                         <initial_peers>
-                            <element>
-                        rtps@udpv4://rti-clouddiscoveryservice:7400
-                    </element>
+                            <element>rtps@udpv4://rti-clouddiscoveryservice:7400</element>
                         </initial_peers>
                     </discovery>
                 </participant_qos>
