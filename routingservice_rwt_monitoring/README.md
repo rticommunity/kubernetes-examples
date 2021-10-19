@@ -44,6 +44,11 @@ To resolve this, a **StatefulSet** for **RTI Routing Services** can be used. To 
 #### Update the QoS profile for RTI Monitor (located under $NDDSHOME/resource/xml/RTI_MONITOR_QOS_PROFILES.xml with adding the following configurations for using RWT. Run RTI Monitor and join the domain for RWT (100 in this example configuration). 
 ```xml 
     <domain_participant_qos>
+        <discovery>
+            <initial_peers>
+                <element>udpv4_wan://3.15.220.185:30007</element>
+            </initial_peers>
+        </discovery>
         <transport_builtin>
             <mask>UDPv4_WAN</mask>
             <udpv4_wan>
