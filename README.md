@@ -1,5 +1,5 @@
 # k8s-configs
-This directory includes the example configurations of use cases with RTI Connext DDS applications on Kubernetes. 
+This directory includes the example configurations of use cases with RTI Connext applications and services on Kubernetes. 
 
 ### Use Cases
 
