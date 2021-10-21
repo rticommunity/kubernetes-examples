@@ -6,7 +6,7 @@ You want to replicate Routing Services for high availability. This is an extende
 
 ### Solution
 
-To resolve this, a **StatefulSet** for **RTI Routing Services** can be used. To expose the traffic of the StatefulSet, **NodePort Service** can be used with the static ports of a node IP address, mapping to each Routing Service. StatefulSet replicate the traffic for a service while Deployment load balance the traffic. 
+To resolve this, a **StatefulSet** for **RTI Routing Services** can be used. **StatefulSet** manages and scales a set of stateful pods by providing guarantees about the ordering and uniqueness of these pods. To expose the traffic of the StatefulSet pods, **NodePort Service** is used. A **NodePort Service** with a specific port maps to each Routing Service pod. **StatefulSet** pods replicate the traffic for a service while pods created with **Deployment** load balance the traffic. 
 
 ![Replicating Routing Services](routingservice_rwt_replicated.png)
 
