@@ -12,3 +12,5 @@ This directory includes the example configurations of use cases with RTI Connext
 |[Replicating RTI Routing Services with RWT](routingservice_rwt_replicated/) | Replicating RTI Routing Service RWT traffic | NodePort Service, StatefulSet, Deployment, ConfigMap | 
 |[Load Balancing RTI Routing Services with RWT](routingservice_rwt_lb/) | Load balancing RTI Routing Service RWT traffic | LoadBalancer Service, Deployment, ConfigMap | 
 |[Remote Monitoring with RTI Routing Service with RWT](routingservice_rwt_monitoring/) | Monitoring DDS applications in a Kubernetes cluster from the outside of the cluster | NodePort Service, StatefulSet, Deployment, ConfigMap | 
+|[Cert Manager Secure DDS](cert-manger-secure-dds-example/) | Bootstrap Secure DDS using Cert Manager and Kubernetes | 
+

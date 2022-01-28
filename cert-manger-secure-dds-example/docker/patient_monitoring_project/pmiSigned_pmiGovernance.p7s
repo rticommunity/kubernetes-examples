@@ -1,0 +1,78 @@
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg="sha-256"; boundary="----BFDE158D77C4D309C076C7D0D1CF5FA0"
+
+This is an S/MIME signed message
+
+------BFDE158D77C4D309C076C7D0D1CF5FA0
+Content-Type: text/plain
+
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.1.0/dds_security_governance.xsd">
+  <!-- Rules affecting different domains are defined under this tag -->
+  <domain_access_rules>
+    <domain_rule>
+      <!-- 1. This determines when to apply this rule. In this case, any domain -->
+      <domains>
+        <id_range>
+          <min>0</min>
+        </id_range>
+      </domains>
+
+      <!-- 2. The following fields determine behavior of
+       DomainParticipants matching this rule -->
+      <allow_unauthenticated_participants>TRUE</allow_unauthenticated_participants>
+      <enable_join_access_control>FALSE</enable_join_access_control>
+      <discovery_protection_kind>ENCRYPT</discovery_protection_kind>
+      <liveliness_protection_kind>ENCRYPT</liveliness_protection_kind>
+      <rtps_protection_kind>NONE</rtps_protection_kind>
+
+      <!-- 3. Rules affecting topics are defined under this tag -->
+      <topic_access_rules>
+        <!-- 3.1 Let's have a rule for all topics -->
+        <topic_rule>
+          <!-- This determines when to apply the rule -->
+          <topic_expression>*</topic_expression>
+
+          <!-- The following fields determine the behavior of
+           topics/endpoints matching this rule -->
+          <enable_discovery_protection>FALSE</enable_discovery_protection>
+          <enable_liveliness_protection>FALSE</enable_liveliness_protection>
+          <enable_read_access_control>FALSE</enable_read_access_control>
+          <enable_write_access_control>FALSE</enable_write_access_control>
+          <metadata_protection_kind>NONE</metadata_protection_kind>
+          <data_protection_kind>ENCRYPT</data_protection_kind>
+        </topic_rule>
+
+        <!-- 3.2 Later we will define other topic rules for specific topics -->
+
+      </topic_access_rules>
+    </domain_rule>
+  </domain_access_rules>
+</dds>
+------BFDE158D77C4D309C076C7D0D1CF5FA0
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+MIIDOQYJKoZIhvcNAQcCoIIDKjCCAyYCAQExDzANBglghkgBZQMEAgEFADALBgkq
+hkiG9w0BBwGgggF6MIIBdjCCAR2gAwIBAgIRAJBdEWpdiGuMU+sthiG8uyowCgYI
+KoZIzj0EAwIwGzEZMBcGA1UEAxMQbXktc2VsZnNpZ25lZC1jYTAeFw0yMjAxMjAy
+MDI1MjRaFw0yMjA0MjAyMDI1MjRaMBsxGTAXBgNVBAMTEG15LXNlbGZzaWduZWQt
+Y2EwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQfqb1fTUNT2rS7kULWjaaLdS7c
+yq7P76mkq9R9Ysfy+nb6C1fkpxg8XEIjFp9hU/JfLYzuF/RKHAwzl69b7Npgo0Iw
+QDAOBgNVHQ8BAf8EBAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUuIYQ
+HF73uwvuKFUNe+hPNmyLIokwCgYIKoZIzj0EAwIDRwAwRAIgKuNClMRx+Jlpb8n+
+wcKLTVVAxs3oUckdgXg30vRGuZ8CIEZEgcWUKwgcyEpW9ab+c5B8yhuTCx9MaJoS
+fSK5qBEyMYIBgzCCAX8CAQEwMDAbMRkwFwYDVQQDExBteS1zZWxmc2lnbmVkLWNh
+AhEAkF0Ral2Ia4xT6y2GIby7KjANBglghkgBZQMEAgEFAKCB5DAYBgkqhkiG9w0B
+CQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMjAxMjExNzM0MjJaMC8G
+CSqGSIb3DQEJBDEiBCCa2AeeOqJ31UGoAUWiReWOo/45z5gJWlfYERKy2uU+CjB5
+BgkqhkiG9w0BCQ8xbDBqMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJYIZI
+AWUDBAECMAoGCCqGSIb3DQMHMA4GCCqGSIb3DQMCAgIAgDANBggqhkiG9w0DAgIB
+QDAHBgUrDgMCBzANBggqhkiG9w0DAgIBKDAKBggqhkjOPQQDAgRGMEQCIFlsB0rV
+DLryQ15vz/DIVVaNv89bsBk10G+CLrSfPOvgAiBjGfWfMAqCRiqppYgZ3r2IlmLc
+ipZB7um0UPYFuCtBtw==
+
+------BFDE158D77C4D309C076C7D0D1CF5FA0--
+
