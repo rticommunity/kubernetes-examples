@@ -5,19 +5,26 @@ Install cert-manager resources using the following command
 
 `$ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml`
 
-and build the docker container for secure_dds
 
-e.g: `docker build . -t secure_dds`
+Next to build the docs from source you will need to have Connext 6.1.0
 
-**NOTE**: Example dockerfile is shown in the repo
+you must replace 
+```
+# Copy external Libraries need for WAN -- Real_time_WAN
+COPY < Find the foldering containing connext libraries rti_connext_dds-6.1.0/lib/x64Linux4gcc7.3.0/> /usr/lib/x86_64-linux-gnu/
+```
+After that you can build using the following command.
+
+`docker build . -t secure_dds`
+
 
 ## 2.0 Create identity CA and Permssions CA
 _In this step we will create 1 CA to represent both_
 
 
-Create a CA using the `bootstrapCa-identity.yaml` file:
+Create a CA using the `bootstrapCA.yaml` file:
 
-` kubectl apply -f bootstrapCA-identity.yaml`
+` kubectl apply -f bootstrapCA.yaml`
 
 ## 3.0 Create Alice certificate signed by CA
 This will create a certificate that will be signed by your recently created CA.
@@ -63,7 +70,13 @@ Finally, mount your certificates ands private keys to your pods.
 
 `kubectl apply -f secret-pod.yaml`
 
-## 7.0 Change USER_QOS_PROFILES.xml for the correct files
+## 6.0 Change USER_QOS_PROFILES.xml for the correct files
+
+Exec inside the pod using
+
+`$ kubectl exec -it secure-sub -n sandbox -- bash`
+and 
+`kubectl exec -it secure-pub -n sandbox -- bash`
 
 
 Update USER_QOS_PROFILES.xml to reflect your created files
@@ -112,7 +125,7 @@ Example
 
 ```
 
-## 8.0 Result
+## 7.0 Result
 
 You should be able to communicate between two pods using Secure-dds
 
