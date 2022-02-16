@@ -1,0 +1,10 @@
+prompt              = no
+distinguished_name  = req_distinguished_name
+
+[ req_distinguished_name ]
+countryName          = US
+stateOrProvinceName  = CA
+localityName         = Santa Clara
+organizationName     = Patient Monitoring Innovations
+emailAddress         = alice@pmi.com
+commonName           = Alice
