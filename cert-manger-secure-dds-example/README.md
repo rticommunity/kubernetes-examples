@@ -28,7 +28,6 @@ To build the docker images for example applications, you will need to have Conne
 
 ```
 $ wget https://s3.amazonaws.com/RTI/Bundles/6.1.0/Evaluation/rti_connext_dds-6.1.0-lm-x64Linux4gcc7.3.0.run
-
 ```
 
 After you install the downloaded Connext package, you can build the example application. 
@@ -82,16 +81,16 @@ Create identity/permission CAs using the `bootstrapCA.yaml` file:
 
 ` kubectl apply -f bootstrapCA.yaml`
 
-## 3. Create Alice certificate signed by identity CA
+#### 3. Create Alice certificate signed by identity CA
 This will create a certificate that will be signed by your recently created CA.
 
 `kubectl apply -f alice-cert.yaml `
 
-## 4. Create Bob certificate signed by identity CA
+#### 4. Create Bob certificate signed by identity CA
 
 `kubectl apply -f bob-cert.yaml `
 
-## 5. Sign the permissions files
+#### 5. Sign the permissions files
 
 Save <pmiPermissionCaCert.pem> and <pmiPermissionCaKey.pem> to a temporary directory
 
@@ -123,13 +122,13 @@ Now create the secret!
 
 `kubectl create secret generic bob-pmi-signed -n sandbox --from-file=./pmiSigned_pmiGovernance.p7s --from-file=./pmiSigned_pmiPermissionsBob.p7s`
 
-## 6. Create pods and attach secrets to the pods
+#### 6. Create pods and attach secrets to the pods
 
 Finally, create pods and mount your certificates ands private keys to the pods.
 
 `kubectl apply -f secret-pod.yaml`
 
-## 7 Result
+#### 7 Result
 
 You should be able to communicate between two pods using Secure-dds
 
