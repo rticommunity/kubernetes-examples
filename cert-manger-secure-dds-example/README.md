@@ -11,7 +11,7 @@ cert-manager is a Kubernetes add-on to automate the management and issuance of c
 
 We will be following the steps in https://community.rti.com/static/documentation/connext-dds/6.1.0/doc/manuals/connext_dds_secure/getting_started_guide/cpp98/hands_on_4.html#
 
-#### Required Components:
+### Required Components:
 * **Publisher(Alice)** and **Subscriber(Bob)** are example applications that need to exchange data. 
 * **Identity CA Certificate** shared by all the DomainParticipants in your secure system 1. The Identity CA Certificate is used to authenticate the remote DomainParticipants, by verifying that the Identity Certificates are legitimate.
 * **Permission CA Certificate** shared by all the DomainParticipants in your secure system. The Permissions CA Certificate is used to verify that Permissions and Governance Files are legitimate.
@@ -23,8 +23,52 @@ We will be following the steps in https://community.rti.com/static/documentation
 * **Bob Private Key** only known to the local participant. It is needed to complete the authentication process, which provides a way of verifying the identity and setting a shared secret.
 * **Bob Permissions File** igned by the Permissions CA. This document specifies what Domains and Partitions the local participant can join and what Topics it can read/write.
 
-### Required Docker Images
-- 
+### Build Docker images
+To build the docker images for example applications, you will need to have Connext Secure 6.1.0. You can download the Connext evaliation version at https://www.rti.com/free-trial/dds-files. 
+
+```
+$ wget https://s3.amazonaws.com/RTI/Bundles/6.1.0/Evaluation/rti_connext_dds-6.1.0-lm-x64Linux4gcc7.3.0.run
+
+```
+
+After you install the downloaded Connext package, you can build the example application. 
+
+```
+$ cd patient_monitoring_project
+$ make -f makefile_PatientMonitoring_x64Linux4gcc7.3.0
+```
+
+Then, you should locate the compiled example binary for Alice and Connext library files to the Docker build directory. 
+
+```
+$ cd ./alice
+$ cp ../patient_monitoring_project/objs/x64Linux4gcc7.3.0/PatientMonitoring_publisher .
+$ cp -rf $NDDSHOME/lib/x64Linux4gcc7.3.0 ./lib
+```
+
+Then, you should locate the compiled example binary for Bob and Connext library files to the Docker build directory. 
+
+```
+$ cd ./bob
+$ cp ../patient_monitoring_project/objs/x64Linux4gcc7.3.0/PatientMonitoring_subscriber .
+$ cp -rf $NDDSHOME/lib/x64Linux4gcc7.3.0 ./lib
+```
+
+Finally, you can build and push the Docker image for Alice.
+
+```
+$ cd ./alice
+$ docker build -t kyoungho/dds_secure_pub
+$ docker push kyoungho/dds_secure_pub
+```
+
+You can build and push the Docker image for Alice.
+
+```
+$ cd ./alice
+$ docker build -t kyoungho/dds_secure_pub
+$ docker push kyoungho/dds_secure_sub
+```
 
 ### Steps
 
@@ -85,115 +129,11 @@ Finally, create pods and mount your certificates ands private keys to the pods.
 
 `kubectl apply -f secret-pod.yaml`
 
-
-
-## 6.0 Change USER_QOS_PROFILES.xml for the correct files
-
-Exec inside the pod using
-
-`$ kubectl exec -it secure-sub -n sandbox -- bash`
-and 
-`kubectl exec -it secure-pub -n sandbox -- bash`
-
-
-Update USER_QOS_PROFILES.xml to reflect your created files
-
-Example
-
-```
- <qos_profile name="Alice" base_name="BuiltinQosLib::Generic.Security" is_default_qos="true">
-            <domain_participant_qos>
-                <transport_builtin>
-                    <mask>UDPv4</mask>
-                </transport_builtin>
-                <property>
-                    <value>
-                        <!-- Certificate Authorities -->
-                        <element>
-                            <name>dds.sec.auth.identity_ca</name>
-                            <value>file:/etc/secret/identity-ca/ca/ca.crt</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.access.permissions_ca</name>
-                            <value>file:/etc/secret/identity-ca/ca/ca.crt</value>
-                        </element>
-                        <!-- Participant Public Certificate and Private Key -->
-                        <element>
-                            <name>dds.sec.auth.identity_certificate</name>
-                            <value>file:/etc/secret/identity-certificate/alice-key/tls.crt</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.auth.private_key</name>
-                            <value>file:/etc/secret/private-key/alice-key/tls.key</value>
-                        </element>
-                        <!-- Signed Governance and Permissions files -->
-                        <element>
-                            <name>dds.sec.access.governance</name>
-                            <value>file:/etc/secret/pmi-signed/pmiSigned_pmiGovernance.p7s</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.access.permissions</name>
-                            <value>file:/etc/secret/pmi-signed/pmiSigned_pmiPermissionsAlice.p7s</value>
-                        </element>
-                    </value>
-                </property>
-            </domain_participant_qos>
-        </qos_profile>
-
-```
-
-## 7.0 Result
+## 7 Result
 
 You should be able to communicate between two pods using Secure-dds
 
 !! Make sure you are using the correct secret names for your mounted secrets !!
-
-## Build docker images
-To build the docker images for example applications, you will need to have Connext Secure 6.1.0. You can download the Connext evaliation version at https://www.rti.com/free-trial/dds-files. 
-
-```
-$ wget https://s3.amazonaws.com/RTI/Bundles/6.1.0/Evaluation/rti_connext_dds-6.1.0-lm-x64Linux4gcc7.3.0.run
-
-```
-
-After you install the downloaded Connext package, you can build the example application. 
-
-```
-$ cd patient_monitoring_project
-$ make -f makefile_PatientMonitoring_x64Linux4gcc7.3.0
-```
-
-Then, you should locate the compiled example binary for Alice and Connext library files to the Docker build directory. 
-
-```
-$ cd ./alice
-$ cp ../patient_monitoring_project/objs/x64Linux4gcc7.3.0/PatientMonitoring_publisher .
-$ cp -rf $NDDSHOME/lib/x64Linux4gcc7.3.0 ./lib
-```
-
-Then, you should locate the compiled example binary for Bob and Connext library files to the Docker build directory. 
-
-```
-$ cd ./bob
-$ cp ../patient_monitoring_project/objs/x64Linux4gcc7.3.0/PatientMonitoring_subscriber .
-$ cp -rf $NDDSHOME/lib/x64Linux4gcc7.3.0 ./lib
-```
-
-Finally, you can build and push the Docker image for Alice.
-
-```
-$ cd ./alice
-$ docker build -t kyoungho/dds_secure_pub
-$ docker push kyoungho/dds_secure_pub
-```
-
-You can build and push the Docker image for Alice.
-
-```
-$ cd ./alice
-$ docker build -t kyoungho/dds_secure_pub
-$ docker push kyoungho/dds_secure_sub
-```
 
 ### RESOURCES
 
