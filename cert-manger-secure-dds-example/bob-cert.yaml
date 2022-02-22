@@ -1,11 +1,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: alice-cert
+  name: bob-cert
   namespace: sandbox
 spec:
-  secretName: alice-crt-secret
-  commonName: alice-cert
+  secretName: bob-crt-secret
+  commonName: bob-cert
   issuerRef:
     name: identity-ca-issuer
     # We can reference ClusterIssuers by changing the kind here.

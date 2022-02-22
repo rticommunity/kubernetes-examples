@@ -13,12 +13,12 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: my-selfsigned-ca
+  name: identity-ca
   namespace: sandbox
 spec:
   isCA: true
-  commonName: my-selfsigned-ca
-  secretName: ca-root-secret
+  commonName: identity-ca
+  secretName: identity-ca-root-secret
   privateKey:
     algorithm: ECDSA
     size: 256
@@ -30,8 +30,34 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: my-ca-issuer
+  name: identity-ca-issuer
   namespace: sandbox
 spec:
   ca:
-    secretName: ca-root-secret
+    secretName: identity-ca-root-secret
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: permission-ca
+  namespace: sandbox
+spec:
+  isCA: true
+  commonName: permission-ca
+  secretName: permission-ca-root-secret
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: permission-ca-issuer
+  namespace: sandbox
+spec:
+  ca:
+    secretName: permission-ca-root-secret
