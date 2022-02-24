@@ -1,9 +1,9 @@
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg="sha-256"; boundary="----10FDDB013CE9EA07F4D60E87A15065B1"
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg="sha-256"; boundary="----E2BA4ED5FD410729AE962ADF33CCB45F"
 
 This is an S/MIME signed message
 
-------10FDDB013CE9EA07F4D60E87A15065B1
+------E2BA4ED5FD410729AE962ADF33CCB45F
 Content-Type: text/plain
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -14,12 +14,12 @@ Content-Type: text/plain
     <grant name="ParticipantAlice">
       <!-- 1. The rules below will apply to the DomainParticipant
        whose Identity certificate contains this subject name -->
-      <subject_name>CN = alice-identity-cert</subject_name>
+      <subject_name>CN = alice-cert</subject_name>
       <!-- 2. Validity dates for this grant -->
       <validity>
         <!-- Format is CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] in GMT -->
         <not_before>2022-01-03T16:37:27</not_before>
-        <not_after>2022-04-03T16:37:27</not_after>
+        <not_after>2023-04-03T16:37:27</not_after>
       </validity>
 
       <!-- 3. Allow this participant to publish the
@@ -41,7 +41,8 @@ Content-Type: text/plain
     </grant>
   </permissions>
 </dds>
-------10FDDB013CE9EA07F4D60E87A15065B1
+
+------E2BA4ED5FD410729AE962ADF33CCB45F
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -57,13 +58,13 @@ Nxg+aHRtmMgW15MwCgYIKoZIzj0EAwIDSAAwRQIgJTjCsXjKP9pTh3U/wAiHRmO1
 Dn9pMj/odrDptxT95OgCIQCvt0ox3JYfGCPqQJBBEbIiK+2xwPohwncDULohEFpJ
 zTGCAYEwggF9AgEBMC0wGDEWMBQGA1UEAxMNcGVybWlzc2lvbi1jYQIRAK4iSkEx
 9iJ5pQ7OzvKaLtQwDQYJYIZIAWUDBAIBBQCggeQwGAYJKoZIhvcNAQkDMQsGCSqG
-SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjIwMjE3MTk0MDQxWjAvBgkqhkiG9w0B
-CQQxIgQgEILBQnVZiw2/eIPBSBGAKi8x0eUczUOVO6R11NWu1oMweQYJKoZIhvcN
+SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjIwMjI0MjE1MDEyWjAvBgkqhkiG9w0B
+CQQxIgQgeP8KQlJ6UBwgKeXjXUKr9RLMp1daUzmmqwtgNiSshKUweQYJKoZIhvcN
 AQkPMWwwajALBglghkgBZQMEASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAK
 BggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4D
-AgcwDQYIKoZIhvcNAwICASgwCgYIKoZIzj0EAwIERzBFAiEAhmQGd3a3BmlPOug1
-PEZ2qrBCJ+E2ffKLJYDliP8luKYCIBfl+iadldprtDM+1qVclDye8AAQubB46sJz
-FR7i98Dz
+AgcwDQYIKoZIhvcNAwICASgwCgYIKoZIzj0EAwIERzBFAiBjdqeV9sbZyzhXPELK
+juyLI8LCGmhcrcGVtS834L/pkgIhAJBMzPtzQyM/xVno/qlrnKKjbWeY+BLH4TkO
+bqhH7xPW
 
-------10FDDB013CE9EA07F4D60E87A15065B1--
+------E2BA4ED5FD410729AE962ADF33CCB45F--
 

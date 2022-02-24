@@ -6,7 +6,7 @@
     <grant name="ParticipantAlice">
       <!-- 1. The rules below will apply to the DomainParticipant
        whose Identity certificate contains this subject name -->
-      <subject_name>CN = alice-identity-cert</subject_name>
+      <subject_name>CN = alice-cert</subject_name>
       <!-- 2. Validity dates for this grant -->
       <validity>
         <!-- Format is CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] in GMT -->

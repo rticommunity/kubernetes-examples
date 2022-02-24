@@ -6,4 +6,4 @@ COPY . /app
 
 WORKDIR /app
 
-CMD ./PatientMonitoring_publisher
+CMD ./PatientMonitoring_publisher --domain 1

@@ -6,4 +6,4 @@ COPY . /app
 
 WORKDIR /app
 
-CMD ./PatientMonitoring_subscriber
+CMD ./PatientMonitoring_subscriber --domain 1
