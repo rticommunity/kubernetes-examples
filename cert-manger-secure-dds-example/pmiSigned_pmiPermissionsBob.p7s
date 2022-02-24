@@ -1,0 +1,70 @@
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg="sha-256"; boundary="----2A7B4B380B36F923D724D336E2E99CA7"
+
+This is an S/MIME signed message
+
+------2A7B4B380B36F923D724D336E2E99CA7
+Content-Type: text/plain
+
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.1.0/dds_security_permissions.xsd">
+  <permissions>
+    <!-- Grants for a specific DomainParticipant will be grouped under this tag -->
+    <grant name="ParticipantBob">
+      <!-- 1. The rules below will apply to the DomainParticipant
+       whose Identity certificate contains this subject name -->
+      <subject_name>CN = bob-identity-cert</subject_name>
+      <!-- 2. Validity dates for this grant -->
+      <validity>
+        <!-- Format is CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] in GMT -->
+        <not_before>2022-01-03T16:37:27</not_before>
+        <not_after>2023-04-03T16:37:27</not_after>
+      </validity>
+
+      <!-- 3. Allow this participant to publish the
+       PatientMonitoring topic -->
+      <allow_rule>
+        <domains>
+          <id>1</id>
+        </domains>
+        <subscribe>
+          <topics>
+            <topic>Example PatientMonitoring</topic>
+          </topics>
+        </subscribe>
+      </allow_rule>
+
+      <!-- 4. This participant will not be allowed to publish or
+       subscribe to any other topic -->
+      <default>DENY</default>
+    </grant>
+  </permissions>
+</dds>
+
+------2A7B4B380B36F923D724D336E2E99CA7
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+MIIDMwYJKoZIhvcNAQcCoIIDJDCCAyACAQExDzANBglghkgBZQMEAgEFADALBgkq
+hkiG9w0BBwGgggF1MIIBcTCCARegAwIBAgIRAK4iSkEx9iJ5pQ7OzvKaLtQwCgYI
+KoZIzj0EAwIwGDEWMBQGA1UEAxMNcGVybWlzc2lvbi1jYTAeFw0yMjAyMTYyMjMx
+MzBaFw0yMjA1MTcyMjMxMzBaMBgxFjAUBgNVBAMTDXBlcm1pc3Npb24tY2EwWTAT
+BgcqhkjOPQIBBggqhkjOPQMBBwNCAAQc5dj3r61U7RXqV0jzoWck5zH1cTQkpP/F
+NqFuxagI9IgpMVE1Y20raml2NUgnx4OMgbDl6M19Cu7Uoc0YUDjWo0IwQDAOBgNV
+HQ8BAf8EBAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUgpKiQoS0Z6qt
+Nxg+aHRtmMgW15MwCgYIKoZIzj0EAwIDSAAwRQIgJTjCsXjKP9pTh3U/wAiHRmO1
+Dn9pMj/odrDptxT95OgCIQCvt0ox3JYfGCPqQJBBEbIiK+2xwPohwncDULohEFpJ
+zTGCAYIwggF+AgEBMC0wGDEWMBQGA1UEAxMNcGVybWlzc2lvbi1jYQIRAK4iSkEx
+9iJ5pQ7OzvKaLtQwDQYJYIZIAWUDBAIBBQCggeQwGAYJKoZIhvcNAQkDMQsGCSqG
+SIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjIwMjE3MTk0NTE1WjAvBgkqhkiG9w0B
+CQQxIgQgdL5m/rdPeyjaPypK1LkW/JEOL4L4Ei00/WluKxCaWJ0weQYJKoZIhvcN
+AQkPMWwwajALBglghkgBZQMEASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAK
+BggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4D
+AgcwDQYIKoZIhvcNAwICASgwCgYIKoZIzj0EAwIESDBGAiEAwG37bqcBlDxeTOQZ
+nLqnHDduyrQWSjFk9qN4/0O+0ikCIQCFmSsmtv18daueSKY40v6qwaV/CHUXRlFy
+w1NRrP5gxQ==
+
+------2A7B4B380B36F923D724D336E2E99CA7--
+
