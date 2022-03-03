@@ -28,7 +28,7 @@ spec:
         - name: ARGS
           value: "-verbosity 5"
         - name: PUBLIC_IP # value for public ip address
-          value: "18.189.101.241"
+          value: "3.128.85.163"
         - name: PUBLIC_PORT # value for public port
           value: "7400"
         - name: HOST_PORT # value for host port 

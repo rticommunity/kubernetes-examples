@@ -17,23 +17,25 @@ To resolve this, a **Deployment** for **RTI Routing Services** can be used. To e
 
 ### Steps
 
-#### Create a ConfigMap for RTI License.
+#### 1. Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-#### Create a Deployment and a Service for Cloud Discovery Service.
+#### 2. Create a LoadBalancer Service for the Routing Service. After this step, AWS will provide a DNS name (e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) for the LoadBalancer Service and you can get a public IP address associated with the DNS name. You should use the public IP address in your RT WAN configurations in Step 4 and Step 7.
+`$ kubectl create -f rs-lb.yaml`
+`$ kubectl get services rs-rwt`
+`$ nslookup a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com`
+
+#### 3. Create a Deployment and a Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-#### Create a ConfigMap for the Routing Service XML configuration file
+#### 4. Create a ConfigMap for the Routing Service XML configuration file
 `$ kubectl create configmap routingservice-rwt --from-file=config.xml`
 
-#### Create a Deployment for the Routing Service. You should update the public IP address and ports in this file. 
+#### 5. Create a Deployment for the Routing Service. You should update the public IP address and ports in this file. 
 `$ kubectl create -f rs-deployment.yaml`
 
-#### Create a LoadBalancer Service for the Routing Service
-`$ kubectl create -f rs-lb.yaml`
-
-#### Create a Deployment for a RTI DDS Ping subscriber
+#### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping-sub.yaml`
 
-#### Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
+#### 7. Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
 `$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`
