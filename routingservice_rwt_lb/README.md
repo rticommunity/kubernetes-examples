@@ -20,8 +20,11 @@ To resolve this, a **Deployment** for **RTI Routing Services** can be used. To e
 #### 1. Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-#### 2. Create a LoadBalancer Service for the Routing Service. After this step, AWS will provide a DNS name (e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) for the LoadBalancer Service and you can get a public IP address associated with the DNS name. You should use the public IP address in your RT WAN configurations in Step 4 and Step 7.
+#### 2. Create a LoadBalancer Service for the Routing Service. 
 `$ kubectl create -f rs-lb.yaml`
+
+After this step, AWS will provide a DNS name (e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) for the LoadBalancer Service and you can get a public IP address associated with the DNS name. You should use the public IP address in your RT WAN configurations in Step 4 and Step 7.
+
 `$ kubectl get services rs-rwt`
 `$ nslookup a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com`
 
