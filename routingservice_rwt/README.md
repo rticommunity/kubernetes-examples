@@ -28,23 +28,23 @@ To resolve this, **RTI Routing Service** is used to bridge internal and external
 
 ### Steps
 
-#### Create a ConfigMap for RTI License.
+#### 1. Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-#### Create a Deployment and a Service for Cloud Discovery Service.
+#### 2. Create a Deployment and a Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-#### Create a ConfigMap for the Routing Service XML configuration file
+#### 3. Create a ConfigMap for the Routing Service XML configuration file
 `$ kubectl create configmap routingservice-rwt --from-file=config.xml`
 
-#### Create a Deployment for the Routing Service. You should update the public IP address and ports in this file.
+#### 4. Create a Deployment for the Routing Service. You should update the public IP address and ports in this file.
 `$ kubectl create -f rs-statefulset.yaml`
 
-#### Create a NodePort Service for the Routing Service
+#### 5. Create a NodePort Service for the Routing Service
 `$ kubectl create -f rs-nodeport.yaml`
 
-#### Create a Deployment for a RTI DDS Ping subscriber
+#### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping-sub.yaml`
 
-#### Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
+#### 7. Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
 `$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`
