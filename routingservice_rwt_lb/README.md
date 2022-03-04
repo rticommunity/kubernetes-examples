@@ -41,5 +41,5 @@ After this step, AWS will provide a DNS name (e.g., a709579e8e4db40248531847d624
 #### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping-sub.yaml`
 
-#### 7. Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
+#### 7. Run the external publisher (outside the cluster). You should update the public IP address and port in this file.
 `$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`
