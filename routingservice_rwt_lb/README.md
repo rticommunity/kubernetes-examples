@@ -26,6 +26,7 @@ To resolve this, a **Deployment** for **RTI Routing Services** can be used. To e
 After this step, AWS will provide a DNS name (e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) for the LoadBalancer Service and you can get a public IP address associated with the DNS name. You should use the public IP address in your RT WAN configurations in Step 4 and Step 7.
 
 `$ kubectl get services rs-rwt`
+
 `$ nslookup a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com`
 
 #### 3. Create a Deployment and a Service for Cloud Discovery Service.
