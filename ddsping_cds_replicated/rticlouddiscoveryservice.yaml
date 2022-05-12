@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: rti-cds
-  serviceName: "rti-cds"
+  serviceName: "rti-cds-hs"
   replicas: 2
   template:
     metadata:
@@ -35,26 +35,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rti-cds-0
+  name: rti-cds-hs
   labels:
-    app: rti-cds-0
+    app: rti-cds
 spec:
   selector:
-    statefulset.kubernetes.io/pod-name: rti-cds-0
-  ports:
-    - port: 7400
-      protocol: UDP
-  clusterIP: None
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: rti-cds-1
-  labels:
-    app: rti-cds-1
-spec:
-  selector:
-    statefulset.kubernetes.io/pod-name: rti-cds-1
+    app: rti-cds
   ports:
     - port: 7400
       protocol: UDP

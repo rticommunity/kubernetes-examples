@@ -8,7 +8,7 @@ The default DDS discovery relies on multicast, and most virtual network solution
 
 ### Solution
 
-To make CDS highly available, a **StatefulSet** with **Headless Service** can be used. **StatefulSet** manages and scales a set of stateful pods by providing guarantees about the ordering and uniqueness of these pods. To access the StatefulSet CDS pods from other Connext application pods, **Headless Service** is used. Each **Head Service** maps to each **StatefulSet** CDS pod. Connext application pods need to add DNS names of CDS services (e.g., rti-cds-0:7400, rti-cds-1:7400) to their initial discovery peer list, so they can still use an available CDS instance even when one of the CDS instances in the list fails. 
+To make CDS highly available, a **StatefulSet** with **Headless Service** can be used. **StatefulSet** manages and scales a set of stateful pods by providing guarantees about the ordering and uniqueness of these pods. To access the StatefulSet CDS pods from other Connext application pods, **Headless Service** is used. The **Headless Service** creates a domain for all of the Pods, rti-cds-hs.default.svc.cluster.local. Connext application pods need to add DNS names of CDS services (e.g., rti-cds-0.rti-cds-hs.default.svc.cluster.local:7400) to their initial discovery peer list, so they can still use an available CDS instance even when one of the CDS instances in the list fails. 
 
 ![Discovery without Multicast](cds_replicated.png)
 
