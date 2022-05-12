@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rti-cds
+spec:
+  selector:
+    matchLabels:
+      app: rti-cds
+  serviceName: "rti-cds"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: rti-cds
+    spec:
+      containers:
+        - name: rti-clouddiscoveryservice
+          image: kyoungho/rti-clouddiscoveryservice
+          volumeMounts:
+            - name: license-volume
+              mountPath: /app/license
+          ports:
+            - containerPort: 7400
+              protocol: UDP
+          env:
+            - name: ARGS
+              value: "-verbosity 6"
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: license-volume
+          configMap:
+            name: rti-license
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rti-cds-0
+  labels:
+    app: rti-cds-0
+spec:
+  selector:
+    statefulset.kubernetes.io/pod-name: rti-cds-0
+  ports:
+    - port: 7400
+      protocol: UDP
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rti-cds-1
+  labels:
+    app: rti-cds-1
+spec:
+  selector:
+    statefulset.kubernetes.io/pod-name: rti-cds-1
+  ports:
+    - port: 7400
+      protocol: UDP
+  clusterIP: None
