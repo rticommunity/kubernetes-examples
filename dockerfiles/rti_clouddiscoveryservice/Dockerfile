@@ -19,4 +19,4 @@ COPY . /app
 
 WORKDIR /app
 
-CMD ./rticlouddiscoveryservice -cfgFile ./config.xml -cfgName $CFG_NAME
+CMD ./rticlouddiscoveryserviceappd -cfgFile ./config.xml -cfgName $CFG_NAME
