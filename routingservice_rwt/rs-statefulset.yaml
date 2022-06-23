@@ -16,6 +16,7 @@ spec:
       containers:
         - name: rti-routingservice
           image: kyoungho/rti-routingservice:6.1.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 7400
               protocol: UDP

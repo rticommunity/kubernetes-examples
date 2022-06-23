@@ -8,14 +8,14 @@ data:
     SET_INDEX=${HOSTNAME##*-}
     echo "Starting initializing for pod $SET_INDEX"
     if [ "$SET_INDEX" = "0" ]; then
-      export PUBLIC_IP=3.15.220.185
+      export PUBLIC_IP=3.16.11.208
       export PUBLIC_PORT=30007
     elif [ "$SET_INDEX" = "1" ]; then
-      export PUBLIC_IP=3.15.220.185
+      export PUBLIC_IP=3.16.11.208
       export PUBLIC_PORT=30008
     else
       echo "Invalid statefulset index"
       exit 1
     fi
     echo $PUBLIC_ADDR
-    /app/rtiroutingserviceapp -cfgFile /app/config.xml -cfgName $CFG_NAME $ARGS
+    /app/rtiroutingserviceapp -cfgFile /app/config.xml -cfgName RS-RWT -verbosity 5

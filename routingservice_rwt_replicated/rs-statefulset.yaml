@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: rti-routingservice
-        image: kyoungho/rti-routingservice:6.1.0
+        image: kyoungho/rti-routingservice:6.1.1
+        imagePullPolicy: Always
         ports:
         - containerPort: 7400
           protocol: UDP
@@ -25,11 +26,10 @@ spec:
           subPath: config.xml
         - name: scripts-vol
           mountPath: /mnt/scripts
+        - name: license-volume
+          mountPath: /app/license
         env:
-        - name: CFG_NAME
-          value: "RS-RWT"
-        - name: ARGS
-          value: "-verbosity 5"
+        # Use init_configmap.yaml for adding additional arguments
         - name: HOST_PORT # value for host port 
           value: "7400"
         - name: WAN_DOMAIN # value for WAN domain ID
@@ -47,3 +47,6 @@ spec:
           configMap:
             name: rs-rwt-init-config
             defaultMode: 0555
+        - name: license-volume
+          configMap:
+            name: rti-license
