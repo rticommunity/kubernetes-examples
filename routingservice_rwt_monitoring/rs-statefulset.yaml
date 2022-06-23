@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
         - name: rti-routingservice
-          image: kyoungho/rti-routingservice:6.1.0
+          image: kyoungho/rti-routingservice:6.1.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 7400
               protocol: UDP
@@ -23,13 +24,13 @@ spec:
             - name: config-volume
               mountPath: /app/config.xml
               subPath: config.xml
+            - name: license-volume
+              mountPath: /app/license
           env:
-            - name: CFG_NAME
-              value: "RS-RWT"
             - name: ARGS
-              value: "-verbosity 5"
+              value: "-cfgFile ./config.xml -cfgName RS-RWT -verbosity 5"
             - name: PUBLIC_IP # value for public ip address
-              value: "3.15.220.185"
+              value: "3.16.11.208"
             - name: PUBLIC_PORT # value for public port
               value: "30007"
             - name: HOST_PORT # value for host port
@@ -44,3 +45,6 @@ spec:
         - name: config-volume
           configMap:
             name: routingservice-rwt
+        - name: license-volume
+          configMap:
+            name: rti-license
