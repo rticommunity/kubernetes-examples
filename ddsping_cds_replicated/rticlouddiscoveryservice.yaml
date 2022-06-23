@@ -24,7 +24,7 @@ spec:
               protocol: UDP
           env:
             - name: ARGS
-              value: "-verbosity 6"
+              value: "-cfgFile ./config.xml -cfgName default"
       imagePullSecrets:
         - name: regcred
       volumes:
