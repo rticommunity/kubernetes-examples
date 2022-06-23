@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: rti-clouddiscoveryservice
-          image: kyoungho/rti-clouddiscoveryservice
+          image: kyoungho/rti-clouddiscoveryservice:6.1.1
+          imagePullPolicy: Always
           volumeMounts:
             - name: license-volume
               mountPath: /app/license
@@ -23,13 +24,13 @@ spec:
               protocol: UDP
           env:
             - name: ARGS
-              value: "-verbosity 6"
+              value: "-cfgFile ./config.xml -cfgName default"
+      imagePullSecrets:
+        - name: regcred
       volumes:
         - name: license-volume
           configMap:
             name: rti-license
-      imagePullSecrets:
-        - name: regcred
 
 ---
 apiVersion: v1

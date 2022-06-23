@@ -13,17 +13,20 @@ spec:
         run: rti-clouddiscoveryservice
     spec:
       containers:
-      - name: rti-clouddiscoveryservice
-        image: kyoungho/rti-clouddiscoveryservice
-        volumeMounts:
-          - name: license-volume
-            mountPath: /app/license
-        ports:
-        - containerPort: 7400
-          protocol: UDP
-        env:
-        - name: ARGS
-          value: "-verbosity 6"
+        - name: rti-clouddiscoveryservice
+          image: kyoungho/rti-clouddiscoveryservice:6.1.1
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: license-volume
+              mountPath: /app/license
+          ports:
+            - containerPort: 7400
+              protocol: UDP
+          env:
+            - name: ARGS
+              value: "-cfgFile ./config.xml -cfgName default"
+      imagePullSecrets:
+        - name: regcred
       volumes:
         - name: license-volume
           configMap:
@@ -38,7 +41,7 @@ metadata:
     run: rti-clouddiscoveryservice
 spec:
   ports:
-  - port: 7400
-    protocol: UDP
+    - port: 7400
+      protocol: UDP
   selector:
     run: rti-clouddiscoveryservice
