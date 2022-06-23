@@ -12,6 +12,7 @@
 FROM ubuntu:20.04
 
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/lib
+ENV RTI_LICENSE_FILE=/app/license/rti_license.dat
 ENV ARGS="-cfgFile ./config.xml -cfgName default"
 
 COPY . /app
