@@ -46,7 +46,7 @@ To resolve this, a **StatefulSet** for **RTI Routing Services** can be used. To 
     <domain_participant_qos>
         <discovery>
             <initial_peers>
-                <element>udpv4_wan://3.15.220.185:30007</element>
+                <element>udpv4_wan://3.16.11.208:30007</element>
             </initial_peers>
         </discovery>
         <transport_builtin>
