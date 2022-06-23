@@ -7,11 +7,10 @@
                 </transport_builtin>
                 <discovery>
                     <initial_peers>
-                        <element>a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com:7400</element>
+                        <element>3.19.41.140:7400</element>
                     </initial_peers>
                 </discovery>
             </participant_qos>
         </qos_profile>
     </qos_library>
 </dds>
-
