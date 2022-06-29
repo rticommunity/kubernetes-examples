@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cds-rwt
+spec:
+  selector:
+    matchLabels:
+      app: cds-rwt
+  # serviceName: "cds-rwt"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cds-rwt
+    spec:
+      containers:
+        - name: cds-rwt
+          image: kyoungho/rti-clouddiscoveryservice:6.1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7400
+              protocol: UDP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/cds-config.xml
+              subPath: cds-config.xml
+            - name: license-volume
+              mountPath: /app/license
+          env:
+            - name: ARGS
+              value: "-cfgFile cds-config.xml -cfgName CDS-RWT -verbosity ALL"
+            - name: CDS_PUBLIC_IP # value for public ip address
+              value: "a7xx-yy.zz.amazonaws.com"
+            - name: CDS_PUBLIC_PORT # value for public port
+              value: "7400"
+            - name: CDS_INTERNAL_PORT # value for internal port
+              value: "7400"
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: config-volume
+          configMap:
+            name: cds-rwt-configmap
+        - name: license-volume
+          configMap:
+            name: rti-license
