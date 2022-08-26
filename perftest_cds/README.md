@@ -3,9 +3,6 @@
 #### Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-#### Create a ConfigMap for RTI License
-`$ kubectl create configmap rti-license --from-file rti_license.dat`
-
 #### Create a Deployment and a Service for Cloud Discovery Service
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
