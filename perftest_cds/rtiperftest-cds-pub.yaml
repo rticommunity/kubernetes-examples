@@ -19,7 +19,7 @@ spec:
 
       containers:
       - name: "rtiperftest-pub"
-        image: "kyoungho/rti-perftest:v3.0.1"
+        image: "kyoungho/rti-perftest:v3.3"
         env:
           - name: "perftest_args"
             value: "-pub"
