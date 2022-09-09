@@ -17,7 +17,7 @@ spec:
         app: "rtiddsping-sub"
     spec:
       containers:
-        - name: "rtiddsping-pub"
+        - name: "rtiddsping-sub"
           image: "kyoungho/rtiddsping-sub:latest"
           env:
             - name: ARGS
