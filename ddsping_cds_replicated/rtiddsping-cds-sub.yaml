@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: "rtiddsping-pub"
-          image: "kyoungho/rtiddsping-sub:6.0.0"
+          image: "kyoungho/rtiddsping-sub:latest"
           env:
             - name: ARGS
               value: "-domainId 10 -numSamples 100 -Verbosity 2"
