@@ -6,7 +6,7 @@ You want to load balance Routing Services for scalability and high availability.
 
 ### Solution
 
-To resolve this, a **Deployment** for **RTI Routing Services** can be used. To expose the traffic of the Deployment, **LoadBalancer Service** is be used with an external Load Balancer provided by AWS. **LoadBalancer Service** with the external load balancer balances the traffic from the outside of the cluster to multiple Routing Service pods. 
+To resolve this, a **Deployment** for **RTI Routing Services** can be used. To expose the traffic of the Deployment, **LoadBalancer Service** is used with an external Load Balancer provided by AWS. **LoadBalancer Service** with the external load balancer balances the traffic from the outside of the cluster to multiple Routing Service pods. 
 
 ![Load Balancing Routing Services with Real-time WAN Transport](routingservice_rwt_lb.png)
 
