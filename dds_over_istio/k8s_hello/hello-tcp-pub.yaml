@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-tcp-pub
+  labels:
+    app: hello-tcp-pub
+    service: hello-tcp-pub
+spec:
+  ports:
+  - port: 7100
+    protocol: TCP
+  selector:
+    app: hello-tcp-pub
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-tcp-pub
+  labels:
+    app: hello-tcp-pub
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-tcp-pub
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: hello-tcp-pub
+        version: v1
+    spec:
+      containers:
+      - name: hello-pub-tcp
+        image: rticom/hello_tcp_wan
+        env:
+        - name: MODE
+          value: "pub"
+        - name: PUBLISHER_NAME
+          value: "hello-tcp-pub.hello-internal.svc.cluster.local"
+        - name: SUBSCRIBER_NAME
+          value: "hello-tcp-sub.hello-internal.svc.cluster.local"
+        - name: PUBLISHER_PORT
+          value: "7100"
+        - name: SUBSCRIBER_PORT
+          value: "7101"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7100
+      imagePullSecrets:
+      - name: regcred
+
