@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-tcp-pub-server
+  labels:
+    app: hello-tcp-pub-server
+    service: hello-tcp-pub-server
+spec:
+  ports:
+  - port: 7200
+    protocol: TCP
+  selector:
+    app: hello-tcp-pub-server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-tcp-pub-server
+  labels:
+    app: hello-tcp-pub-server
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-tcp-pub-server
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: hello-tcp-pub-server
+        version: v1
+    spec:
+      containers:
+      - name: hello-pub-tcp-server
+        image: rticom/hello-pub-server:v2
+        env:
+        - name: PUBLIC_PUBLISHER_NAME
+          value: "a3b4e8877f4604924893ef2afa99af86-49787318.us-east-2.elb.amazonaws.com"
+        - name: PUBLIC_PUBLISHER_PORT
+          value: "7200"
+        - name: PUBLISHER_PORT
+          value: "7200"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7200
+      imagePullSecrets:
+      - name: regcred
+

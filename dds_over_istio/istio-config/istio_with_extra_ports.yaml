@@ -1,0 +1,46 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio-with-dds-ports
+spec:
+  profile: default
+  components:
+    ingressGateways:
+      - namespace: istio-system
+        name: istio-ingressgateway
+        enabled: true
+        k8s:
+          service:
+            ports:
+              - port: 15021
+                targetPort: 15021
+                name: status-port
+                protocol: TCP
+              - port: 80
+                targetPort: 8080
+                name: http2
+                protocol: TCP
+              - port: 443
+                targetPort: 8443
+                name: https
+                protocol: TCP
+              - port: 15012
+                targetPort: 15012
+                name: tcp-istiod
+                protocol: TCP
+              - port: 15443
+                targetPort: 15443
+                name: tls
+                protocol: TCP
+              - port: 7100
+                targetPort: 7100
+                name: dds-tcp-pub
+                protocol: TCP
+              - port: 7101
+                targetPort: 7101
+                name: dds-tcp-sub
+                protocol: TCP
+	      - port: 7200
+                targetPort: 7200
+                name: dds-tcp-async-pub
+                protocol: TCP
