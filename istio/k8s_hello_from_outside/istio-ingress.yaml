@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: hello-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 7200
+      name: dds-tcp-async-pub
+      protocol: TCP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hello-service
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - hello-gateway
+  tcp:
+  - match:
+    - port: 7200
+    route:
+    - destination:
+        host: hello-tcp-pub-server.hello-from-outside.svc.cluster.local
+        port:
+          number: 7200
