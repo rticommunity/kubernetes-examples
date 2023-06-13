@@ -1,0 +1,3 @@
+struct PatientMonitoring {
+    string<128> patient_condition;
+};
