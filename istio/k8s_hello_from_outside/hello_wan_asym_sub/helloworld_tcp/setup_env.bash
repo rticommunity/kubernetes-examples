@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export NDDSHOME=/Applications/rti_connext_dds-7.0.0
+export NDDSHOME=/Applications/rti_connext_dds-6.1.1
 source $NDDSHOME/resource/scripts/rtisetenv_arm64Darwin20clang12.0.bash
 export PATH=$PATH:/Users/pbanerjee/Library/Python/3.10/bin
 

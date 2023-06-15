@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export NDDSHOME=/opt/rti_connext_dds-7.1.0/
-export LD_LIBRARY_PATH=/opt/rti_connext_dds-7.1.0/lib/x64Linux4gcc7.3.0/
+export NDDSHOME=/opt/rti_connext_dds-6.1.2/
+export LD_LIBRARY_PATH=/opt/rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/
 export RTI_EXAMPLE_ARCH=x64Linux4gcc7.3.0/
 
 #setup discovery peers
