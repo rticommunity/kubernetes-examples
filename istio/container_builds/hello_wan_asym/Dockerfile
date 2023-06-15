@@ -1,4 +1,4 @@
-FROM rticom/ubuntu_connext7_java
+FROM rticom/ubuntu_connext6_java
 
 # Set the working directory
 WORKDIR /app
@@ -7,8 +7,8 @@ WORKDIR /app
 COPY helloworld_tcp/ .
 
 # set the environment variables
-ENV NDDSHOME /opt/rti_connext_dds-7.1.0
-ENV LD_LIBRARY_PATH /opt/rti_connext_dds-7.1.0/lib/x64Linux4gcc7.3.0
+ENV NDDSHOME /opt/rti_connext_dds-6.1.2
+ENV LD_LIBRARY_PATH /opt/rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0
 ENV RTI_EXAMPLE_ARCH x64Linux4gcc7.3.0
 
 # install dig to perform IP address lookup (for now)
