@@ -25,6 +25,10 @@ RUN apt-get update && \
 #RUN rm rti_connext_dds-6.1.2-pro-target-x64Linux4gcc7.3.0.rtipkg rti_connext_dds-6.1.2-pro-host-x64Linux.run
 
 # To get a smaller size container, we will just copy the library and license file into the image
-COPY rti_connext_dds-6.1.2/lib /opt/rti_connext_dds-6.1.2/lib
+COPY rti_connext_dds-6.1.2/lib/java/nddsjava.jar /opt/rti_connext_dds-6.1.2/lib/java/nddsjava.jar
+COPY rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddscore.so /opt/rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddscore.so
+COPY rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddsc.so /opt/rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddsc.so
+COPY rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddsjava.so /opt/rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddsjava.so
+COPY rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddstransporttcp.so /opt/rti_connext_dds-6.1.2/lib/x64Linux4gcc7.3.0/libnddstrans
+porttcp.so
 COPY rti_connext_dds-6.1.2/RTI_License_Agreement.pdf /opt/rti_connext_dds-6.1.2/RTI_License_Agreement.pdf
-
