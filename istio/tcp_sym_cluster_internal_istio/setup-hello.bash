@@ -17,7 +17,7 @@ spec:
 EOF
 
 # create a secret to pull the license controlled private images from dockerhub
-kubectl create secret docker-registry regcred --namespace=hello-internal --docker-server=docker.io --docker-username=rtiresearch --docker-password=rti.research.23.docker --docker-email=research_docker@rti.com
+kubectl create secret docker-registry regcred --namespace=hello-internal --docker-server=docker.io --docker-username=rtiresearch --docker-password=<password> --docker-email=research_docker@rti.com
 
 # create the config
 kubectl apply -f tcp_config_sym.yaml --namespace=hello-internal
