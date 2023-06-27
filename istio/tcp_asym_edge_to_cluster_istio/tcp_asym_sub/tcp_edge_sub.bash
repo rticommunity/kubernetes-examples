@@ -19,3 +19,5 @@ export PUBLISHER_IP=$INGRESS_GATEWAY_IP
 export PUBLISHER_PORT=7200
 
 export NDDS_DISCOVERY_PEERS=tcpv4_wan://$PUBLISHER_IP:$PUBLISHER_PORT
+
+$NDDSHOME/bin/rtiddsping -subscriber -domainId 10 -qosFile ./tcp_config_asym.xml -qosProfile qos_lib::sub_profile -Verbosity 2

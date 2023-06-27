@@ -7,7 +7,7 @@ metadata:
     service: hello-tcp-pub
 spec:
   ports:
-  - port: 7100
+  - port: 7200
     protocol: TCP
   selector:
     app: hello-tcp-pub
@@ -33,21 +33,27 @@ spec:
     spec:
       containers:
       - name: hello-pub-tcp
-        image: rticom/hello_tcp_wan
+        image: rticom/rtiddsping-pub:6.1.1
         env:
-        - name: MODE
-          value: "pub"
-        - name: PUBLISHER_NAME
-          value: "hello-tcp-pub.hello-internal.svc.cluster.local"
-        - name: SUBSCRIBER_NAME
-          value: "hello-tcp-sub.hello-internal.svc.cluster.local"
+        - name: ARGS
+          value: "-domainId 10 -qosFile tcp_config_asym.xml -qosProfile qos_lib::pub_profile -Verbosity 2"
+        - name: PUBLIC_PUBLISHER_IP
+          value: "3.18.237.80"
+        - name: PUBLIC_PUBLISHER_PORT
+          value: "7200"
         - name: PUBLISHER_PORT
-          value: "7100"
-        - name: SUBSCRIBER_PORT
-          value: "7101"
+          value: "7200"
         imagePullPolicy: Always
         ports:
-        - containerPort: 7100
+        - containerPort: 7200
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/tcp_config_asym.xml
+            subPath: tcp_config_asym.xml
       imagePullSecrets:
       - name: regcred
+      volumes:
+        - name: config-volume
+          configMap:
+            name: tcp-config-asym
 

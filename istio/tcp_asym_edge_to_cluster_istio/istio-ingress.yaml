@@ -27,6 +27,6 @@ spec:
     - port: 7200
     route:
     - destination:
-        host: hello-tcp-pub-server.hello-from-outside.svc.cluster.local
+        host: hello-tcp-pub.hello-from-outside.svc.cluster.local
         port:
           number: 7200

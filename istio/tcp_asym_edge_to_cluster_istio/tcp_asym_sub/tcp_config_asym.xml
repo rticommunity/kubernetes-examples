@@ -21,7 +21,7 @@ or inability to use the software.
 
         A QoS library is a named set of QoS profiles.
     -->
-    <qos_library name="HelloWorld_Library">
+    <qos_library name="qos_lib">
 
         <!-- QoS profile used to configure reliable communication between the DataWriter 
              and DataReader created in the example code.
@@ -30,7 +30,7 @@ or inability to use the software.
              with the publisher being the server.
         -->
 
-	<qos_profile name="HelloWorldSub_Profile" base_name="BuiltinQosLib::Generic.StrictReliable">
+	<qos_profile name="sub_profile" base_name="BuiltinQosLib::Generic.StrictReliable">
             <!-- QoS used to configure the data writer created in the example code -->                
             <datawriter_qos>
                 <publication_name>
