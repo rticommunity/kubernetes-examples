@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ddsping-tcp-sub
+  labels:
+    app: ddsping-tcp-sub
+    service: ddsping-tcp-sub
+spec:
+  clusterIP: 10.100.80.10
+  ports:
+  - port: 7101
+    protocol: TCP
+  selector:
+    app: ddsping-tcp-sub
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddsping-tcp-sub
+  labels:
+    app: ddsping-tcp-sub
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddsping-tcp-sub
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ddsping-tcp-sub
+        version: v1
+    spec:
+      containers:
+      - name: ddsping-sub-tcp
+        image: rticom/rtiddsping-sub:6.1.1
+        env:
+        - name: ARGS
+          value: "-domainId 10 -qosFile tcp_config_sym.xml -qosProfile qos_lib::sub_profile -Verbosity 2"
+        - name: PUBLIC_PUBLISHER_IP
+          value: "10.100.80.1"
+        - name: PUBLIC_PUBLISHER_PORT
+          value: "7100"
+        - name: PUBLISHER_PORT
+          value: "7100"
+        - name: PUBLIC_SUBSCRIBER_IP
+          value: "10.100.80.10"
+        - name: PUBLIC_SUBSCRIBER_PORT
+          value: "7101"
+        - name: SUBSCRIBER_PORT
+          value: "7101"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7101
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/tcp_config_sym.xml
+            subPath: tcp_config_sym.xml
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+        - name: config-volume
+          configMap:
+            name: tcp-config-sym
+
