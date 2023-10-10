@@ -17,6 +17,12 @@ To perform performance experiments of RTI Connext DDS applicaitons within a Kube
 #### Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
+#### Assign a label for a publisher node
+kubectl label nodes <your-pub-node-name> perftest_type=pub
+
+#### Assign a label for a subscriber node
+kubectl label nodes <your-sub-node-name> perftest_type=sub
+
 #### Create a Deployment and a Service for Cloud Discovery Service
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 

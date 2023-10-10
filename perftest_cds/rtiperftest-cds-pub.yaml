@@ -16,12 +16,15 @@ spec:
       labels:
         app: "rtiperftest-pub"
     spec:
-
       containers:
       - name: "rtiperftest-pub"
-        image: "kyoungho/rti-perftest:v3.3"
+        image: "rticom/perftest:v4.1"
         env:
           - name: "perftest_args"
-            value: "-pub"
+            value: "-pub -noPrint -latencyCount 1 -dataLen 100 -latencyTest -executionTime 100"
           - name: NDDS_DISCOVERY_PEERS
             value: rtps@rti-clouddiscoveryservice:7400
+      imagePullSecrets:
+        - name: regcred
+      nodeSelector:
+        perftest_type: pub

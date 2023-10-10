@@ -18,9 +18,13 @@ spec:
     spec:
       containers:
       - name: "rtiperftest-sub"
-        image: "kyoungho/rti-perftest:v3.3"
+        image: "rticom/perftest:v4.1"
         env:
         - name: "perftest_args"
-          value: "-sub"
+          value: "-sub -noPrint"
         - name: NDDS_DISCOVERY_PEERS
           value: rtps@rti-clouddiscoveryservice:7400
+      imagePullSecrets:
+        - name: regcred
+      nodeSelector:
+        perftest_type: sub
