@@ -21,12 +21,12 @@ Follow these steps to set up and run performance experiments using RTI PerfTest 
 This command creates a ConfigMap to store your RTI license information, which is required for running RTI Connext DDS applications and services.
 
 #### Assign a label for a publisher node
-kubectl label nodes <your-pub-node-name> perftest_type=pub
+`$ kubectl label nodes <your-pub-node-name> perftest_type=pub`
 
 Assign the "perftest_type" label to a node designated as the publisher. This label helps in scheduling publisher pods to the appropriate node.
 
 #### Assign a label for a subscriber node
-kubectl label nodes <your-sub-node-name> perftest_type=sub
+`$ kubectl label nodes <your-sub-node-name> perftest_type=sub`
 
 Similarly, assign the "perftest_type" label to a node designated as the subscriber. This label assists in scheduling subscriber pods to the appropriate node.
 
