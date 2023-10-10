@@ -1,4 +1,18 @@
-# k8s Manifests for RTI PerfTest with Cloud Discovery Service
+##  RTI PerfTest with RTI Cloud Discovery Service
+
+### Problem
+
+You want to experiment performance of RTI Connext DDS applications within a Kubernetes cluster. 
+
+### Solution
+
+To perform performance experiments of RTI Connext DDS applicaitons within a Kubernetes cluster, you can deploy RTI PerfTest applications pods. Like other DDS applications, RTI PerfTest requires RTI Cloud Discovery Service for discovery if a CNI does not support multicast. Therefore, we deploy a pod for RTI Cloud Discovery Service and create a ClusterIP service for the pod. After running RTI PerfTest applicaiton pods, you can get the results of performance tests through output logs of the application pods. 
+
+### Required Docker Images
+- [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
+- [RTI PerfTest](../dockerfiles/rti_perftest)
+
+### Steps
 
 #### Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
@@ -11,3 +25,4 @@
 
 #### Create a Deployment for PerfTest subscriber
 `$ kubectl create -f rtiperftest-cds-sub.yaml`
+
