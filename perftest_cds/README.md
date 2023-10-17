@@ -8,6 +8,8 @@ You want to conduct performance experiments on RTI Connext DDS applications with
 
 To conduct performance experiments with RTI Connext DDS applications in a Kubernetes cluster, you can deploy RTI PerfTest application pods. Similar to other DDS applications, RTI PerfTest relies on RTI Cloud Discovery Service for discovery when your Container Network Interface (CNI) does not support multicast. Therefore, we deploy a pod for RTI Cloud Discovery Service and create a ClusterIP service for the pod. After deploying RTI PerfTest application pods, you can obtain the results of performance tests by examining the output logs of these application pods.
 
+![RTI PerfTest with RTI Cloud Discovery Service](perftest_cds.png)
+
 ### Required Docker Images
 - [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
 - [RTI PerfTest](../dockerfiles/rti_perftest)
