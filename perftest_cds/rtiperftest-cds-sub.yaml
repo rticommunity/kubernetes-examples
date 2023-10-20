@@ -22,6 +22,7 @@ spec:
         env:
         - name: "perftest_args"
           value: "-sub -noPrint"
+          #value: "-sub -noPrint -bestEffort"
         - name: NDDS_DISCOVERY_PEERS
           value: rtps@rti-clouddiscoveryservice:7400
       imagePullSecrets:
