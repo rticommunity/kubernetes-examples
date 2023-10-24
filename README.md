@@ -1,6 +1,8 @@
 # Kubernetes Example Configurations for RTI Connext DDS
 This directory provides example configurations for various use cases involving RTI Connext applications and services running on Kubernetes.
 
+NOTE: Please note that the container images in the example configurations are not publicly available. We encourage you to create your own container images and utilize your container image repository for pushing and pulling these images.
+
 ### Use Cases
 
 |Name | Description | Kubernetes Features Used |
