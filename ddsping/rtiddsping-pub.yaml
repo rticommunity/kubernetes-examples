@@ -1,24 +1,23 @@
 ---
-apiVersion: "apps/v1"
-kind: "Deployment"
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: "rtiddsping-pub"
-  namespace: "default"
+  name: rtiddsping-pub
   labels:
-    app: "rtiddsping-pub"
+    app: rtiddsping-pub
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "rtiddsping-pub"
+      app: rtiddsping-pub
   template:
     metadata:
       labels:
-        app: "rtiddsping-pub"
+        app: rtiddsping-pub
     spec:
       containers:
-        - name: "rtiddsping-pub"
-          image: "rticom/ddsping-pub:6.1.1"
+        - name: rtiddsping-pub
+          image: rticom/ddsping-pub:6.1.1
           env:
             - name: ARGS
               value: "-domainId 10 -Verbosity 2"
