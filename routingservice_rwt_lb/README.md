@@ -1,4 +1,4 @@
-## Load Balancing Routing Services with Real-time WAN Transport
+## Communicaitons Between External Applications And Pods Within a Kubernetes Cluster Using a Network Load-Balanced Gateway
 
 ### Problem
 
@@ -6,7 +6,7 @@ You want to load balance Routing Services for scalability and high availability.
 
 ### Solution
 
-To resolve this, a **Deployment** for **RTI Routing Services** can be used. To expose the traffic of the Deployment, **LoadBalancer Service** is used with an external Load Balancer provided by AWS. **LoadBalancer Service** with the external load balancer balances the traffic from the outside of the cluster to multiple Routing Service pods. 
+To resolve this, a **Deployment** for **RTI Routing Services** can be used. To expose the traffic of the Deployment, **LoadBalancer Service** is used with an external Network Load Balancer (NLB) provided by AWS. **LoadBalancer Service** with the external load balancer balances the traffic from the outside of the cluster to multiple Routing Service pods. 
 
 ![Load Balancing Routing Services with Real-time WAN Transport](routingservice_rwt_lb.png)
 
