@@ -1,10 +1,8 @@
-## Pod-to-pod Communications Inside a Kubernetes Cluster
-
+## Communications Between Pods Inside a Kubernetes Cluster via Multicast Discovery
 
 ### Problem
 
 You need to establish communications between Connext DDS applications running in different pods within a k8s cluster. 
-
 
 ### Solution
 
