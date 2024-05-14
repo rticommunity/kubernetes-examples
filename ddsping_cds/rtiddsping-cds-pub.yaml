@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rtiddsping-pub
-          image: rticom/ddsping-pub:6.1.1
+          image: rticom/ddsping-pub:latest
           env:
             - name: ARGS
               value: "-domainId 10 -Verbosity 2"
