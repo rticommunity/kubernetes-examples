@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: rti-cds
-  serviceName: "rti-cds-hs"
+  serviceName: rti-cds-hs
   replicas: 2
   template:
     metadata:

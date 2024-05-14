@@ -1,28 +1,28 @@
 ---
-apiVersion: "apps/v1"
-kind: "Deployment"
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: "rtiddsping-sub"
-  namespace: "default"
+  name: rtiddsping-sub
+  namespace: default
   labels:
-    app: "rtiddsping-sub"
+    app: rtiddsping-sub
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "rtiddsping-sub"
+      app: rtiddsping-sub
   template:
     metadata:
       labels:
-        app: "rtiddsping-sub"
+        app: rtiddsping-sub
     spec:
       containers:
-        - name: "rtiddsping-pub"
-          image: "kyoungho/rtiddsping-sub:6.1.1"
+        - name: rtiddsping-pub
+          image: kyoungho/rtiddsping-sub:6.1.1
           env:
             - name: ARGS
               value: "-domainId 10 -numSamples 100 -Verbosity 2"
             - name: NDDS_DISCOVERY_PEERS
-              value: rtps@udpv4://rti-cds-0.rti-cds-hs.default.svc.cluster.local:7400,rtps@udpv4://rti-cds-1.rti-cds-hs.default.svc.cluster.local:7400
+              value: "rtps@udpv4://rti-cds-0.rti-cds-hs.default.svc.cluster.local:7400,rtps@udpv4://rti-cds-1.rti-cds-hs.default.svc.cluster.local:7400"
       imagePullSecrets:
         - name: regcred
