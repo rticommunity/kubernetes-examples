@@ -66,11 +66,19 @@ To make CDS highly available, a **StatefulSet** with **Headless Service** can be
 #### Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
+This command creates a ConfigMap to store the RTI License, which is necessary for running RTI CDS in the evaluation package.
+
 #### Create a StatefulSet and Headless Services for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice-ha.yaml`
+
+Use this command to create a StatefulSet and a Headless Service for the RTI CDS. This will create redundant RTI CDSes for high availability and each instance will have a service endpoint (e.g., rti-cds-0). 
 
 #### Create a Deployment for DDS ping publisher.
 `$ kubectl create -f rtiddsping-cds-pub-ha.yaml`
 
+This command deploys the RTI DDS Ping Publisher, which can now use redundant CDSes for discovery within your Kubernetes cluster.
+
 #### Create a Deployment for DDS ping subscriber.
 `$ kubectl create -f rtiddsping-cds-sub-ha.yaml`
+
+Use this command to create a Deployment for the RTI DDS Ping Subscriber. It can also leverage redundant CDSes for discovery, allowing communication with the publisher.
