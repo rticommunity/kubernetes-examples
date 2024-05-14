@@ -3,28 +3,23 @@
 
 ### Problem
 
-You want to expose DDS applications outside a k8s cluster.
-
-k8s creates a virtual network and each pod is given a virtual IP address. Because of that, applications in a k8s cluster cannot be directly communicated from applications outside of the cluster. This can be a matter if there are applications outside of a k8s cluster that need to exchange messages with applications running in the cluster. 
-
+When integrating DDS applications with a Kubernetes (k8s) cluster, the internal virtual network structure poses challenges. Each pod in a k8s cluster is assigned a virtual IP address, which is not directly accessible from outside the cluster. This isolation complicates direct communications with external applications that need to exchange data with applications running inside the cluster.
 
 ### Solution
 
-To resolve this, **RTI Routing Service** is used to bridge internal and external DDS applications along with **Real-time WAN Transport**. A **NodePort Service** exposes a service on a static port on the node IP address. We used a NodePort Service to expose the internal RTI Routing Service (in the cluster) on each Node’s IP that can be reached by external participants. 
-
+To establish communication between internal and external DDS applications, we employ the **RTI Routing Service (RTI RS)** combined with **Real-time WAN Transport** as a gateway. A NodePort service is configured to expose the RTI Routing Service on a static port at each node's IP address, enabling external applications to interact with applicaitons within the cluster.
 
 #### Required Components:
 
-* **DDS Publisher** and **DDS Subscriber** are example applications that need to exchange data. 
-* **Routing Service**: A bridge service residing in the k8s cluster that forwards data from the **external DDS Publisher** to the **internal DDS Subscriber**. 
-* **NodePort Service**: We create a **NodePort Service** that exposes the **Routing Service** on each Node’s IP at a static port (e.g. Port 30007 in the figure). Then, the **external participant (DDS Publisher)** can contact the **Routing Service** by requesting NodeIP:NodePort (e.g. NODE2_IP:30007 in the figure). 
+* **DDS Publisher and Subscriber**: These are example applications that demonstrate the data exchange.
+* **Routing Service**: Acts as a gateway within the k8s cluster, forwarding data from the external DDS Publisher to the internal DDS Subscriber.
+* **NodePort Service**: Created to expose the Routing Service on each node’s IP at a specified static port (e.g., Port 30007 as shown in the example diagram). External participants can access the Routing Service by using the address format NodeIP:NodePort (e.g., NODE2_IP:30007).
 
 ![Exposing DDS Applications with Real-time WAN Transport](routingservice_rwt.png)
-(ADD CDS TO THE DIAGRAM)
 
 ### Required Docker Images
-- [RTI Routing Service](../dockerfiles/rti_routingservice)
-- [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
+- [RTI Routing Service (RS)](../dockerfiles/rti_routingservice)
+- [RTI Cloud Discovery Service (CDS)](../dockerfiles/rti_clouddiscoveryservice)
 - [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
 
 ### Steps
@@ -32,20 +27,33 @@ To resolve this, **RTI Routing Service** is used to bridge internal and external
 #### 1. Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-#### 2. Create a Deployment and a Service for Cloud Discovery Service.
+This command creates a ConfigMap to store the RTI License, which is necessary for running RTI CDS and RTI RS in the evaluation package.
+
+#### 2. Create a Deployment and a ClusterIP Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
+
+Use this command to create a Deployment and a Service for RTI CDS. RTI CDS is used for discovery between internal DDS Subscriber and RTI RS. 
 
 #### 3. Create a ConfigMap for the Routing Service XML configuration file
 `$ kubectl create configmap routingservice-rwt --from-file=config.xml`
 
-#### 4. Create a Deployment for the Routing Service. You should update the public IP address and ports in this file.
-`$ kubectl create -f rs-statefulset.yaml`
+This command creates a ConfigMap to store the Routing Service XML configuration file (config.xml). You can update the configuration file as needed. 
 
-#### 5. Create a NodePort Service for the Routing Service
-`$ kubectl create -f rs-nodeport.yaml`
+#### 4. Create a StatefulSet for Routing Service. 
+`$ kubectl create -f rtiroutingservice.yaml`
 
-#### 6. Create a Deployment for a RTI DDS Ping subscriber
+Use this command to create a StatefulSet and NodePort service for RTI RS. 
+
+**(NOTE: You should update the public IP address and ports in this file).***
+
+#### 5. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping-sub.yaml`
 
-#### 7. Run the external publisher (outside the cluster). You should update the public IP address and ports in this file.
+This command deploys the internal RTI DDS Ping Publisher, which can use CDS for discovering the RTI RS within the cluster.
+
+#### 6. Run the external publisher (outside the cluster). 
 `$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`
+
+Now, all components are running within the k8s cluster. You can use this command to run an external DDS Publisher application. 
+
+**(NOTE: You should update the public IP address and ports in this file).**

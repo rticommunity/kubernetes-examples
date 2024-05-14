@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: rti-routingservice
-          image: kyoungho/rti-routingservice:6.1.1
+          image: rticom/routing-service:7.2.0
           imagePullPolicy: Always
           ports:
             - containerPort: 7400
@@ -25,7 +25,7 @@ spec:
               mountPath: /app/config.xml
               subPath: config.xml
             - name: license-volume
-              mountPath: /app/license
+              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
           env:
             - name: ARGS
               value: "-cfgFile ./config.xml -cfgName RS-RWT -verbosity 5"
@@ -48,3 +48,17 @@ spec:
         - name: license-volume
           configMap:
             name: rti-license
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rs-rwt-0
+spec:
+  type: NodePort
+  selector:
+    statefulset.kubernetes.io/pod-name: rs-rwt-0
+  ports:
+    - nodePort: 30007
+      protocol: UDP
+      port: 7400
