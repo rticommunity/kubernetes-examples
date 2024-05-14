@@ -44,7 +44,7 @@ This command creates a ConfigMap to store the Routing Service XML configuration 
 
 Use this command to create a StatefulSet and NodePort service for RTI RS. 
 
-**(NOTE: You should update the public IP address and ports in this file).***
+**(NOTE: You should update the public IP address and ports in this file).**
 
 #### 5. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping-sub.yaml`
