@@ -1,35 +1,34 @@
 ---
-apiVersion: "apps/v1"
-kind: "Deployment"
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: "rtiddsping"
-  namespace: "default"
+  name: rtiddsping
   labels:
-    app: "rtiddsping"
+    app: rtiddsping
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "rtiddsping"
+      app: rtiddsping
   template:
     metadata:
       labels:
-        app: "rtiddsping"
+        app: rtiddsping
     spec:
       containers:
-        - name: "rtiddsping-pub"
-          image: "kyoungho/rtiddsping-pub:6.1.1"
+        - name: rtiddsping-pub
+          image: rticom/ddsping-pub:latest
           env:
             - name: ARGS
               value: "-domainId 10 -Verbosity 2 -transport 3"
             - name: NDDS_DISCOVERY_PEERS
-              value: shmem://,rtps@udpv4://rti-clouddiscoveryservice:7400
-        - name: "rtiddsping-sub"
-          image: "kyoungho/rtiddsping-sub:6.1.1"
+              value: "shmem://,rtps@udpv4://rti-clouddiscoveryservice:7400"
+        - name: rtiddsping-sub
+          image: rticom/ddsping-sub:latest
           env:
             - name: ARGS
               value: "-domainId 10 -Verbosity 2 -transport 2"
             - name: NDDS_DISCOVERY_PEERS
-              value: shmem://
+              value: "shmem://"
       imagePullSecrets:
         - name: regcred
