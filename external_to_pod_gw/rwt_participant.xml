@@ -7,9 +7,7 @@
             </transport_builtin>
             <discovery>
                 <initial_peers>
-                    <element>
-                        udpv4_wan://3.16.11.208:30007
-                    </element>
+                    <element>10.2.94.112:30007</element>
                 </initial_peers>
             </discovery>
         </participant_qos>
