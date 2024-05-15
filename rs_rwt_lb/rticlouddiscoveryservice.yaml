@@ -31,17 +31,3 @@ spec:
         - name: license-volume
           configMap:
             name: rti-license
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: rti-clouddiscoveryservice
-  labels:
-    run: rti-clouddiscoveryservice
-spec:
-  ports:
-    - port: 7400
-      protocol: UDP
-  selector:
-    run: rti-clouddiscoveryservice

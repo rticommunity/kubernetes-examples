@@ -36,7 +36,7 @@ After this step, AWS will provide a DNS name (e.g., a709579e8e4db40248531847d624
 `$ kubectl create configmap routingservice-rwt --from-file=config.xml`
 
 #### 5. Create a Deployment for the Routing Service. You should update the public IP address and ports in this file. 
-`$ kubectl create -f rs-deployment.yaml`
+`$ kubectl create -f rtiroutingservice.yaml`
 
 #### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping-sub.yaml`
