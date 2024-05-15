@@ -1,4 +1,4 @@
-## Peer-to-Peer Communication with Participants behind Cone NATs Using Cloud Discovery Service and a NodePort
+## Peer-to-Peer Communications Between External Applications Behind Cone NATs
 
 ### Problem
 
@@ -26,15 +26,12 @@ To solve this, **Cloud Discovery Service** is used to resolve the public IP addr
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
 #### 2. Create a ConfigMap for the CDS XML configuration file
-`$ kubectl create configmap cds-rwt-configmap --from-file=public_cds/cds-config.xml`
+`$ kubectl create configmap cds-rwt-configmap --from-file=cds-config.xml`
 
-#### 3. Set the CDS_PUBLIC_IP variable in this file and create a Deployment and a Service for Cloud Discovery Service.
-`$ kubectl create -f public_cds/cds-statefulset.yaml`
+#### 3. Set the CDS_PUBLIC_IP variable in this file and create a Deployment and a Service for Cloud Discovery Service and create a NodePort Service for the CDS
+`$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-#### 4. Create a NodePort Service for the CDS
-`$ kubectl create -f public_cds/cds-nodeport.yaml`
-
-#### 5. Set these environment variable before launching the publisher and subscriber. For example:
+#### 4. Set these environment variable before launching the publisher and subscriber. For example:
 `$ export CDS_PUBLIC_IP=54.177.131.196`
 `$ set CDS_PUBLIC_PORT=30007`
 
