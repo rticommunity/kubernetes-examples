@@ -18,12 +18,12 @@ When running Connext DDS applications in a Kubernetes cluster, especially when l
 Follow these steps to enable pod-to-pod communication for DDS applications within your Kubernetes cluster:
 
 #### Create a Deployment for DDS ping publisher.
-`$ kubectl create -f rtiddsping-pub.yaml`
+`$ kubectl create -f rtiddsping_pub.yaml`
 
 This command deploys the RTI DDS Ping Publisher within your Kubernetes cluster.
 
 #### Create a Deployment for DDS ping subscriber.
-`$ kubectl create -f rtiddsping-sub.yaml`
+`$ kubectl create -f rtiddsping_sub.yaml`
 
 This command creates a Deployment for the RTI DDS Ping Subscriber. This subscriber can now communicate with the RTI DDS Ping publisher.
 
