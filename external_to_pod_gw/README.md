@@ -35,7 +35,7 @@ This command creates a ConfigMap to store the RTI License, required for running 
 This command creates a Deployment and a Service for RTI CDS, which is used for discovery between the internal DDS Subscriber and RTI RS. 
 
 #### 3. Create a ConfigMap for the Routing Service XML configuration file
-`$ kubectl create configmap routingservice-rwt --from-file=config.xml`
+`$ kubectl create configmap routingservice-rwt --from-file=USER_ROUTING_SERVICE.xml`
 
 This command stores the Routing Service XML configuration file (config.xml) as a ConfigMap, which can be updated as needed. 
 
