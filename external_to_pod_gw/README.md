@@ -55,7 +55,7 @@ Use this command to determine the node port assigned by Kubernetes.
 This step creates a StatefulSet and a NodePort service for RTI RS. 
 
 #### 5. Create a Deployment for a RTI DDS Ping subscriber
-`$ kubectl create -f rtiddsping-sub.yaml`
+`$ kubectl create -f rtiddsping_sub.yaml`
 
 This command deploys the internal RTI DDS Ping Subscriber, which uses CDS for discovering the RTI RS within the cluster.
 
