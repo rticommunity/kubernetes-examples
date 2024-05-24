@@ -10,11 +10,11 @@ Follow these steps to test WIS image within your Kubernetes cluster:
 #### Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-#### Create a ConfigMap for the Web Integraton Service XML configuration file
-`$ kubectl create configmap web-integration-service --from-file=USER_WEB_INTEGRATION_SERVICE.xml`
-
 #### Create a Deployment and a Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
+
+#### Create a ConfigMap for the Web Integraton Service XML configuration file
+`$ kubectl create configmap web-integration-service --from-file=USER_WEB_INTEGRATION_SERVICE.xml`
 
 #### Create a StatefulSet and a Service for Web Integration Service.
 `$ kubectl create -f rtiwebintegrationservice.yaml`
