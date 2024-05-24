@@ -27,12 +27,12 @@ spec:
             - name: license-volume
               mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
               subPath: rti_license.dat
-          args: ["-cfgName", "RS-RWT"]
+          args: ["-cfgName", "RS-RWT", "-verbosity", "REMOTE:REMOTE"]
           env:
             - name: PUBLIC_IP # value for public ip address
               value: "10.2.94.112"
             - name: PUBLIC_PORT # value for public port
-              value: "30007"
+              value: "32333"
             - name: HOST_PORT # value for host port
               value: "7400"
             - name: WAN_DOMAIN # value for WAN domain ID
@@ -48,17 +48,3 @@ spec:
         - name: license-volume
           configMap:
             name: rti-license
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: rs-rwt-0
-spec:
-  type: NodePort
-  selector:
-    statefulset.kubernetes.io/pod-name: rs-rwt-0
-  ports:
-    - nodePort: 30007
-      protocol: UDP
-      port: 7400
