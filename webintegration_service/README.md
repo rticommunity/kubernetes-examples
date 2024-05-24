@@ -23,7 +23,7 @@ Follow these steps to test WIS image within your Kubernetes cluster:
 `$ kubectl create -f rtiddsping_cds_sub.yaml`
 
 #### List Types
-` $curl -X GET -H "Cache-Control:no-cache" http://sjc01k8s04.sjcvirt.rti.com:30007/dds/rest1/types`
+`$curl -X GET -H "Cache-Control:no-cache" http://sjc01k8s04.sjcvirt.rti.com:30007/dds/rest1/types`
 
 #### Sending Samples
 ` $curl -X POST -H "Content-Type:application/dds-web+xml" -H "Cache-Control:no-cache" -d '<data>
@@ -36,3 +36,13 @@ After running the command above you can get the pod name of the DDS ping subscri
 
 ` $ kubectl logs rtiddsping-sub-xxxx`
 This command will display the output of the DDS ping subscriber.
+
+#### Clean up resources
+`$ kubectl delete -f rtiwebintegrationservice.yaml`
+`$ kubectl delete -f rtiddsping_cds_sub.yaml`
+`$ kubectl delete -f rticlouddiscoveryservice`
+`$ kubectl delete configmap web-integration-service`
+
+
+
+
