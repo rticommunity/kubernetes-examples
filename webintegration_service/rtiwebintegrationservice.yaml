@@ -33,7 +33,6 @@ spec:
       imagePullSecrets:
         - name: regcred
       volumes:
-      volumes:
         - name: config-volume
           configMap:
             name: web-integration-service
