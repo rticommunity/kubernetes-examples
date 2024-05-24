@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rti-wis
+spec:
+  selector:
+    matchLabels:
+      app: rti-wis
+  serviceName: rti-wis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rti-wis
+    spec:
+      containers:
+        - name: rti-webintegrationservice
+          image: rticom/web-integration-service:7.3.0-EAR
+          volumeMounts:
+            - name: config-volume
+              mountPath: /home/rtiuser/rti_workspace/7.3.0/user_config/web_integration_service/USER_WEB_INTEGRATION_SERVICE.xml
+              subPath: USER_WEB_INTEGRATION_SERVICE.xml
+            - name: license-volume
+              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              subPath: rti_license.dat
+          env:
+            - name: NDDS_DISCOVERY_PEERS
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+          args: ["-cfgName", "pingDemoTutorial", "-listeningPorts", "9090"]
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+      volumes:
+        - name: config-volume
+          configMap:
+            name: web-integration-service
+        - name: license-volume
+          configMap:
+            name: rti-license
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rti-wis-0
+spec:
+  type: NodePort
+  selector:
+    statefulset.kubernetes.io/pod-name: rti-wis-0
+  ports:
+    - nodePort: 30007
+      protocol: TCP
+      port: 9090

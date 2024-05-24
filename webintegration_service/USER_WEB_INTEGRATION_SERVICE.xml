@@ -1,0 +1,52 @@
+<!-- RTI Data Distribution Service Deployment -->
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../resource/schema/rti_web_integration_service.xsd">
+
+    <!-- Here we define ShapeType, which is the type associated with all
+        the Shape topics (i.e., Circles, Triangles, and Squares). -->
+  <types>
+    <struct name="PingType" extensibility="extensible">
+      <member name="number" type="long"/>
+    </struct>
+  </types>
+
+  <!-- Qos Library -->
+  <qos_library name="QosLibrary">
+    <qos_profile name="DefaultProfile" base_name="BuiltinQosLibExp::Generic.BestEffort" is_default_qos="true">
+      <participant_qos>
+        <transport_builtin>
+          <mask>UDPV4</mask>
+        </transport_builtin>
+      </participant_qos>
+      <datawriter_qos>
+        <durability>
+          <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+        </durability>
+      </datawriter_qos>
+    </qos_profile>
+  </qos_library>
+
+    <domain_library name="PingDomainLibrary">
+        <domain name="PingDomain" domain_id="0">
+            <register_type name="PingType" type_ref="PingType" />
+            <topic name="PingTopic" register_type_ref="PingType" />
+        </domain>
+    </domain_library>
+
+    <!-- PingDemo Configuration. It creates all the necessary entities
+         to publish and subscribe to Squares. -->
+    <web_integration_service name="pingDemoTutorial">
+        <application name="PingDemoApp">
+            <domain_participant name="MyParticipant"
+                    domain_ref="PingDomainLibrary::PingDomain" >
+                <publisher name="MyPublisher">
+                    <data_writer name="MyPingWriter" topic_ref="PingTopic" />
+                </publisher>
+                <subscriber name="MySubscriber">
+                    <data_reader name="MyPingReader" topic_ref="PingTopic" />
+                </subscriber>
+<participant_qos base_name="QosLibrary::DefaultProfile" />
+            </domain_participant>
+        </application>
+    </web_integration_service>
+</dds>
