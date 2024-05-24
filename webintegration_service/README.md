@@ -31,10 +31,13 @@ Follow these steps to test WIS image within your Kubernetes cluster:
 </data>' http://sjc01k8s04.sjcvirt.rti.com:30007/dds/rest1/applications/PingDemoApp/domain_participants/MyParticipant/publishers/MyPublisher/data_writers/MyPingWriter`
 
 Now you can check the output of the DDS ping subscriber to validate it receives the sample
+
 ` $ kubectl get pods`
+
 After running the command above you can get the pod name of the DDS ping subscriber. 
 
 ` $ kubectl logs rtiddsping-sub-xxxx`
+
 This command will display the output of the DDS ping subscriber.
 
 #### Clean up resources
