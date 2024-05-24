@@ -5,18 +5,19 @@
 This is created to test the official Web Integration Service (WIS) Docker image. 
 
 ### Steps
-Follow these steps to test persistence service image within your Kubernetes cluster:
+Follow these steps to test WIS image within your Kubernetes cluster:
 
 #### Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-This command creates a ConfigMap to store the RTI License, which is necessary for running the RTI PS in the evaluation package.
-
 #### Create a ConfigMap for the Web Integraton Service XML configuration file
 `$ kubectl create configmap web-integration-service --from-file=USER_WEB_INTEGRATION_SERVICE.xml`
 
+#### Create a Deployment and a Service for Cloud Discovery Service.
+`$ kubectl create -f rticlouddiscoveryservice.yaml`
+
 #### Create a StatefulSet and a Service for Web Integration Service.
-`$ kubectl create -f rtiwebintegration.yaml`
+`$ kubectl create -f rtiwebintegrationservice.yaml`
 
 #### Create a Deployment for DDS ping subscriber.
 `$ kubectl create -f rtiddsping_cds_sub.yaml`
@@ -33,5 +34,5 @@ Now you can check the output of the DDS ping subscriber to validate it receives 
 ` $ kubectl get pods`
 After running the command above you can get the pod name of the DDS ping subscriber. 
 
-` $ kubectl get rtiddsping-sub-xxxx`
+` $ kubectl logs rtiddsping-sub-xxxx`
 This command will display the output of the DDS ping subscriber.
