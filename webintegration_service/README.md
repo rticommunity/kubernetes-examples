@@ -42,8 +42,11 @@ This command will display the output of the DDS ping subscriber.
 
 #### Clean up resources
 `$ kubectl delete -f rtiwebintegrationservice.yaml`
+
 `$ kubectl delete -f rtiddsping_cds_sub.yaml`
+
 `$ kubectl delete -f rticlouddiscoveryservice`
+
 `$ kubectl delete configmap web-integration-service`
 
 
