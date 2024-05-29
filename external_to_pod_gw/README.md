@@ -43,7 +43,7 @@ This command stores the Routing Service XML configuration file (USER_ROUTING_SER
 
 This step creates a NodePort service for the RTI RS to make the RTI RS accessible from external applications.
 
-#### 4. Create a StatefulSet for Routing Service. 
+#### 5. Create a StatefulSet for Routing Service. 
 `$ kubectl get service`
 
 Use this command to determine the node port assigned by Kubernetes.
@@ -54,12 +54,12 @@ Use this command to determine the node port assigned by Kubernetes.
 
 This step creates a StatefulSet and a NodePort service for RTI RS. 
 
-#### 5. Create a Deployment for a RTI DDS Ping subscriber
+#### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping_sub.yaml`
 
 This command deploys the internal RTI DDS Ping Subscriber, which uses CDS for discovering the RTI RS within the cluster.
 
-#### 6. Run the external publisher (outside the cluster). 
+#### 7. Run the external publisher (outside the cluster). 
 **(NOTE: Adjust the initial_peer setting (using PUBLIC_IP:PUBLIC_PORT) in rwt_participant.xml).**
 
 `$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`
