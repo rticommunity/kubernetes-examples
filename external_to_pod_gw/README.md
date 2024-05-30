@@ -46,9 +46,13 @@ This step creates a NodePort service for the RTI RS to make the RTI RS accessibl
 #### 5. Create a StatefulSet for Routing Service. 
 `$ kubectl get service`
 
-Use this command to determine the node port assigned by Kubernetes. (***This step is needed to get the port number not the external IP address. For PUBLIC_IP, you must use the IP address of an externally accessible node not the IP address of ClusterIP, which only accessible within the cluster***) 
+Use this command to get the external port assigned by Kubernetes (NodePorts are in the 30000-32767 range by default). 
 
-**(NOTE: Update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in this file).**
+`$ kubectl get nodes -o wide`
+
+Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP addresses of externally accessible node).
+
+**Update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in this file.**
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
