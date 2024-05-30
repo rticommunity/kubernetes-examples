@@ -50,7 +50,7 @@ Use this command to get the external port assigned by Kubernetes (NodePorts are 
 
 `$ kubectl get nodes -o wide`
 
-Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP addresses of externally accessible node).
+Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP address of externally accessible nodes).
 
 **Lastly, update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in this file.**
 
