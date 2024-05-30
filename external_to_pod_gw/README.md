@@ -52,7 +52,7 @@ Use this command to get the external port assigned by Kubernetes (NodePorts are 
 
 Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP addresses of externally accessible node).
 
-**Update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in this file.**
+**Lastly, update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in this file.**
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
