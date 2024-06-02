@@ -13,7 +13,7 @@ Follow these steps to test RnR image within your Kubernetes cluster:
 #### Create a Deployment and a Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-### Create a Persistent Volume for RnR services
+#### Create a Persistent Volume for Recording and Replay services
 `$ kubectl create -f pv.yaml`
 
 #### Create a StatefulSet for Recording service
