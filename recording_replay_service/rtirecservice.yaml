@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rti-recs
+spec:
+  selector:
+    matchLabels:
+      app: rti-recs
+  serviceName: rti-recs
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rti-recs
+    spec:
+      securityContext:
+        fsGroup: 1000 # the userid that is used in the image
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: rti-recordingservice
+          image: rticom/recording-service:7.3.0-EAR
+          volumeMounts:
+            - name: license-volume
+              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              subPath: rti_license.dat
+            - name: rec-pv-storage
+              mountPath: /home/rtiuser/rti_workspace/7.3.0/database
+          env:
+            - name: NDDS_DISCOVERY_PEERS
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400
+            - name: DATA_DOMAIN
+              value: "10"
+          args: ["-cfgName", "default"]
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: license-volume
+          configMap:
+            name: rti-license
+        - name: rec-pv-storage
+          persistentVolumeClaim:
+            claimName: rec-pv-claim
