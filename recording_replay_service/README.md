@@ -22,7 +22,7 @@ Follow these steps to test RnR image within your Kubernetes cluster:
 #### Create a Deployment for DDS ping publisher.
 `$ kubectl create -f rtiddsping_cds_pub.yaml`
 
-### Wait for a while to record some data from the DDS ping publisher. Then, terminate both Recording Service and the DDS ping publisher
+#### Wait for a while to record some data from the DDS ping publisher. Then, terminate both Recording Service and the DDS ping publisher
 `$ kubectl delete -f rtiddsping_cds_pub.yaml`
 
 `$ kubectl delete -f rtirecordingservice.yaml`
