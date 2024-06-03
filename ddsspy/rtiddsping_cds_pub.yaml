@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtiddsping-pub
+  labels:
+    app: rtiddsping-pub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rtiddsping-pub
+  template:
+    metadata:
+      labels:
+        app: rtiddsping-pub
+    spec:
+      containers:
+        - name: rtiddsping-pub
+          image: rticom/dds-ping:7.3.0-EAR
+          env:
+            - name: NDDS_DISCOVERY_PEERS
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400
+          args: ["-publisher", "-domainId", "10", "-Verbosity", "2"]
+      imagePullSecrets:
+        - name: regcred

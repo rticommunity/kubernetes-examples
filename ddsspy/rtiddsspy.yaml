@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtiddsspy
+  labels:
+    app: rtiddsspy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rtiddsspy
+  template:
+    metadata:
+      labels:
+        app: rtiddsspy
+    spec:
+      containers:
+        - name: rtiddsspy
+          image: rticom/dds-spy:7.3.0-EAR
+          env:
+            - name: NDDS_DISCOVERY_PEERS
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400
+          args: ["-domainId", "10"]
+      imagePullSecrets:
+        - name: regcred
