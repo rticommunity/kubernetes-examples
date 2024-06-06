@@ -32,7 +32,7 @@ spec:
             - name: PUBLIC_IP # value for public ip address
               value: "10.2.94.112"
             - name: PUBLIC_PORT # value for public port
-              value: "32333"
+              value: "31514"
             - name: HOST_PORT # value for host port
               value: "7400"
             - name: WAN_DOMAIN # value for WAN domain ID
