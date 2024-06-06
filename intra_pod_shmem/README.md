@@ -25,10 +25,10 @@ This command creates a ConfigMap to store the RTI License, which is necessary fo
 Use this command to create a Deployment and a Service for the RTI CDS.
 
 #### Create a publisher and subscriber over shared memory transport.
-`$ kubectl create -f rtiddsping-shmem.yaml`
+`$ kubectl create -f rtiddsping_shmem.yaml`
 
 This command deploys the RTI DDS Ping Publisher and Subscriber that communicate over shared memory transport.
 
 #### Deploy a subscriber over UDP transport.
-`$ kubectl create -f rtiddsping-sub.yaml`
+`$ kubectl create -f rtiddsping_sub.yaml`
 This command deploys the RTI DDS Ping Subscriber that communicates using UDP transport.
