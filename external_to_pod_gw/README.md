@@ -17,21 +17,21 @@ To establish communication between internal and external DDS applications, we em
 ![Exposing DDS Applications with Real-time WAN Transport](routingservice_rwt.png)
 
 ### Required Docker Images
-- [RTI Routing Service (RS)](../dockerfiles/rti_routingservice)
-- [RTI Cloud Discovery Service (CDS)](../dockerfiles/rti_clouddiscoveryservice)
-- [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
+- [RTI Routing Service (RS)](https://hub.docker.com/repository/docker/rticom/routing-service)
+- [RTI Cloud Discovery Service](https://hub.docker.com/repository/docker/rticom/cloud-discovery-service)
+- [RTI DDS Ping](https://hub.docker.com/repository/docker/rticom/dds-ping)
 
 ### Steps
 
 #### 1. Create a ConfigMap for RTI License.
 `$ kubectl create configmap rti-license --from-file rti_license.dat`
 
-This command creates a ConfigMap to store the RTI License, required for running RTI CDS and RTI RS in the evaluation package.
+This command creates a ConfigMap to store the RTI License, required for running RTI Cloud Discovery Service and RTI Routing Service in the evaluation package.
 
 #### 2. Create a Deployment and a ClusterIP Service for Cloud Discovery Service.
 `$ kubectl create -f rticlouddiscoveryservice.yaml`
 
-This command creates a Deployment and a Service for RTI CDS, which is used for discovery between the internal DDS Subscriber and RTI RS. 
+This command creates a Deployment and a Service for RTI Cloud Discovery Service, which is used for discovery between the internal DDS Subscriber and RTI Routing Service. 
 
 #### 3. Create a ConfigMap for the Routing Service XML configuration file
 `$ kubectl create configmap routingservice-rwt --from-file=USER_ROUTING_SERVICE.xml`
@@ -41,7 +41,7 @@ This command stores the Routing Service XML configuration file (USER_ROUTING_SER
 #### 4. Create a NodePort service for Routing Service
 `$ kubectl create -f rtiroutingservice_nodeport.yaml `
 
-This step creates a NodePort service for the RTI RS to make the RTI RS accessible from external applications.
+This step creates a NodePort service for the RTI Routing Service to make the RTI Routing Service accessible from external applications.
 
 #### 5. Create a StatefulSet for Routing Service. 
 `$ kubectl get service`
@@ -52,16 +52,16 @@ Use this command to get the external port assigned by Kubernetes (NodePorts are 
 
 Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP address of externally accessible nodes).
 
-**Lastly, update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in this file.**
+**Lastly, update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in rtiroutingservice.yaml.**
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
 This step creates a StatefulSet and a NodePort service for RTI RS. 
 
 #### 6. Create a Deployment for a RTI DDS Ping subscriber
-`$ kubectl create -f rtiddsping_sub.yaml`
+`$ kubectl create -f rtiddsping_cds_sub.yaml`
 
-This command deploys the internal RTI DDS Ping Subscriber, which uses CDS for discovering the RTI RS within the cluster.
+This command deploys the internal RTI DDS Ping Subscriber, which uses Cloud Discovery Service for discovering the RTI Routing Service within the cluster.
 
 #### 7. Run the external publisher (outside the cluster). 
 **(NOTE: Adjust the initial_peer setting (using PUBLIC_IP:PUBLIC_PORT) in rwt_participant.xml).**
