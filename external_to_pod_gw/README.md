@@ -56,7 +56,7 @@ Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP 
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
-This step creates a StatefulSet and a NodePort service for RTI RS. 
+This step creates a StatefulSet for RTI Routing Service. 
 
 #### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping_cds_sub.yaml`
