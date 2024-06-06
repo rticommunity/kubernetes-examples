@@ -9,9 +9,8 @@ Containers in a pod share the same IPC namespace, which means they can communica
 ![Container Communications over Shared Memory](ddsping_shmem.png)
 
 ### Required Docker Images
-- [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
-- [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
-- [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
+- [RTI Cloud Discovery Service](https://hub.docker.com/repository/docker/rticom/cloud-discovery-service)
+- [RTI DDS Ping](https://hub.docker.com/repository/docker/rticom/dds-ping)
 
 ### Steps
 
