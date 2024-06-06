@@ -17,7 +17,7 @@ To establish communication between internal and external DDS applications, we em
 ![Exposing DDS Applications with Real-time WAN Transport](routingservice_rwt.png)
 
 ### Required Docker Images
-- [RTI Routing Service (RS)](https://hub.docker.com/repository/docker/rticom/routing-service)
+- [RTI Routing Service](https://hub.docker.com/repository/docker/rticom/routing-service)
 - [RTI Cloud Discovery Service](https://hub.docker.com/repository/docker/rticom/cloud-discovery-service)
 - [RTI DDS Ping](https://hub.docker.com/repository/docker/rticom/dds-ping)
 
