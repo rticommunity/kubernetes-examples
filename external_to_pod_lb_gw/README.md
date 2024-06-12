@@ -2,7 +2,7 @@
 
 ### Problem
 
-You need to ensure scalability and high availability for Routing Services to accommodate varying loads and ensure high availability. 
+You need to ensure scalability and fault tolerance for Routing Services to accommodate varying loads and ensure high availability. 
 
 ### Solution
 
