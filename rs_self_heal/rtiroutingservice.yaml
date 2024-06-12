@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rti-rs
+spec:
+  selector:
+    matchLabels:
+      app: rti-rs
+  serviceName: rti-rs
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rti-rs
+    spec:
+      containers:
+        - name: rti-routingservice
+          image: rticom/routing-service:7.3.0-EAR
+          volumeMounts:
+            - name: license-volume
+              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              subPath: rti_license.dat
+          env:
+            - name: NDDS_DISCOVERY_PEERS
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400
+          args: ["-cfgName", "DomainBridgingLAN"]
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: license-volume
+          configMap:
+            name: rti-license
