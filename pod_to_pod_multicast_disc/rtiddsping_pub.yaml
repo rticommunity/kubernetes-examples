@@ -17,9 +17,7 @@ spec:
     spec:
       containers:
         - name: rtiddsping-pub
-          image: rticom/ddsping-pub:latest
-          env:
-            - name: ARGS
-              value: "-domainId 10 -Verbosity 2"
+          image: rticom/dds-ping:7.3.0-EAR
+          args: ["-publisher", "-domainId", "10" ,"-verbosity", "2"]
       imagePullSecrets:
         - name: regcred

@@ -11,8 +11,7 @@ When running Connext DDS applications in a Kubernetes cluster, especially when l
 ![Pod-to-pod Communications Inside a Cluster](ddsping.png)
 
 ### Required Docker Images
-- [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
-- [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
+- [RTI DDS Ping](https://hub.docker.com/repository/docker/rticom/dds-ping)
 
 ### Steps
 Follow these steps to enable pod-to-pod communication for DDS applications within your Kubernetes cluster:

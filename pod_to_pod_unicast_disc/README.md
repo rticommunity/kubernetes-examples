@@ -11,9 +11,8 @@ To address the multicast limitation in Kubernetes, you can leverage **RTI Cloud 
 ![Discovery without Multicast](ddsping_cds.png)
 
 ### Required Docker Images
-- [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
-- [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
-- [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
+- [RTI Cloud Discovery Service](https://hub.docker.com/repository/docker/rticom/cloud-discovery-service)
+- [RTI DDS Ping](https://hub.docker.com/repository/docker/rticom/dds-ping)
 
 ### Steps
 Follow these steps to enable DDS discovery without multicast within your Kubernetes cluster:
@@ -53,9 +52,8 @@ To achieve high availability of the RTI Cloud Discovery Service, deploying it vi
 ![Discovery without Multicast](cds_replicated.png)
 
 ### Required Docker Images
-- [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
-- [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
-- [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
+- [RTI Cloud Discovery Service](https://hub.docker.com/repository/docker/rticom/cloud-discovery-service)
+- [RTI DDS Ping](https://hub.docker.com/repository/docker/rticom/dds-ping)
 
 ### Steps
 

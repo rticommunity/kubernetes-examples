@@ -9,9 +9,8 @@ Containers in a pod share the same IPC namespace, which means they can communica
 ![Container Communications over Shared Memory](ddsping_shmem.png)
 
 ### Required Docker Images
-- [RTI Cloud Discovery Service](../dockerfiles/rti_clouddiscoveryservice)
-- [RTI DDS Ping Publisher](../dockerfiles/rti_ddsping_pub)
-- [RTI DDS Ping Subscriber](../dockerfiles/rti_ddsping_sub)
+- [RTI Cloud Discovery Service](https://hub.docker.com/repository/docker/rticom/cloud-discovery-service)
+- [RTI DDS Ping](https://hub.docker.com/repository/docker/rticom/dds-ping)
 
 ### Steps
 
@@ -26,10 +25,10 @@ This command creates a ConfigMap to store the RTI License, which is necessary fo
 Use this command to create a Deployment and a Service for the RTI CDS.
 
 #### Create a publisher and subscriber over shared memory transport.
-`$ kubectl create -f rtiddsping-shmem.yaml`
+`$ kubectl create -f rtiddsping_shmem.yaml`
 
 This command deploys the RTI DDS Ping Publisher and Subscriber that communicate over shared memory transport.
 
 #### Deploy a subscriber over UDP transport.
-`$ kubectl create -f rtiddsping-sub.yaml`
+`$ kubectl create -f rtiddsping_sub.yaml`
 This command deploys the RTI DDS Ping Subscriber that communicates using UDP transport.

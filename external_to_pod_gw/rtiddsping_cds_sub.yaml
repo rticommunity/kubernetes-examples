@@ -17,11 +17,10 @@ spec:
     spec:
       containers:
         - name: rtiddsping-sub
-          image: rticom/ddsping-sub:latest
+          image: rticom/dds-ping:7.3.0-EAR
+          args: ["-subscriber", "-domainId", "10" ,"-verbosity", "2"]
           env:
-            - name: ARGS
-              value: "-domainId 10 -Verbosity 2 -transport 3"
             - name: NDDS_DISCOVERY_PEERS
-              value: "rtps@udpv4://rti-clouddiscoveryservice:7400"
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400
       imagePullSecrets:
         - name: regcred

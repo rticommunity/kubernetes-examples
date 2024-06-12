@@ -2,11 +2,11 @@
 
 ### Problem
 
-You want to load balance Routing Services for scalability and high availability. This is an extended use case of [this](../routingservice_rwt). 
+You need to ensure scalability and fault tolerance for Routing Services to accommodate varying loads and ensure high availability. 
 
 ### Solution
 
-To resolve this, a **Deployment** for **RTI Routing Services** can be used. To expose the traffic of the Deployment, **LoadBalancer Service** is used with an external Network Load Balancer (NLB) provided by AWS. **LoadBalancer Service** with the external load balancer balances the traffic from the outside of the cluster to multiple Routing Service pods. 
+To address this challenge, deploying RTI Routing Services using a Kubernetes **Deployment** and **LoadBalancer service** facilitates scalability and high availability. A LoadBalancer Service, integrating with an external Network Load Balancer (NLB) provided by AWS, is utilized to expose the traffic of the Routing Services. This configuration allows the LoadBalancer Service, in conjunction with the external NLB, to distribute incoming traffic evenly from outside the cluster to multiple Routing Service pods, effectively scaling up the service in response to demand while maintaining high availability.
 
 ![Load Balancing Routing Services with Real-time WAN Transport](routingservice_rwt_lb.png)
 
