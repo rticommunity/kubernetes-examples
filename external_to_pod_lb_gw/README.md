@@ -41,9 +41,13 @@ This step creates a LoadBalancer service for the RTI Routing Service to make the
 
 `$ kubectl get services rs-rwt`
 
-Use this command to get the external address ((e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) assigned by AWS Network Load Balancer.
+Use this command to get the external DNS name (e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) assigned by AWS Network Load Balancer.
 
-**NOTE: Update the values for PUBLIC_IP with the external address in rtiroutingservice.yaml.**
+Then, you run the following command to get an public IP address from the DNS name. 
+
+`$ nslookup a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com`
+
+**NOTE: Update the values for PUBLIC_IP with one of the external addresses in rtiroutingservice.yaml.**
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
