@@ -43,7 +43,7 @@ This step creates a LoadBalancer service for the RTI Routing Service to make the
 
 Use this command to get the external address ((e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) assigned by AWS Network Load Balancer.
 
-** NOTE: Update the values for PUBLIC_IP with the external address in rtiroutingservice.yaml.**
+**NOTE: Update the values for PUBLIC_IP with the external address in rtiroutingservice.yaml.**
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
@@ -56,8 +56,7 @@ This command deploys the internal RTI DDS Ping Subscriber, which uses Cloud Disc
 
 #### 7. Run the external publisher (outside the cluster). You should update the public IP address and port in this file.
 
-NOTE: Adjust the initial_peer setting (using PUBLIC_IP:PUBLIC_PORT) in rwt_participant.xml.
-
+**NOTE: Adjust the initial_peer setting (using PUBLIC_IP:PUBLIC_PORT) in rwt_participant.xml.**
 
 `$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`
 
