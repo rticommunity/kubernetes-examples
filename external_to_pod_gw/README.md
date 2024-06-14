@@ -52,11 +52,11 @@ Use this command to get the external port assigned by Kubernetes (NodePorts are 
 
 Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP address of externally accessible nodes).
 
-**Lastly, update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in rtiroutingservice.yaml.**
+**NOTE: Update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in rtiroutingservice.yaml.**
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
-This step creates a StatefulSet for RTI Routing Service. 
+Finally, running this command creates a StatefulSet for RTI Routing Service. 
 
 #### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping_cds_sub.yaml`
@@ -64,7 +64,7 @@ This step creates a StatefulSet for RTI Routing Service.
 This command deploys the internal RTI DDS Ping Subscriber, which uses Cloud Discovery Service for discovering the RTI Routing Service within the cluster.
 
 #### 7. Run the external publisher (outside the cluster). 
-**(NOTE: Adjust the initial_peer setting (using PUBLIC_IP:PUBLIC_PORT) in rwt_participant.xml).**
+**NOTE: Adjust the initial_peer setting (using PUBLIC_IP:PUBLIC_PORT) in rwt_participant.xml.**
 
 `$ rtiddsping -qosFile rwt_participant.xml -qosProfile RWT_Demo::RWT_Profile -publisher -domainId 100`
 
