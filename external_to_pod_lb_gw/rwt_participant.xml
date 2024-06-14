@@ -7,7 +7,7 @@
                 </transport_builtin>
                 <discovery>
                     <initial_peers>
-                        <element>a7a5c4bd86dcb49ffb449cbfcc8fe157-09daea9f71b38803.elb.us-east-2.amazonaws.com:7400</element>
+                        <element>a928b09ff02564f6b84a62ed956ae579-704f9044bab51a73.elb.us-east-2.amazonaws.com:7400</element>
                     </initial_peers>
                 </discovery>
             </participant_qos>
