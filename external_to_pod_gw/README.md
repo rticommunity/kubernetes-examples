@@ -52,11 +52,11 @@ Use this command to get the external port assigned by Kubernetes (NodePorts are 
 
 Use this command to get IP addresses of nodes (For PUBLIC_IP, you can use an IP address of externally accessible nodes).
 
-**Lastly, update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in rtiroutingservice.yaml.**
+**Update the values for PUBLIC_IP (with one of IP addresses of nodes) and PUBLIC_PORT (with the assigned node port) as necessary in rtiroutingservice.yaml.**
 
 `$ kubectl create -f rtiroutingservice.yaml`
 
-This step creates a StatefulSet for RTI Routing Service. 
+Finally, running this command creates a StatefulSet for RTI Routing Service. 
 
 #### 6. Create a Deployment for a RTI DDS Ping subscriber
 `$ kubectl create -f rtiddsping_cds_sub.yaml`
