@@ -7,7 +7,7 @@
                 </transport_builtin>
                 <discovery>
                     <initial_peers>
-                        <element>a7a5c4bd86dcb49ffb449cbfcc8fe157-09daea9f71b38803.elb.us-east-2.amazonaws.com:7400</element>
+                        <element>udpv4_wan://3.20.5.68:7400</element>
                     </initial_peers>
                 </discovery>
             </participant_qos>

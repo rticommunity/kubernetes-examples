@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment	
+kind: Deployment
 metadata:
   name: rti-routingservice
 spec:
@@ -13,51 +13,37 @@ spec:
         app: rti-routingservice
     spec:
       containers:
-      - name: rti-routingservice
-        image: kyoungho/rti-routingservice:6.1.1
-        ports:
-        - containerPort: 7400
-          protocol: UDP
-        volumeMounts:
-        - name: config-volume
-          mountPath: /app/config.xml
-          subPath: config.xml
-        - name: license-volume
-          mountPath: /app/license
-        env:
-        - name: ARGS
-          value: "-cfgFile ./config.xml -cfgName RS-RWT -verbosity 5"
-        - name: PUBLIC_IP # value for public ip address
-          value: "a7a5c4bd86dcb49ffb449cbfcc8fe157-09daea9f71b38803.elb.us-east-2.amazonaws.com"
-        - name: PUBLIC_PORT # value for public port
-          value: "7400"
-        - name: HOST_PORT # value for host port 
-          value: "7400"
-        - name: WAN_DOMAIN # value for WAN domain ID
-          value: "100"
-        - name: LAN_DOMAIN # value for LAN domain ID
-          value: "10"
+        - name: rti-routingservice
+          image: rticom/routing-service:7.3.0-EAR
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7400
+              protocol: UDP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /home/rtiuser/rti_workspace/7.3.0/user_config/routing_service/USER_ROUTING_SERVICE.xml
+              subPath: USER_ROUTING_SERVICE.xml
+            - name: license-volume
+              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              subPath: rti_license.dat
+          args: ["-cfgName", "RS-RWT", "-verbosity", "REMOTE:REMOTE"]
+          env:
+            - name: PUBLIC_IP # value for public ip address
+              value: "3.20.5.68"
+            - name: PUBLIC_PORT # value for public port
+              value: "7400"
+            - name: HOST_PORT # value for host port
+              value: "7400"
+            - name: WAN_DOMAIN # value for WAN domain ID
+              value: "100"
+            - name: LAN_DOMAIN # value for LAN domain ID
+              value: "10"
       imagePullSecrets:
         - name: regcred
-      volumes: 
+      volumes:
         - name: config-volume
           configMap:
             name: routingservice-rwt
         - name: license-volume
           configMap:
             name: rti-license
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: rs-rwt
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 7400
-    targetPort: 7400
-    protocol: UDP
-  selector:
-    app: rti-routingservice
