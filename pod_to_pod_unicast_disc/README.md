@@ -8,7 +8,7 @@ You want to enable DDS discovery within a Kubernetes cluster without relying on 
 
 To address the multicast limitation in Kubernetes, you can leverage **RTI Cloud Discovery Service (CDS)**. CDS provides a solution for DDS discovery in environments where multicast is not supported. To use CDS, you need to add the IP address or DNS name and port number of the CDS to the initial peer lists of your Connext DDS applications. To get a stable IP address or DNS name within Kubernetes, you can employ a Cluster IP Service. Cluster IP is the default type of Kubernetes Service and exposes a pod on a stable internal IP in the cluster. With this, the pod for RTI CDS is reachable by DDS applications via a stable IP address or DNS name (e.g. rti-clouddiscovery:7400).
 
-**NOTE: RTI CDS currently lacks support for synchronization across multiple instances, so this example only works with a single CDS instance.**
+**NOTE: RTI CDS currently lacks support for synchronization across multiple instances, so this example only works with a single CDS instance per service.**
 
 ![Discovery without Multicast](ddsping_cds.png)
 
