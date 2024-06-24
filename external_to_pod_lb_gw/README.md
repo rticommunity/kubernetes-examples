@@ -8,6 +8,8 @@ You need to ensure scalability and fault tolerance for Routing Services to accom
 
 To address this challenge, deploying RTI Routing Services using a Kubernetes **Deployment** and **LoadBalancer service** facilitates scalability and high availability. A LoadBalancer Service, integrating with an external Network Load Balancer (NLB) provided by AWS, is utilized to expose the traffic of the Routing Services. This configuration allows the LoadBalancer Service, in conjunction with the external NLB, to distribute incoming traffic evenly from outside the cluster to multiple Routing Service pods, effectively scaling up the service in response to demand while maintaining high availability.
 
+**NOTE: This example only works with AWS NLB with cross-zone load balancing.**
+
 ![Load Balancing Routing Services with Real-time WAN Transport](routingservice_rwt_lb.png)
 
 ### Required Docker Images
