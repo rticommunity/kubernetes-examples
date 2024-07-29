@@ -1,4 +1,4 @@
-## Communicaitons Between External Applications And Pods Within a Kubernetes Cluster Using a Network Load-Balanced Gateway
+## Communications Between External Applications And Pods Within a Kubernetes Cluster Using a Network Load-Balanced Gateway
 
 ### Problem
 
