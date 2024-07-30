@@ -41,7 +41,7 @@ This step creates a LoadBalancer service for the RTI Routing Service to make the
 
 #### 5. Create a Deployment for the Routing Service. 
 
-`$ kubectl get services rs-rwt`
+`$ kubectl get services rti-routingservice`
 
 Use this command to get the external DNS name (e.g., a709579e8e4db40248531847d6245779-0bc4e2a058d739ab.elb.us-east-2.amazonaws.com) assigned by AWS Network Load Balancer.
 
