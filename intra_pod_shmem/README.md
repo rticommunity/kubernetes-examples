@@ -4,7 +4,7 @@
 You want to make Connext containers communicate over shared memory.
 
 ### Solution
-Containers in a pod share the same IPC namespace, which means they can communicate with each other using standard inter-process communications such as SystemV semaphores or POSIX shared memory. If containers are in the same pod, Connext containers with a version above 6.0 can communicate over shared memory with the default settings. (Please see [this](https://community.rti.com/kb/communicate-between-two-docker-containers-using-rti-connext-dds-and-shared-memory) if you use an older version.) A Connext container can use both shared memory transport for container-to-container communications (in the same pod) and UDP transport for pod-to-pod communications. 
+Containers in a pod share the same IPC namespace, which means they can communicate with each other using standard inter-process communications such as SystemV semaphores or POSIX shared memory. If containers are in the same pod and are also configured to share the same process namespace, Connext containers with a version above 6.0 can communicate over shared memory with the default settings. (Please see [this](https://community.rti.com/kb/communicate-between-two-docker-containers-using-rti-connext-dds-and-shared-memory) if you use an older version.) A Connext container can use both shared memory transport for container-to-container communications (in the same pod) and UDP transport for pod-to-pod communications.
 
 ![Container Communications over Shared Memory](ddsping_shmem.png)
 
