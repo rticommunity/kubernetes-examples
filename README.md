@@ -1,8 +1,6 @@
 # Kubernetes Example Configurations for RTI Connext Applications
 This directory provides example configurations for various use cases involving RTI Connext applications and services running on Kubernetes.
 
-NOTE: Please note that the container images in the example configurations are not publicly available. We encourage you to build your own container images and use your own container image repository for pushing and pulling these images. It is also necessary to update the container image names in the example configurations as per your setup.
-
 ### Use Cases
 
 |Name | Description | Kubernetes Features Used | RTI Components Used|
