@@ -17,7 +17,5 @@ spec:
     spec:
       containers:
         - name: rtiddsping-sub
-          image: rticom/dds-ping:7.3.0-EAR
-          args: ["-subscriber", "-domainId", "10" ,"-verbosity", "2"]
-      imagePullSecrets:
-        - name: regcred
+          image: rticom/dds-ping:7.5.0.1
+          args: ["-subscriber", "-domainId", "10" ,"-verbosity", "1"]

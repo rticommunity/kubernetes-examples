@@ -14,22 +14,22 @@ spec:
     spec:
       containers:
         - name: rti-routingservice
-          image: rticom/routing-service:7.3.0-EAR
+          image: rticom/routing-service:7.5.0.1
           imagePullPolicy: Always
           ports:
             - containerPort: 7400
               protocol: UDP
           volumeMounts:
             - name: config-volume
-              mountPath: /home/rtiuser/rti_workspace/7.3.0/user_config/routing_service/USER_ROUTING_SERVICE.xml
+              mountPath: /home/rtiuser/rti_workspace/7.5.0/user_config/routing_service/USER_ROUTING_SERVICE.xml
               subPath: USER_ROUTING_SERVICE.xml
             - name: license-volume
-              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              mountPath: /opt/rti.com/rti_connext_dds-7.5.0/rti_license.dat
               subPath: rti_license.dat
-          args: ["-cfgName", "RS-RWT", "-verbosity", "REMOTE:REMOTE"]
+          args: ["-cfgName", "RS-RWT", "-verbosity", "3"]
           env:
             - name: PUBLIC_IP # value for public ip address
-              value: "3.20.5.68"
+              value: "203.0.113.20"
             - name: PUBLIC_PORT # value for public port
               value: "7400"
             - name: HOST_PORT # value for host port
@@ -38,8 +38,6 @@ spec:
               value: "100"
             - name: LAN_DOMAIN # value for LAN domain ID
               value: "10"
-      imagePullSecrets:
-        - name: regcred
       volumes:
         - name: config-volume
           configMap:

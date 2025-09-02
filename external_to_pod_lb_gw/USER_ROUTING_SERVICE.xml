@@ -49,7 +49,7 @@
             <creation_mode>IMMEDIATE</creation_mode>
             <deny_topic_name_filter>rti/*</deny_topic_name_filter>
           </input>
-          <output>
+          <output participant="1">
             <creation_mode>IMMEDIATE</creation_mode>
             <deny_topic_name_filter>rti/*</deny_topic_name_filter>
           </output>

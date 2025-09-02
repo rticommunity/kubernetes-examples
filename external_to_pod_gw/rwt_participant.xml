@@ -4,10 +4,17 @@
         <participant_qos>
             <transport_builtin>
                 <mask>UDPv4_WAN</mask>
+                <udpv4_wan>
+                    <comm_ports>
+                        <default>
+                            <host>7777</host>
+                        </default>
+                    </comm_ports>
+                </udpv4_wan>
             </transport_builtin>
             <discovery>
                 <initial_peers>
-                    <element>udpv4_wan://10.2.94.112:31514</element>
+                    <element>udpv4_wan://203.0.113.10:30395</element>
                 </initial_peers>
             </discovery>
         </participant_qos>

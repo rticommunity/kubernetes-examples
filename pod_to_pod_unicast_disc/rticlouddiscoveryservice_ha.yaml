@@ -15,16 +15,14 @@ spec:
     spec:
       containers:
         - name: rti-clouddiscoveryservice
-          image: rticom/cloud-discovery-service:7.3.0-EAR
+          image: rticom/cloud-discovery-service:7.5.0.1
           volumeMounts:
             - name: license-volume
-              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              mountPath: /opt/rti.com/rti_connext_dds-7.5.0/rti_license.dat
               subPath: rti_license.dat
           ports:
             - containerPort: 7400
               protocol: UDP
-      imagePullSecrets:
-        - name: regcred
       volumes:
         - name: license-volume
           configMap:

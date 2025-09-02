@@ -17,10 +17,8 @@ spec:
     spec:
       containers:
         - name: rtiddsping-pub
-          image: rticom/dds-ping:7.3.0-EAR
+          image: rticom/dds-ping:7.5.0.1
           args: ["-publisher", "-domainId", "10" ,"-verbosity", "2"]
           env:
             - name: NDDS_DISCOVERY_PEERS
               value: rtps@udpv4://rti-clouddiscoveryservice:7400
-      imagePullSecrets:
-        - name: regcred
