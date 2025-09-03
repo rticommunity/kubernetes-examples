@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/6.0.0/rti_routing_service.xsd">
+  <routing_service name="RS-RWT-PUB">
+    <domain_route name="RWT_UDPLAN_PUB">
+      <participant name="1">
+        <domain_id>$(WAN_DOMAIN)</domain_id>
+        <participant_qos>
+          <transport_builtin>
+            <mask>UDPv4_WAN</mask>
+            <udpv4_wan>
+              <public_address>
+                  $(PUB_PUBLIC_IP)
+              </public_address>
+              <comm_ports>
+                <default>
+                  <host>$(PUB_HOST_PORT)</host>
+                  <public>$(PUB_PUBLIC_PORT)</public>
+                </default>
+              </comm_ports>
+            </udpv4_wan>
+          </transport_builtin>
+        </participant_qos>
+      </participant>
+      <participant name="2">
+        <domain_id>$(LAN_DOMAIN)</domain_id>
+        <participant_qos>
+          <discovery>
+            <initial_peers>
+              <element>
+                        rtps@udpv4://rti-clouddiscoveryservice:7400
+              </element>
+            </initial_peers>
+          </discovery>
+        </participant_qos>
+      </participant>
+      <session name="Session">
+        <auto_topic_route name="Forward">
+          <input participant="1">
+            <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+            <creation_mode>IMMEDIATE</creation_mode>
+          </input>
+          <output participant="2">
+            <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+            <creation_mode>IMMEDIATE</creation_mode>
+          </output>
+        </auto_topic_route>
+      </session>
+    </domain_route>
+  </routing_service>
+
+  <routing_service name="RS-RWT-SUB">
+    <domain_route name="RWT_UDPLAN_SUB">
+      <participant name="1">
+        <domain_id>$(WAN_DOMAIN)</domain_id>
+        <participant_qos>
+          <transport_builtin>
+            <mask>UDPv4_WAN</mask>
+            <udpv4_wan>
+              <public_address>
+                  $(SUB_PUBLIC_IP)
+              </public_address>
+              <comm_ports>
+                <default>
+                  <host>$(SUB_HOST_PORT)</host>
+                  <public>$(SUB_PUBLIC_PORT)</public>
+                </default>
+              </comm_ports>
+            </udpv4_wan>
+          </transport_builtin>
+        </participant_qos>
+      </participant>
+      <participant name="2">
+        <domain_id>$(LAN_DOMAIN)</domain_id>
+        <participant_qos>
+          <discovery>
+            <initial_peers>
+              <element>
+                        rtps@udpv4://rti-clouddiscoveryservice:7400
+              </element>
+            </initial_peers>
+          </discovery>
+        </participant_qos>
+      </participant>
+      <session name="Session">
+        <auto_topic_route name="Backward">
+          <input participant="2">
+            <creation_mode>IMMEDIATE</creation_mode>
+            <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+          </input>
+          <output participant="1">
+            <creation_mode>IMMEDIATE</creation_mode>
+            <deny_topic_name_filter>rti/*</deny_topic_name_filter>
+          </output>
+        </auto_topic_route>
+      </session>
+    </domain_route>
+  </routing_service>
+</dds>
