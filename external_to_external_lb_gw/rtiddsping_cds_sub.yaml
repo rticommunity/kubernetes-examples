@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtiddsping-sub
+  labels:
+    app: rtiddsping-sub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rtiddsping-sub
+  template:
+    metadata:
+      labels:
+        app: rtiddsping-sub
+    spec:
+      containers:
+        - name: rtiddsping-sub
+          image: rticom/dds-ping:7.5.0.1
+          args: ["-subscriber", "-domainId", "10" ,"-verbosity", "2"]
+          env:
+            - name: NDDS_DISCOVERY_PEERS
+              value: rtps@udpv4://rti-clouddiscoveryservice:7400

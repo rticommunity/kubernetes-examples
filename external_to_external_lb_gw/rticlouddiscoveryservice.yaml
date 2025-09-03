@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rti-clouddiscoveryservice
+spec:
+  selector:
+    matchLabels:
+      run: rti-clouddiscoveryservice
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: rti-clouddiscoveryservice
+    spec:
+      containers:
+        - name: rti-clouddiscoveryservice
+          image: rticom/cloud-discovery-service:7.5.0.1
+          args: ["-verbosity", "ALL"]
+          volumeMounts:
+            - name: license-volume
+              mountPath: /opt/rti.com/rti_connext_dds-7.5.0/rti_license.dat
+              subPath: rti_license.dat
+          ports:
+            - containerPort: 7400
+              protocol: UDP
+      volumes:
+        - name: license-volume
+          configMap:
+            name: rti-license
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rti-clouddiscoveryservice
+  labels:
+    run: rti-clouddiscoveryservice
+spec:
+  ports:
+    - port: 7400
+      protocol: UDP
+  selector:
+    run: rti-clouddiscoveryservice

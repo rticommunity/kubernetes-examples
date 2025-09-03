@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rti-routingservice-sub
+spec:
+  selector:
+    matchLabels:
+      app: rti-routingservice-sub
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rti-routingservice-sub
+    spec:
+      containers:
+        - name: rti-routingservice-sub
+          image: rticom/routing-service:7.5.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7400
+              protocol: UDP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /home/rtiuser/rti_workspace/7.5.0/user_config/routing_service/USER_ROUTING_SERVICE.xml
+              subPath: USER_ROUTING_SERVICE.xml
+            - name: license-volume
+              mountPath: /opt/rti.com/rti_connext_dds-7.5.0/rti_license.dat
+              subPath: rti_license.dat
+          args: ["-cfgName", "RS-RWT-SUB", "-verbosity", "5"]
+          env:
+            - name: PUB_PUBLIC_IP # value for public ip address
+              value: "203.0.113.30"
+            - name: PUB_PUBLIC_PORT # value for public port
+              value: "7400"
+            - name: PUB_HOST_PORT # value for host port
+              value: "7400"
+            - name: SUB_PUBLIC_IP # value for public ip address
+              value: "203.0.113.31"
+            - name: SUB_PUBLIC_PORT # value for public port
+              value: "7401"
+            - name: SUB_HOST_PORT # value for host port
+              value: "7401"
+            - name: WAN_DOMAIN # value for WAN domain ID
+              value: "100"
+            - name: LAN_DOMAIN # value for LAN domain ID
+              value: "10"
+      volumes:
+        - name: config-volume
+          configMap:
+            name: routingservice-rwt
+        - name: license-volume
+          configMap:
+            name: rti-license
