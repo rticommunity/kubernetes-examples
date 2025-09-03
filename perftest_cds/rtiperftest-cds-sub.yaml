@@ -18,12 +18,10 @@ spec:
       containers:
       - name: "rtiperftest-sub"
         image: "rticom/perftest:7.3.0"
+        args: ["-sub"]
         env:
-        - name: "perftest_args"
-          value: "-sub -noPrint"
-          #value: "-sub -noPrint -bestEffort"
         - name: NDDS_DISCOVERY_PEERS
-          value: rtps@rti-clouddiscoveryservice:7400
+          value: rtps@udpv4://rti-clouddiscoveryservice:7400
         volumeMounts:
           - name: license-volume
             mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
@@ -32,4 +30,3 @@ spec:
         - name: license-volume
           configMap:
             name: rti-license
-

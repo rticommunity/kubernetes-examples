@@ -18,12 +18,10 @@ spec:
       containers:
       - name: "rtiperftest-pub"
         image: "rticom/perftest:7.3.0"
+        args: ["-pub"]
         env:
-          - name: "perftest_args"
-            #value: "-pub -bestEffort -noPrint -latencyCount 1 -scan 32:64:128:256:512:1024:2048:4096:8192:16384:32768:63000 -latencyTest -executionTime 100"
-            value: "-pub -noPrint -latencyCount 1 -scan 32:64:128:256:512:1024:2048:4096:8192:16384:32768:63000 -latencyTest -executionTime 100"
           - name: NDDS_DISCOVERY_PEERS
-            value: rtps@rti-clouddiscoveryservice:7400
+            value: rtps@udpv4://rti-clouddiscoveryservice:7400
         volumeMounts:
           - name: license-volume
             mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
