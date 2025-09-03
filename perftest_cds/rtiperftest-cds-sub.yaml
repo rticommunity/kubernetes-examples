@@ -3,7 +3,6 @@ apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
   name: "rtiperftest-sub"
-  namespace: "default"
   labels:
     app: "rtiperftest-sub"
 spec:
@@ -18,14 +17,19 @@ spec:
     spec:
       containers:
       - name: "rtiperftest-sub"
-        image: "rticom/perftest:v4.1"
+        image: "rticom/perftest:7.3.0"
         env:
         - name: "perftest_args"
           value: "-sub -noPrint"
           #value: "-sub -noPrint -bestEffort"
         - name: NDDS_DISCOVERY_PEERS
           value: rtps@rti-clouddiscoveryservice:7400
-      imagePullSecrets:
-        - name: regcred
-      nodeSelector:
-        perftest_type: sub
+        volumeMounts:
+          - name: license-volume
+            mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+            subPath: rti_license.dat
+      volumes:
+        - name: license-volume
+          configMap:
+            name: rti-license
+

@@ -3,7 +3,6 @@ apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
   name: "rtiperftest-pub"
-  namespace: "default"
   labels:
     app: "rtiperftest-pub"
 spec:
@@ -18,14 +17,18 @@ spec:
     spec:
       containers:
       - name: "rtiperftest-pub"
-        image: "rticom/perftest:v4.1"
+        image: "rticom/perftest:7.3.0"
         env:
           - name: "perftest_args"
             #value: "-pub -bestEffort -noPrint -latencyCount 1 -scan 32:64:128:256:512:1024:2048:4096:8192:16384:32768:63000 -latencyTest -executionTime 100"
             value: "-pub -noPrint -latencyCount 1 -scan 32:64:128:256:512:1024:2048:4096:8192:16384:32768:63000 -latencyTest -executionTime 100"
           - name: NDDS_DISCOVERY_PEERS
             value: rtps@rti-clouddiscoveryservice:7400
-      imagePullSecrets:
-        - name: regcred
-      nodeSelector:
-        perftest_type: pub
+        volumeMounts:
+          - name: license-volume
+            mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+            subPath: rti_license.dat
+      volumes:
+        - name: license-volume
+          configMap:
+            name: rti-license

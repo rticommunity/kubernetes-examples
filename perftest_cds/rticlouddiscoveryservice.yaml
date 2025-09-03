@@ -14,19 +14,14 @@ spec:
     spec:
       containers:
         - name: rti-clouddiscoveryservice
-          image: rticom/rti-clouddiscoveryservice:latest
-          imagePullPolicy: Always
+          image: rticom/cloud-discovery-service:7.3.0
           volumeMounts:
             - name: license-volume
-              mountPath: /app/license
+              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              subPath: rti_license.dat
           ports:
             - containerPort: 7400
               protocol: UDP
-          env:
-            - name: ARGS
-              value: "-cfgFile ./config.xml -cfgName default"
-      imagePullSecrets:
-        - name: regcred
       volumes:
         - name: license-volume
           configMap:
