@@ -1,8 +1,7 @@
 # Kubernetes Example Configurations for RTI Connext DDS
 
 [![CI/CD Pipeline](https://github.com/rticommunity/kubernetes-examples/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/rticommunity/kubernetes-examples/actions)
-[![License](https://img.shields.io/badge/License-RTI-blue.svg)](LICENSE)
-[![RTI Connext](https://img.shields.io/badge/RTI%20Connext-7.5.0-green.svg)](https://www.rti.com/products/connext-dds)
+[![RTI Connext](https://img.shields.io/badge/RTI%20Connext-7.5.0-green.svg)](https://community.rti.com/documentation/rti-connext-750)
 
 This repository provides example configurations for deploying RTI Connext DDS applications and services on Kubernetes clusters. Each example demonstrates specific networking patterns and deployment strategies for real-time distributed systems.
 
