@@ -1,0 +1,44 @@
+# Kind cluster configuration for local testing
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: rti-test
+
+networking:
+  # Disable default CNI to test different networking scenarios
+  disableDefaultCNI: false
+  # Set pod and service subnets
+  podSubnet: "10.244.0.0/16"
+  serviceSubnet: "10.96.0.0/12"
+
+nodes:
+- role: control-plane
+  image: kindest/node:v1.29.0
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  # Map ports for NodePort services testing
+  - containerPort: 30000
+    hostPort: 30000
+    protocol: UDP
+  - containerPort: 30001
+    hostPort: 30001
+    protocol: UDP
+  - containerPort: 30395
+    hostPort: 30395
+    protocol: UDP
+- role: worker
+  image: kindest/node:v1.29.0
+- role: worker
+  image: kindest/node:v1.29.0
+
+# Enable feature gates that might be useful for DDS
+kubeadmConfigPatches:
+- |
+  kind: ClusterConfiguration
+  apiServer:
+    extraArgs:
+      enable-admission-plugins: NodeRestriction,ResourceQuota

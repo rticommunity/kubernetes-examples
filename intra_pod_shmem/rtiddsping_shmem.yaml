@@ -20,13 +20,13 @@ spec:
       containers:
         - name: rtiddsping-pub
           image: rticom/dds-ping:7.5.0.1
-          args: ["-publisher", "-domainId", "10" ,"-verbosity", "2", "-transport", "3"]
+          args: ["-publisher", "-domainId", "10", "-verbosity", "2", "-transport", "3"]
           env:
             - name: NDDS_DISCOVERY_PEERS
               value: "shmem://,rtps@udpv4://rti-clouddiscoveryservice:7400"
         - name: rtiddsping-sub
           image: rticom/dds-ping:7.5.0.1
-          args: ["-subscriber", "-domainId", "10" ,"-verbosity", "2", "-transport", "2"]
+          args: ["-subscriber", "-domainId", "10", "-verbosity", "2", "-transport", "2"]
           env:
             - name: NDDS_DISCOVERY_PEERS
               value: "shmem://"

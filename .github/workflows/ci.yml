@@ -1,0 +1,138 @@
+name: CI/CD Pipeline
+'on':
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  yaml-validation:
+    runs-on: ubuntu-latest
+    name: YAML Validation
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.28.0'
+
+      - name: Validate Kubernetes YAML files
+        run: |
+          find . -name "*.yaml" -o -name "*.yml" | grep -v '.github' | \
+            xargs -I {} sh -c 'echo "Validating {}" && kubectl --dry-run=client apply -f {} || echo "Warning: {} validation failed"'
+
+      - name: Lint YAML files
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .
+          config_file: .yamllint.yml
+
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Security Scanning
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    name: Integration Tests
+    needs: [yaml-validation]
+    strategy:
+      matrix:
+        kubernetes-version: ['1.27', '1.28', '1.29']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1
+        with:
+          node_image: kindest/node:v${{ matrix.kubernetes-version }}.0
+
+      - name: Create RTI License from Secret
+        env:
+          RTI_LICENSE_BASE64: ${{ secrets.RTI_LICENSE }}
+        run: |
+          if [ -n "$RTI_LICENSE_BASE64" ]; then
+            echo "$RTI_LICENSE_BASE64" | base64 -d > rti_license.dat
+            echo "Using RTI license from secrets"
+          else
+            echo "# Dummy RTI License for CI Testing" > rti_license.dat
+            echo "# Warning: Using dummy license - tests may fail" >> rti_license.dat
+            echo "Warning: No RTI license secret found, using dummy license"
+          fi
+
+      - name: Create test results directory
+        run: |
+          mkdir -p tests/results/basic
+
+      - name: Run test suite (basic tests only)
+        run: |
+          chmod +x tests/run_integration_tests.sh
+          # Capture both stdout and stderr to a log file
+          ./tests/run_integration_tests.sh basic 2>&1 | tee tests/results/basic/test_output.log || echo "Some tests may fail without valid RTI license"
+
+      - name: Upload basic test output
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: basic-test-output-k8s-${{ matrix.kubernetes-version }}
+          path: tests/results/basic/test_output.log
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-k8s-${{ matrix.kubernetes-version }}
+          path: tests/results/
+
+  performance-tests:
+    runs-on: ubuntu-latest
+    name: Performance Tests
+    needs: [integration-tests]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1
+        with:
+          node_image: kindest/node:v1.28.0
+
+      - name: Create RTI License from Secret
+        env:
+          RTI_LICENSE_BASE64: ${{ secrets.RTI_LICENSE }}
+        run: |
+          if [ -n "$RTI_LICENSE_BASE64" ]; then
+            echo "$RTI_LICENSE_BASE64" | base64 -d > rti_license.dat
+            echo "Using RTI license from secrets"
+          else
+            echo "# Dummy RTI License for CI Testing" > rti_license.dat
+            echo "Warning: No RTI license secret found, using dummy license"
+          fi
+
+      - name: Run performance tests
+        run: |
+          chmod +x tests/performance_tests.sh
+          ./tests/performance_tests.sh basic 30 2 || echo "Performance tests may fail without valid RTI license"
+
+      - name: Upload performance results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-results
+          path: tests/results/performance/

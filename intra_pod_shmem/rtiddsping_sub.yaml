@@ -18,7 +18,7 @@ spec:
       containers:
         - name: rtiddsping-sub
           image: rticom/dds-ping:7.5.0.1
-          args: ["-subscriber", "-domainId", "10" ,"-verbosity", "2", "-transport", "1"]
+          args: ["-subscriber", "-domainId", "10", "-verbosity", "2", "-transport", "1"]
           env:
             - name: NDDS_DISCOVERY_PEERS
               value: "rtps@udpv4://rti-clouddiscoveryservice:7400"
