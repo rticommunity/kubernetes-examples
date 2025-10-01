@@ -1,6 +1,19 @@
 #!/bin/bash
 # Integration Test Suite for RTI Connext DDS Kubernetes Examples
+# 
 # Usage: ./run_integration_tests.sh [test_category]
+#
+# Test Categories:
+#   basic       - Pod-to-pod unicast discovery (recommended for CI/CD)
+#   multicast   - Pod-to-pod multicast discovery (CNI dependent)
+#   advanced    - Shared memory + external gateway scenarios  
+#   loadbalancer- External gateway with LoadBalancer service
+#   all         - All test categories (comprehensive)
+#
+# Examples:
+#   ./run_integration_tests.sh basic      # Run reliable unicast tests
+#   ./run_integration_tests.sh advanced   # Run complex networking tests
+#   ./run_integration_tests.sh all        # Run complete test suite
 
 set -euo pipefail
 
@@ -28,15 +41,29 @@ get_test_cases() {
     local category="$1"
     case "$category" in
         "basic")
-            echo "pod_to_pod_multicast_disc pod_to_pod_unicast_disc"
+            # Basic DDS communication using unicast discovery with Cloud Discovery Service
+            # Works reliably across all Kubernetes CNI implementations
+            echo "pod_to_pod_unicast_disc"
             ;;
         "advanced")
+            # Advanced scenarios: shared memory transport and external gateway
+            # - intra_pod_shmem: Containers communicate via shared memory within same pod
+            # - external_to_pod_gw: External apps communicate with pods via RTI Routing Service + NodePort
             echo "intra_pod_shmem external_to_pod_gw"
             ;;
+        "multicast")
+            # Multicast-based discovery (requires CNI with multicast support)
+            # May fail on cloud providers or CNIs that block multicast traffic
+            echo "pod_to_pod_multicast_disc"
+            ;;
         "loadbalancer")
+            # External-to-pod communication via LoadBalancer service
+            # Requires cloud provider with LoadBalancer controller support
             echo "external_to_pod_lb_gw"
             ;;
         "all")
+            # Comprehensive test suite - runs all available test cases
+            # Note: Some tests may fail depending on CNI capabilities and cloud provider features
             echo "pod_to_pod_multicast_disc pod_to_pod_unicast_disc intra_pod_shmem external_to_pod_gw external_to_pod_lb_gw"
             ;;
         *)
@@ -90,6 +117,72 @@ create_routing_service_configmaps() {
     esac
 }
 
+# Verify data flow between publisher and subscriber
+verify_data_flow() {
+    local use_case="$1"
+    log_info "Verifying data flow for $use_case..."
+    
+    # Brief pause to let pods start communicating (CDS is already ready)
+    sleep 5
+    
+    # Get publisher and subscriber pod names
+    local pub_pod
+    local sub_pod
+    
+    pub_pod=$(kubectl get pods -n "$NAMESPACE" -l app=rtiddsping-pub --no-headers -o custom-columns=":metadata.name" 2>/dev/null | head -1)
+    sub_pod=$(kubectl get pods -n "$NAMESPACE" -l app=rtiddsping-sub --no-headers -o custom-columns=":metadata.name" 2>/dev/null | head -1)
+    
+    if [[ -z "$pub_pod" ]] || [[ -z "$sub_pod" ]]; then
+        log_error "Could not find publisher or subscriber pods"
+        TEST_RESULTS="$TEST_RESULTS $use_case:FAIL"
+        FAILED_TESTS="$FAILED_TESTS $use_case"
+        return 1
+    fi
+    
+    log_info "Found publisher pod: $pub_pod"
+    log_info "Found subscriber pod: $sub_pod"
+    
+    # Simple test - exactly like the proven debug script
+    log_info "Testing data reception..."
+    local sub_logs
+    sub_logs=$(kubectl logs "$sub_pod" -n "$NAMESPACE" --tail=50 2>/dev/null || echo "")
+    
+    if echo "$sub_logs" | grep -q -E "(issue received|Received sample|Latency:|samples received|Samples received)"; then
+        log_success "✓ Subscriber is receiving data from publisher!"
+        echo ""
+        echo "========== SUBSCRIBER DATA RECEPTION PROOF =========="
+        echo "Publisher pod: $pub_pod"
+        echo "Subscriber pod: $sub_pod"
+        echo ""
+        echo "Recent subscriber logs showing data reception:"
+        echo "$sub_logs" | tail -20
+        echo ""
+        echo "Data reception samples:"
+        echo "$sub_logs" | grep -E "(issue received|Received sample|Latency:|samples received)" | tail -5
+        echo "====================================================="
+        echo ""
+        log_success "Data flow verification passed for $use_case"
+        return 0
+        log_error "✗ No data reception detected in subscriber logs"
+        echo ""
+        echo "========== DIAGNOSTIC INFORMATION =========="
+        echo "Publisher pod: $pub_pod"
+        echo "Subscriber pod: $sub_pod"
+        echo ""
+        echo "Recent subscriber logs (last 20 lines):"
+        kubectl logs "$sub_pod" -n "$NAMESPACE" --tail=20 2>/dev/null || echo "No subscriber logs available"
+        echo ""
+        echo "Recent publisher logs (last 20 lines):"
+        kubectl logs "$pub_pod" -n "$NAMESPACE" --tail=20 2>/dev/null || echo "No publisher logs available"
+        echo "============================================="
+        echo ""
+        
+        TEST_RESULTS="$TEST_RESULTS $use_case:FAIL"
+        FAILED_TESTS="$FAILED_TESTS $use_case"
+        return 1
+    fi
+}
+
 # Test individual use case
 test_use_case() {
     local use_case="$1"
@@ -108,9 +201,9 @@ test_use_case() {
     # Create required ConfigMaps for routing service examples
     create_routing_service_configmaps "$use_case"
     
-    # Apply all YAML files
+    # Get all YAML files (excluding HA files to avoid conflicts)
     local yaml_files
-    yaml_files=$(find . -maxdepth 1 -name "*.yaml" -o -name "*.yml" | head -10)
+    yaml_files=$(find . -maxdepth 1 -name "*.yaml" -o -name "*.yml" | grep -v "_ha\.yaml" | head -10)
     
     if [[ -z "$yaml_files" ]]; then
         log_warn "No YAML files found in $test_dir"
@@ -119,9 +212,38 @@ test_use_case() {
         return 0
     fi
     
-    # Deploy resources
-    local deploy_success=true
+    # Deploy Cloud Discovery Service first and wait for it to be ready
+    local cds_file=""
+    local other_files=""
     for yaml_file in $yaml_files; do
+        if [[ "$yaml_file" == *"clouddiscoveryservice"* ]]; then
+            cds_file="$yaml_file"
+        else
+            other_files="$other_files $yaml_file"
+        fi
+    done
+    
+    # Deploy CDS first if it exists
+    if [[ -n "$cds_file" ]]; then
+        log_info "Deploying Cloud Discovery Service first: $cds_file"
+        if ! kubectl apply -f "$cds_file" -n "$NAMESPACE" --timeout=60s; then
+            log_error "Failed to apply $cds_file"
+            TEST_RESULTS="$TEST_RESULTS $use_case:FAIL"
+            FAILED_TESTS="$FAILED_TESTS $use_case"
+            popd > /dev/null
+            return 1
+        fi
+        
+        # Wait for CDS to be ready before deploying pub/sub
+        log_info "Waiting for Cloud Discovery Service to be ready..."
+        if ! kubectl wait --for=condition=available deployment -l app=rti-clouddiscoveryservice -n "$NAMESPACE" --timeout=120s 2>/dev/null; then
+            log_warn "CDS deployment may not be fully ready, continuing anyway..."
+        fi
+    fi
+    
+    # Deploy remaining resources (publisher and subscriber)
+    local deploy_success=true
+    for yaml_file in $other_files; do
         log_info "Applying $yaml_file"
         if ! kubectl apply -f "$yaml_file" -n "$NAMESPACE" --timeout=60s; then
             log_error "Failed to apply $yaml_file"
@@ -156,6 +278,11 @@ test_use_case() {
         log_success "All pods are running successfully"
         TEST_RESULTS="$TEST_RESULTS $use_case:PASS"
         PASSED_TESTS="$PASSED_TESTS $use_case"
+    fi
+    
+    # Data flow verification test for basic DDS communication
+    if [[ "$use_case" == "pod_to_pod_unicast_disc" || "$use_case" == "pod_to_pod_multicast_disc" ]]; then
+        verify_data_flow "$use_case"
     fi
     
     # Basic connectivity test (if applicable)

@@ -76,10 +76,22 @@ jobs:
             echo "Warning: No RTI license secret found, using dummy license"
           fi
 
+      - name: Create test results directory
+        run: |
+          mkdir -p tests/results/basic
+
       - name: Run test suite (basic tests only)
         run: |
           chmod +x tests/run_integration_tests.sh
-          ./tests/run_integration_tests.sh basic || echo "Some tests may fail without valid RTI license"
+          # Capture both stdout and stderr to a log file
+          ./tests/run_integration_tests.sh basic 2>&1 | tee tests/results/basic/test_output.log || echo "Some tests may fail without valid RTI license"
+
+      - name: Upload basic test output
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: basic-test-output-k8s-${{ matrix.kubernetes-version }}
+          path: tests/results/basic/test_output.log
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

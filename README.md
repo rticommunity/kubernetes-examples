@@ -49,12 +49,30 @@ kubectl create configmap rti-license --from-file=rti_license.dat
 
 ### 3. Run Integration Tests
 ```bash
-# Test basic scenarios
+# Test basic scenarios (unicast discovery - works on most CNIs)
 ./tests/run_integration_tests.sh basic
 
-# Test all scenarios
+./tests/run_integration_tests.sh multicast
+
+# Test advanced scenarios (complex networking and specialized transports)
+./tests/run_integration_tests.sh advanced
+
+# Test LoadBalancer scenarios (requires cloud provider LoadBalancer support)
+./tests/run_integration_tests.sh loadbalancer
+
+# Test all scenarios (comprehensive test suite)
 ./tests/run_integration_tests.sh all
 ```
+
+#### Test Category Details:
+- **`basic`**: Pod-to-pod unicast discovery with Cloud Discovery Service - reliable across all CNIs
+- **`multicast`**: Pod-to-pod multicast discovery - only works if CNI supports multicast traffic
+- **`advanced`**: 
+  - Intra-pod shared memory communication between containers
+  - External-to-pod gateway using RTI Routing Service with NodePort
+- **`loadbalancer`**: External-to-pod gateway using RTI Routing Service with LoadBalancer service
+- **`all`**: Runs all test categories (may fail on CNIs without multicast/LoadBalancer support)
+
 
 ## 🛠️ Troubleshooting
 
