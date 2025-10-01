@@ -86,7 +86,6 @@ kubectl create configmap rti-license --from-file=rti_license.dat
 **Solution**: 
 - Verify cloud provider LoadBalancer controller
 - Check service annotations for cloud-specific requirements
-- Review cluster permissions
 
 #### 3. License Issues
 **Problem**: RTI services fail with license errors
@@ -99,7 +98,6 @@ kubectl create configmap rti-license --from-file=rti_license.dat
 **Problem**: DDS applications cannot discover each other
 **Solution**:
 - Verify Cloud Discovery Service is running: `kubectl logs deployment/rti-clouddiscoveryservice`
-- Check network policies aren't blocking traffic
 - Validate initial peer configurations
 
 ## 📄 License
