@@ -18,7 +18,7 @@ spec:
       containers:
         - name: rtiddsping-pub
           image: rticom/dds-ping:7.5.0.1
-          args: ["-publisher", "-domainId", "10" ,"-verbosity", "2"]
+          args: ["-publisher", "-domainId", "10", "-verbosity", "2"]
           env:
             - name: NDDS_DISCOVERY_PEERS
               value: "rtps@udpv4://rti-cds-0.rti-cds-hs:7400,rtps@udpv4://rti-cds-1.rti-cds-hs:7400"

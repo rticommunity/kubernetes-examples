@@ -1,5 +1,5 @@
 name: CI/CD Pipeline
-on:
+'on':
   push:
     branches: [main, develop]
   pull_request:
