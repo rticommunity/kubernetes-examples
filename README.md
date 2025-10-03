@@ -90,7 +90,7 @@ kubectl create configmap rti-license --from-file=rti_license.dat
 - Verify ConfigMap creation: `kubectl get configmap rti-license -o yaml`
 - Check volume mounts in pod specifications
 
-#### 4. Pod Communication Failures
+#### 3. Pod Communication Failures
 **Problem**: DDS applications cannot discover each other
 
 **Solution**:
