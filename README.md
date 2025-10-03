@@ -79,17 +79,12 @@ kubectl create configmap rti-license --from-file=rti_license.dat
 
 #### 1. Multicast Not Supported
 **Problem**: CNI doesn't support multicast (common in cloud providers)
+
 **Solution**: Use unicast discovery examples with Cloud Discovery Service
 
-#### 2. LoadBalancer Pending
-**Problem**: LoadBalancer service stuck in pending state
-**Solution**: 
-- Verify cloud provider LoadBalancer controller
-- Check service annotations for cloud-specific requirements
-- Review cluster permissions
-
-#### 3. License Issues
+#### 2. License Issues
 **Problem**: RTI services fail with license errors
+
 **Solution**:
 - Ensure `rti_license.dat` is valid and not expired
 - Verify ConfigMap creation: `kubectl get configmap rti-license -o yaml`
@@ -97,9 +92,9 @@ kubectl create configmap rti-license --from-file=rti_license.dat
 
 #### 4. Pod Communication Failures
 **Problem**: DDS applications cannot discover each other
+
 **Solution**:
 - Verify Cloud Discovery Service is running: `kubectl logs deployment/rti-clouddiscoveryservice`
-- Check network policies aren't blocking traffic
 - Validate initial peer configurations
 
 ## 📄 License
