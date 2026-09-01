@@ -37,7 +37,7 @@ kubectl apply -k pod_to_pod_unicast_disc/overlays/rti-examples/ha
 
 To deploy to a different namespace, copy the selected `overlays/rti-examples` directory, change `namespace: rti-examples` in its `kustomization.yaml`, create the same ConfigMaps in the new namespace, and apply the copied overlay.
 
-Kustomize is optional. Raw manifests remain directly deployable from their bases, for example `kubectl apply -f pod_to_pod_unicast_disc/base/ -n rti-examples` (or `base/ha/` for HA).
+Kustomize is optional. Raw manifests remain directly deployable from their bases, for example `kubectl apply -f pod_to_pod_unicast_disc/base/*.yaml -n rti-examples` (or `pod_to_pod_unicast_disc/base/ha/*.yaml` for HA).
 
 ## Running integration tests
 

@@ -19,5 +19,5 @@ Use `kubectl get services -n rti-examples` to obtain the external endpoint. Conf
 To deploy to another namespace, copy `overlays/rti-examples`, update `namespace: rti-examples` in its copied `kustomization.yaml`, create both ConfigMaps in the target namespace, and apply the copy. For direct raw deployment, use:
 
 ```bash
-kubectl apply -f external_to_pod_lb_gw/base/ -n rti-examples
+kubectl apply -f external_to_pod_lb_gw/base/*.yaml -n rti-examples
 ```
