@@ -9,7 +9,9 @@ Run these commands from the repository root:
 ```bash
 kubectl create namespace rti-examples
 kubectl create configmap rti-license --from-file=rti_license.dat -n rti-examples
-kubectl apply -k pod_to_pod_unicast_disc/overlays/rti-examples
+kubectl apply -f pod_to_pod_unicast_disc/rticlouddiscoveryservice.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_pub.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_sub.yaml
 ```
 
 ## Deploy the redundant CDS (HA) scenario
@@ -19,17 +21,11 @@ Use a separate namespace or remove the single-CDS scenario first because both sc
 ```bash
 kubectl create namespace rti-examples
 kubectl create configmap rti-license --from-file=rti_license.dat -n rti-examples
-kubectl apply -k pod_to_pod_unicast_disc/overlays/rti-examples/ha
+kubectl apply -f pod_to_pod_unicast_disc/rticlouddiscoveryservice_ha.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_pub_ha.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_sub_ha.yaml
 ```
 
 The HA scenario creates a StatefulSet and headless service. Participants discover its CDS instances through their stable DNS names.
 
-To deploy either scenario to a different namespace, copy `overlays/rti-examples` (including `ha/` when needed), change `namespace: rti-examples` in the applicable copied `kustomization.yaml`, create the license ConfigMap in the target namespace, and apply that overlay.
-
-For direct deployment without Kustomize, use raw base resources:
-
-```bash
-find pod_to_pod_unicast_disc/base -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
-# HA:
-find pod_to_pod_unicast_disc/base/ha -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
-```
+All resources are deployed to the fixed `rti-examples` namespace.

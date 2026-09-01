@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rtiddsping-pub
+  namespace: rti-examples
   labels:
     app: rtiddsping-pub
 spec:
@@ -18,7 +19,4 @@ spec:
       containers:
         - name: rtiddsping-pub
           image: rticom/dds-ping:7.7.0
-          args: ["-publisher", "-domainId", "10", "-verbosity", "2"]
-          env:
-            - name: NDDS_DISCOVERY_PEERS
-              value: rtps@udpv4://rti-clouddiscoveryservice:7400
+          args: ["-publisher", "-domainId", "10", "-verbosity", "1"]

@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtiddsping-sub
+  namespace: rti-examples
+  labels:
+    app: rtiddsping-sub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rtiddsping-sub
+  template:
+    metadata:
+      labels:
+        app: rtiddsping-sub
+    spec:
+      containers:
+        - name: rtiddsping-sub
+          image: rticom/dds-ping:7.7.0
+          args: ["-subscriber", "-domainId", "10", "-verbosity", "1"]

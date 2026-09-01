@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rtiddsping-pub
+  namespace: rti-examples
   labels:
     app: rtiddsping-pub
 spec:

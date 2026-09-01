@@ -17,7 +17,7 @@ This repository provides Kubernetes configurations for RTI Connext DDS networkin
 
 ## Deploying an example
 
-Each example has a standard Kustomize base containing its deployable resource YAML and an `overlays/rti-examples` overlay that selects the `rti-examples` namespace. From the repository root, create that namespace and the ConfigMaps required by the selected example:
+All example manifests use the fixed `rti-examples` namespace. From the repository root, create that namespace and the ConfigMaps required by the selected example:
 
 ```bash
 kubectl create namespace rti-examples
@@ -27,17 +27,17 @@ kubectl create configmap routingservice-rwt \
   --from-file=external_to_pod_gw/USER_ROUTING_SERVICE.xml -n rti-examples
 ```
 
-The multicast example needs no ConfigMap. Use the corresponding `USER_ROUTING_SERVICE.xml` path for the load-balanced gateway. Then apply an overlay, for example:
+The multicast example needs no ConfigMap. Use the corresponding `USER_ROUTING_SERVICE.xml` path for the load-balanced gateway. Apply an example directly, for example:
 
 ```bash
-kubectl apply -k pod_to_pod_unicast_disc/overlays/rti-examples
+kubectl apply -f pod_to_pod_multicast_disc/
 # Redundant Cloud Discovery Service (HA):
-kubectl apply -k pod_to_pod_unicast_disc/overlays/rti-examples/ha
+kubectl apply -f pod_to_pod_unicast_disc/rticlouddiscoveryservice_ha.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_pub_ha.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_sub_ha.yaml
 ```
 
-To deploy to a different namespace, copy the selected `overlays/rti-examples` directory, change `namespace: rti-examples` in its `kustomization.yaml`, create the same ConfigMaps in the new namespace, and apply the copied overlay.
-
-Kustomize is optional. Raw manifests remain directly deployable from their bases, for example `find pod_to_pod_unicast_disc/base -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;` (or `pod_to_pod_unicast_disc/base/ha` for HA).
+The single-CDS unicast and HA resources share publisher and subscriber names, so deploy only one of those scenarios in `rti-examples` at a time.
 
 ## Running integration tests
 

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rti-clouddiscoveryservice
+  namespace: rti-examples
 spec:
   selector:
     matchLabels:
@@ -32,6 +33,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rti-clouddiscoveryservice
+  namespace: rti-examples
   labels:
     run: rti-clouddiscoveryservice
 spec:

@@ -22,6 +22,8 @@ NAMESPACE="rti-test-$(date +%s)"
 TEST_TIMEOUT=600
 LOG_LEVEL="INFO"
 CLEANUP_ON_EXIT=true
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TEST_MANIFEST_DIR="$REPO_ROOT/tests/results/namespace-rewritten-manifests-$NAMESPACE"
 
 # Colors for output
 RED='\033[0;31m'
@@ -83,8 +85,30 @@ cleanup() {
         log_info "Cleaning up test namespace: $NAMESPACE"
         kubectl delete namespace "$NAMESPACE" --ignore-not-found=true --timeout=60s || true
     fi
+    rm -rf "$TEST_MANIFEST_DIR"
 }
 trap cleanup EXIT
+
+copy_manifest_for_test_namespace() {
+    local source_manifest="$1"
+    local output_manifest="$TEST_MANIFEST_DIR/$(basename "$PWD")-$(basename "$source_manifest")"
+    local metadata_count
+    local namespace_count
+
+    metadata_count=$(grep -c '^metadata:$' "$source_manifest" || true)
+    namespace_count=$(grep -c '^  namespace: rti-examples$' "$source_manifest" || true)
+    if [[ "$metadata_count" -eq 0 || "$metadata_count" -ne "$namespace_count" ]]; then
+        log_error "Manifest does not declare rti-examples for every resource: $source_manifest"
+        return 1
+    fi
+
+    if ! sed -E "s/^([[:space:]]*namespace:)[[:space:]]*rti-examples[[:space:]]*$/\\1 $NAMESPACE/" \
+        "$source_manifest" > "$output_manifest"; then
+        log_error "Failed to rewrite manifest namespace: $source_manifest"
+        return 1
+    fi
+    printf '%s\n' "$output_manifest"
+}
 
 # Create test namespace
 setup_test_environment() {
@@ -93,6 +117,7 @@ setup_test_environment() {
         log_error "Failed to create test namespace"
         return 1
     }
+    mkdir -p "$TEST_MANIFEST_DIR"
     
     # Create RTI license ConfigMap if rti_license.dat exists
     if [[ -f "rti_license.dat" ]]; then
@@ -201,10 +226,8 @@ test_use_case() {
     # Create required ConfigMaps for routing service examples
     create_routing_service_configmaps "$use_case"
     
-    # Apply the single-scenario base directly so the test namespace remains dynamic.
-    local base_dir="base"
     local yaml_files
-    yaml_files=$(find "$base_dir" -maxdepth 1 -type f \( -name "*.yaml" -o -name "*.yml" \) ! -name "kustomization.yaml" | sort)
+    yaml_files=$(find . -maxdepth 1 -type f \( -name "*.yaml" -o -name "*.yml" \) | sort)
     
     if [[ -z "$yaml_files" ]]; then
         log_warn "No YAML files found in $test_dir"
@@ -212,15 +235,28 @@ test_use_case() {
         popd > /dev/null
         return 0
     fi
+
+    local rendered_yaml_files=()
+    local yaml_file
+    for yaml_file in $yaml_files; do
+        local rendered_yaml_file
+        if ! rendered_yaml_file=$(copy_manifest_for_test_namespace "$yaml_file"); then
+            TEST_RESULTS="$TEST_RESULTS $use_case:FAIL"
+            FAILED_TESTS="$FAILED_TESTS $use_case"
+            popd > /dev/null
+            return 1
+        fi
+        rendered_yaml_files+=("$rendered_yaml_file")
+    done
     
     # Deploy Cloud Discovery Service first and wait for it to be ready
     local cds_file=""
-    local other_files=""
-    for yaml_file in $yaml_files; do
+    local other_files=()
+    for yaml_file in "${rendered_yaml_files[@]}"; do
         if [[ "$yaml_file" == *"clouddiscoveryservice"* ]]; then
             cds_file="$yaml_file"
         else
-            other_files="$other_files $yaml_file"
+            other_files+=("$yaml_file")
         fi
     done
     
@@ -244,7 +280,7 @@ test_use_case() {
     
     # Deploy remaining resources (publisher and subscriber)
     local deploy_success=true
-    for yaml_file in $other_files; do
+    for yaml_file in "${other_files[@]}"; do
         log_info "Applying $yaml_file"
         if ! kubectl apply -f "$yaml_file" -n "$NAMESPACE" --timeout=60s; then
             log_error "Failed to apply $yaml_file"
@@ -298,7 +334,7 @@ test_use_case() {
     fi
     
     # Cleanup resources for this test
-    for yaml_file in $yaml_files; do
+    for yaml_file in "${rendered_yaml_files[@]}"; do
         kubectl delete -f "$yaml_file" -n "$NAMESPACE" --ignore-not-found=true --timeout=60s || true
     done
     

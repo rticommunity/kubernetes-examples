@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rti-routingservice
+  namespace: rti-examples
 spec:
   selector:
     matchLabels:

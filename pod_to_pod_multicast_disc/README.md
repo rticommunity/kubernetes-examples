@@ -8,13 +8,7 @@ Run these commands from the repository root. This example needs no ConfigMap:
 
 ```bash
 kubectl create namespace rti-examples
-kubectl apply -k pod_to_pod_multicast_disc/overlays/rti-examples
+kubectl apply -f pod_to_pod_multicast_disc/
 ```
 
-The overlay places every resource in `rti-examples`. To deploy elsewhere, copy `overlays/rti-examples`, change `namespace: rti-examples` in the copied `kustomization.yaml`, create that namespace, and apply the copied overlay.
-
-For a non-Kustomize workflow, apply the raw resources directly:
-
-```bash
-find pod_to_pod_multicast_disc/base -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
-```
+All resources are deployed to the fixed `rti-examples` namespace.
