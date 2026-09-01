@@ -201,9 +201,10 @@ test_use_case() {
     # Create required ConfigMaps for routing service examples
     create_routing_service_configmaps "$use_case"
     
-    # Get all YAML files (excluding HA files to avoid conflicts)
+    # Apply the single-scenario base directly so the test namespace remains dynamic.
+    local base_dir="base"
     local yaml_files
-    yaml_files=$(find . -maxdepth 1 -name "*.yaml" -o -name "*.yml" | grep -v "_ha\.yaml" | head -10)
+    yaml_files=$(find "$base_dir" -maxdepth 1 -type f \( -name "*.yaml" -o -name "*.yml" \) ! -name "kustomization.yaml" | sort)
     
     if [[ -z "$yaml_files" ]]; then
         log_warn "No YAML files found in $test_dir"
