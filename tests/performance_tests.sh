@@ -59,10 +59,10 @@ spec:
     spec:
       containers:
         - name: rti-clouddiscoveryservice
-          image: rticom/cloud-discovery-service:7.3.0
+          image: rticom/cloud-discovery-service:7.7.0.1
           volumeMounts:
             - name: license-volume
-              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              mountPath: /opt/rti.com/rti_connext_dds-7.7.0/rti_license.dat
               subPath: rti_license.dat
           ports:
             - containerPort: 7400
@@ -101,14 +101,14 @@ spec:
     spec:
       containers:
       - name: publisher
-        image: rticom/perftest:7.3.0
+        image: rticom/perftest:7.7.0
         args: ["-pub", "-executionTime", "$DURATION", "-dataLen", "1024"]
         env:
           - name: NDDS_DISCOVERY_PEERS
             value: rtps@udpv4://rti-clouddiscoveryservice:7400
         volumeMounts:
           - name: license-volume
-            mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+            mountPath: /opt/rti.com/rti_connext_dds-7.7.0/rti_license.dat
             subPath: rti_license.dat
         resources:
           requests:
@@ -139,14 +139,14 @@ spec:
     spec:
       containers:
       - name: subscriber
-        image: rticom/perftest:7.3.0
+        image: rticom/perftest:7.7.0
         args: ["-sub", "-verbosity", "1"]
         env:
           - name: NDDS_DISCOVERY_PEERS
             value: rtps@udpv4://rti-clouddiscoveryservice:7400
         volumeMounts:
           - name: license-volume
-            mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+            mountPath: /opt/rti.com/rti_connext_dds-7.7.0/rti_license.dat
             subPath: rti_license.dat
         resources:
           requests:
@@ -204,10 +204,10 @@ spec:
     spec:
       containers:
         - name: rti-clouddiscoveryservice
-          image: rticom/cloud-discovery-service:7.3.0
+          image: rticom/cloud-discovery-service:7.7.0.1
           volumeMounts:
             - name: license-volume
-              mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+              mountPath: /opt/rti.com/rti_connext_dds-7.7.0/rti_license.dat
               subPath: rti_license.dat
           ports:
             - containerPort: 7400
@@ -239,14 +239,14 @@ spec:
     spec:
       containers:
       - name: publisher
-        image: rticom/perftest:7.3.0
+        image: rticom/perftest:7.7.0
         args: ["-pub", "-latencyCount", "10000", "-dataLen", "32", "-latencyTest", "-executionTime", "60"]
         env:
           - name: NDDS_DISCOVERY_PEERS
             value: rtps@udpv4://rti-clouddiscoveryservice:7400
         volumeMounts:
           - name: license-volume
-            mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+            mountPath: /opt/rti.com/rti_connext_dds-7.7.0/rti_license.dat
             subPath: rti_license.dat
         resources:
           requests:
@@ -271,14 +271,14 @@ spec:
     spec:
       containers:
       - name: subscriber
-        image: rticom/perftest:7.3.0
+        image: rticom/perftest:7.7.0
         args: ["-sub", "-latencyTest"]
         env:
           - name: NDDS_DISCOVERY_PEERS
             value: rtps@udpv4://rti-clouddiscoveryservice:7400
         volumeMounts:
           - name: license-volume
-            mountPath: /opt/rti.com/rti_connext_dds-7.3.0/rti_license.dat
+            mountPath: /opt/rti.com/rti_connext_dds-7.7.0/rti_license.dat
             subPath: rti_license.dat
         resources:
           requests:

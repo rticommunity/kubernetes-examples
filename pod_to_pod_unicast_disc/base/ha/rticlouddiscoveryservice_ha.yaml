@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
         - name: rti-clouddiscoveryservice
-          image: rticom/cloud-discovery-service:7.5.0.1
+          image: rticom/cloud-discovery-service:7.7.0.1
           volumeMounts:
             - name: license-volume
-              mountPath: /opt/rti.com/rti_connext_dds-7.5.0/rti_license.dat
+              mountPath: /opt/rti.com/rti_connext_dds-7.7.0/rti_license.dat
               subPath: rti_license.dat
           ports:
             - containerPort: 7400
