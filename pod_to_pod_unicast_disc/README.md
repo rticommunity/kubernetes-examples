@@ -29,7 +29,7 @@ To deploy either scenario to a different namespace, copy `overlays/rti-examples`
 For direct deployment without Kustomize, use raw base resources:
 
 ```bash
-kubectl apply -f pod_to_pod_unicast_disc/base/*.yaml -n rti-examples
+find pod_to_pod_unicast_disc/base -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
 # HA:
-kubectl apply -f pod_to_pod_unicast_disc/base/ha/*.yaml -n rti-examples
+find pod_to_pod_unicast_disc/base/ha -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
 ```

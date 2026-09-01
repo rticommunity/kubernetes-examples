@@ -19,5 +19,5 @@ Get the assigned NodePort with `kubectl get service -n rti-examples`. Run the ex
 To deploy to a different namespace, copy `overlays/rti-examples`, change `namespace: rti-examples` in the copied `kustomization.yaml`, and create both ConfigMaps in the new namespace before applying the copy. For direct raw deployment, use:
 
 ```bash
-kubectl apply -f external_to_pod_gw/base/*.yaml -n rti-examples
+find external_to_pod_gw/base -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
 ```

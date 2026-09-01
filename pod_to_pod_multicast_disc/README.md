@@ -16,5 +16,5 @@ The overlay places every resource in `rti-examples`. To deploy elsewhere, copy `
 For a non-Kustomize workflow, apply the raw resources directly:
 
 ```bash
-kubectl apply -f pod_to_pod_multicast_disc/base/*.yaml -n rti-examples
+find pod_to_pod_multicast_disc/base -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
 ```

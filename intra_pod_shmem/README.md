@@ -17,5 +17,5 @@ The overlay puts all resources in `rti-examples`. To deploy to another namespace
 For direct raw-manifest deployment without Kustomize:
 
 ```bash
-kubectl apply -f intra_pod_shmem/base/*.yaml -n rti-examples
+find intra_pod_shmem/base -maxdepth 1 -name '*.yaml' ! -name kustomization.yaml -exec kubectl apply -n rti-examples -f {} \;
 ```
