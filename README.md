@@ -17,27 +17,27 @@ This repository provides Kubernetes configurations for RTI Connext DDS networkin
 
 ## Deploying an example
 
-All example manifests use the fixed `rti-examples` namespace. From the repository root, create that namespace and the ConfigMaps required by the selected example:
+All example manifests use the fixed `rti-examples` namespace. From the
+repository root, create the namespace and RTI license ConfigMap:
 
 ```bash
 kubectl create namespace rti-examples
 kubectl create configmap rti-license --from-file=rti_license.dat -n rti-examples
-# Gateway examples also need their Routing Service configuration:
-kubectl create configmap routingservice-rwt \
-  --from-file=external_to_pod_gw/USER_ROUTING_SERVICE.xml -n rti-examples
 ```
 
-The multicast example needs no ConfigMap. Use the corresponding `USER_ROUTING_SERVICE.xml` path for the load-balanced gateway. Apply an example directly, for example:
+Deploy the single Cloud Discovery Service unicast example:
 
 ```bash
-kubectl apply -f pod_to_pod_multicast_disc/
-# Redundant Cloud Discovery Service (HA):
-kubectl apply -f pod_to_pod_unicast_disc/rticlouddiscoveryservice_ha.yaml
-kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_pub_ha.yaml
-kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_sub_ha.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rticlouddiscoveryservice.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_pub.yaml
+kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_sub.yaml
 ```
 
-The single-CDS unicast and HA resources share publisher and subscriber names, so deploy only one of those scenarios in `rti-examples` at a time.
+See the individual example READMEs for [multicast](pod_to_pod_multicast_disc/),
+[HA unicast](pod_to_pod_unicast_disc/), [shared memory](intra_pod_shmem/), and
+[gateway-specific](external_to_pod_gw/) setup. The single-CDS unicast and HA
+resources share publisher and subscriber names, so deploy only one of those
+scenarios in `rti-examples` at a time.
 
 ## Running integration tests
 
