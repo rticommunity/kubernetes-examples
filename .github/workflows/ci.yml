@@ -15,7 +15,7 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
         with:
-          version: 'v1.28.0'
+          version: 'v1.37.0'
 
       - name: Validate Kubernetes YAML files
         run: |
@@ -52,16 +52,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Integration Tests
     needs: [yaml-validation]
-    strategy:
-      matrix:
-        kubernetes-version: ['1.27', '1.28', '1.29']
     steps:
       - uses: actions/checkout@v4
 
       - name: Create kind cluster
         uses: helm/kind-action@v1
         with:
-          node_image: kindest/node:v${{ matrix.kubernetes-version }}.0
+          node_image: kindest/node:v1.37.0
 
       - name: Create RTI License from Secret
         env:
@@ -90,14 +87,14 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: basic-test-output-k8s-${{ matrix.kubernetes-version }}
+          name: basic-test-output-k8s-1.37.0
           path: tests/results/basic/test_output.log
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results-k8s-${{ matrix.kubernetes-version }}
+          name: test-results-k8s-1.37.0
           path: tests/results/
 
   performance-tests:
@@ -111,7 +108,7 @@ jobs:
       - name: Create kind cluster
         uses: helm/kind-action@v1
         with:
-          node_image: kindest/node:v1.28.0
+          node_image: kindest/node:v1.37.0
 
       - name: Create RTI License from Secret
         env:
