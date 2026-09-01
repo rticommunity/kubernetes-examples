@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rtiddsping-pub
-          image: rticom/dds-ping:7.7.0.1
+          image: rticom/dds-ping:7.7.0
           args: ["-publisher", "-domainId", "10", "-verbosity", "2"]
           env:
             - name: NDDS_DISCOVERY_PEERS

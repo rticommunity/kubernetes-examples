@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rti-routingservice
-          image: rticom/routing-service:7.7.0.1
+          image: rticom/routing-service:7.7.0
           imagePullPolicy: Always
           ports:
             - containerPort: 7400
