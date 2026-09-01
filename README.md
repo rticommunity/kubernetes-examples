@@ -35,9 +35,7 @@ kubectl apply -f pod_to_pod_unicast_disc/rtiddsping_cds_sub.yaml
 
 See the individual example READMEs for [multicast](pod_to_pod_multicast_disc/),
 [HA unicast](pod_to_pod_unicast_disc/), [shared memory](intra_pod_shmem/), and
-[gateway-specific](external_to_pod_gw/) setup. The single-CDS unicast and HA
-resources share publisher and subscriber names, so deploy only one of those
-scenarios in `rti-examples` at a time.
+[gateway-specific](external_to_pod_gw/) setup.
 
 ## Running integration tests
 

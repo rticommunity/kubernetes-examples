@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rtiddsping-pub
+  name: rtiddsping-pub-ha
   namespace: rti-examples
   labels:
-    app: rtiddsping-pub
+    app: rtiddsping-pub-ha
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rtiddsping-pub
+      app: rtiddsping-pub-ha
   template:
     metadata:
       labels:
-        app: rtiddsping-pub
+        app: rtiddsping-pub-ha
     spec:
       containers:
-        - name: rtiddsping-pub
+        - name: rtiddsping-pub-ha
           image: rticom/dds-ping:7.7.0
           args: ["-publisher", "-domainId", "10", "-verbosity", "2"]
           env:
