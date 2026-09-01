@@ -2,22 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rtiddsping-sub
+  name: rtiddsping-sub-ha
+  namespace: rti-examples
   labels:
-    app: rtiddsping-sub
+    app: rtiddsping-sub-ha
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rtiddsping-sub
+      app: rtiddsping-sub-ha
   template:
     metadata:
       labels:
-        app: rtiddsping-sub
+        app: rtiddsping-sub-ha
     spec:
       containers:
-        - name: rtiddsping-pub
-          image: rticom/dds-ping:7.5.0.1
+        - name: rtiddsping-sub-ha
+          image: rticom/dds-ping:7.7.0
           args: ["-subscriber", "-domainId", "10", "-verbosity", "2"]
           env:
             - name: NDDS_DISCOVERY_PEERS

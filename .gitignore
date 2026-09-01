@@ -29,3 +29,6 @@ Thumbs.db
 *.tmp
 .cache/
 node_modules/
+
+# Local Git worktrees
+.worktrees/
